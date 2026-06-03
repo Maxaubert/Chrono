@@ -2,9 +2,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   buildAuthorizeUrl,
+  clearTokens,
   deriveChallenge,
   exchangeCodeForTokens,
-  fetchAllPlaylistTracks,
+  fetchPlaylistTracks,
+  fetchPlaylistTracksViaEmbed,
   generateVerifier,
   getSpotifyConfig,
   loadTokens,
@@ -107,40 +109,51 @@ export default function SpikeHarness() {
     }
   }
 
+  function logout() {
+    clearTokens()
+    window.location.href = '/'
+  }
+
+  async function renderCards(tracks: SpotifyTrack[]) {
+    const withQr = await Promise.all(
+      tracks.map(async (t) => ({
+        ...t,
+        qr: await renderQrDataUrl(encodeTrackToken(t.id)),
+      })),
+    )
+    setCards(withQr)
+  }
+
   async function importPlaylist() {
     setError(null)
     setImportNote(null)
     const id = parsePlaylistId(playlist)
     if (!id) return setError('Could not parse a playlist id from that input.')
-    try {
-      // Read tracks via the public embed page + its anonymous token (the Web
-      // API playlist endpoint is blocked for development-mode apps). Pages
-      // through all tracks. Public playlists only.
-      const result = await fetchAllPlaylistTracks({ playlistId: id })
-      const withQr = await Promise.all(
-        result.tracks.map(async (t) => ({
-          ...t,
-          qr: await renderQrDataUrl(encodeTrackToken(t.id)),
-        })),
-      )
-      setCards(withQr)
-      if (result.complete) {
-        setImportNote(null)
-      } else if (result.total != null) {
-        setImportNote(
-          `Loaded ${result.tracks.length} of ${result.total}. Paging cut short (Spotify API ${result.apiStatus}); click Import again to fetch more.`,
-        )
-      } else {
-        const reason =
-          result.apiStatus === 429
-            ? 'rate-limited (429); this IP is throttled, wait and retry'
-            : result.apiStatus
-              ? `the tracks API returned ${result.apiStatus}, so the token workaround is not paging`
-              : 'no Spotify token was found on the embed page'
-        setImportNote(
-          `Loaded ${result.tracks.length} (preview only): ${reason}.`,
-        )
+
+    // Primary: the official Web API with your own token. Pages past 100 and
+    // works for playlists you own (needs the playlist-read-private scope).
+    const token = loadTokens()?.accessToken
+    if (token) {
+      try {
+        const tracks = await fetchPlaylistTracks({ playlistId: id, accessToken: token })
+        if (tracks.length > 0) {
+          await renderCards(tracks)
+          setImportNote(`Imported ${tracks.length} tracks via your Spotify account.`)
+          return
+        }
+      } catch {
+        // Falls through to the public embed (e.g. 403 for a playlist you do not own).
       }
+    }
+
+    // Fallback: the public embed page (up to 100, no login). Good for playlists
+    // you do not own; full lists need a playlist you own while logged in.
+    try {
+      const tracks = await fetchPlaylistTracksViaEmbed({ playlistId: id })
+      await renderCards(tracks)
+      setImportNote(
+        `Loaded ${tracks.length} via the public preview (max 100). For the full list, log in and import a playlist you own.`,
+      )
     } catch (e) {
       setError(String(e))
     }
@@ -200,6 +213,14 @@ export default function SpikeHarness() {
           <span className="self-center text-sm text-green-700">
             Player ready
           </span>
+        )}
+        {loggedIn && !deps.mock && (
+          <button
+            className="rounded border border-neutral-300 px-4 py-2 text-sm"
+            onClick={logout}
+          >
+            Log out
+          </button>
         )}
       </section>
 

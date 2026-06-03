@@ -31,6 +31,9 @@ export function buildAuthorizeUrl(args: {
     code_challenge_method: 'S256',
     code_challenge: args.challenge,
     scope: SCOPES.join(' '),
+    // Force the consent screen so newly added scopes (e.g. playlist-read-*) are
+    // actually granted rather than silently reusing a prior, narrower grant.
+    show_dialog: 'true',
   })
   return `${AUTHORIZE}?${params.toString()}`
 }

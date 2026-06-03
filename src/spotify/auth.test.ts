@@ -29,6 +29,7 @@ describe('buildAuthorizeUrl', () => {
     expect(url.searchParams.get('code_challenge_method')).toBe('S256')
     expect(url.searchParams.get('code_challenge')).toBe('chal')
     expect(url.searchParams.get('scope')).toBe(SCOPES.join(' '))
+    expect(url.searchParams.get('show_dialog')).toBe('true')
   })
 })
 
