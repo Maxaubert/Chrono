@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { MockProvider, type AudioProvider } from '@/audio'
 import {
   buildAuthorizeUrl,
+  clearTokens,
   deriveChallenge,
   exchangeCodeForTokens,
   fetchMyPlaylists,
@@ -9,6 +10,7 @@ import {
   fetchTrackYear,
   generateVerifier,
   getSpotifyConfig,
+  isExpired,
   loadTokens,
   type MyPlaylist,
   saveTokens,
@@ -17,6 +19,12 @@ import {
   takeVerifier,
   type SpotifyTrack,
 } from '@/spotify'
+
+/** True only when a stored token exists and has not expired. */
+function hasValidToken(): boolean {
+  const tokens = loadTokens()
+  return !!tokens && !isExpired(tokens)
+}
 
 // A tiny fixed deck for ?mock=1 (no real Spotify). Years strictly increase in
 // draw order so placing at the rightmost gap is always correct (E2E relies on this).
@@ -38,6 +46,7 @@ export interface SpotifySession {
   error: string | null
   provider: AudioProvider
   login: () => Promise<void>
+  logout: () => void
   connect: () => Promise<void>
   importPlaylistId: (id: string) => Promise<SpotifyTrack[]>
   loadMyPlaylists: () => Promise<MyPlaylist[]>
@@ -55,7 +64,7 @@ export function useSpotifySession(): SpotifySession {
           }),
     [mock],
   )
-  const [loggedIn, setLoggedIn] = useState(mock || !!loadTokens())
+  const [loggedIn, setLoggedIn] = useState(mock || hasValidToken())
   const [connected, setConnected] = useState(mock)
   const [error, setError] = useState<string | null>(null)
 
@@ -91,13 +100,23 @@ export function useSpotifySession(): SpotifySession {
     }
   }
 
+  function logout() {
+    clearTokens()
+    setConnected(false)
+    setLoggedIn(false)
+    setError(null)
+  }
+
   async function connect() {
     if (mock) return setConnected(true)
     try {
       await (provider as SpotifyProvider).connect()
       setConnected(true)
     } catch (e) {
+      // A stale/expired token shows up here as an auth error; clear it so the
+      // user is sent back to a fresh login instead of being stuck.
       setError(String(e))
+      if (/auth/i.test(String(e))) logout()
     }
   }
 
@@ -126,6 +145,7 @@ export function useSpotifySession(): SpotifySession {
     error,
     provider,
     login,
+    logout,
     connect,
     importPlaylistId,
     loadMyPlaylists,

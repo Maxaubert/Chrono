@@ -83,6 +83,14 @@ export default function SetupScreen({
               Player ready
             </span>
           )}
+          {session.loggedIn && (
+            <button
+              className="rounded border border-neutral-300 px-3 py-2 text-sm"
+              onClick={session.logout}
+            >
+              Log out
+            </button>
+          )}
         </section>
       )}
 
