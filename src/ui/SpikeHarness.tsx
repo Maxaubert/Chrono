@@ -352,7 +352,12 @@ export default function SpikeHarness() {
                   width={120}
                   height={120}
                 />
-                <p className="mt-1 text-xs text-neutral-400">card</p>
+                <button
+                  className="mt-2 w-full rounded bg-purple-600 px-2 py-1 text-xs text-white"
+                  onClick={() => handleDecode(encodeTrackToken(c.id))}
+                >
+                  Play this card
+                </button>
               </li>
             ))}
           </ul>
