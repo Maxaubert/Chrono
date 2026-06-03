@@ -17,7 +17,9 @@ export class SpotifyProvider implements AudioProvider {
   }) {
     this.getAccessToken = opts.getAccessToken
     this.deviceId = opts.deviceId ?? null
-    this.fetchImpl = opts.fetchImpl ?? fetch
+    // Bind to globalThis: native fetch throws "Illegal invocation" when called
+    // as a method of any other object (e.g. this.fetchImpl(...)).
+    this.fetchImpl = opts.fetchImpl ?? fetch.bind(globalThis)
   }
 
   /** Load the SDK and connect a player; stores the resulting device id. */
