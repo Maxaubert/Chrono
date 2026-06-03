@@ -20,6 +20,9 @@ dist-ssr
 # Git worktrees (superpowers isolated workspaces)
 .worktrees
 
+# Superpowers brainstorming mockups
+.superpowers
+
 # Test + tooling output
 coverage
 playwright-report
