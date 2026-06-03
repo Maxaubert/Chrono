@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { MockProvider, type AudioProvider } from '@/audio'
 import {
   buildAuthorizeUrl,
@@ -100,25 +100,48 @@ export function useSpotifySession(): SpotifySession {
     }
   }
 
+  const autoConnectStarted = useRef(false)
+
   function logout() {
     clearTokens()
     setConnected(false)
     setLoggedIn(false)
     setError(null)
+    autoConnectStarted.current = false
   }
 
   async function connect() {
     if (mock) return setConnected(true)
-    try {
-      await (provider as SpotifyProvider).connect()
-      setConnected(true)
-    } catch (e) {
-      // A stale/expired token shows up here as an auth error; clear it so the
-      // user is sent back to a fresh login instead of being stuck.
-      setError(String(e))
-      if (/auth/i.test(String(e))) logout()
+    // Retry transient connect failures; a stale/expired token surfaces as an
+    // auth error, so clear it and send the user back to a fresh login.
+    for (let attempt = 0; attempt < 4; attempt++) {
+      try {
+        await (provider as SpotifyProvider).connect()
+        setConnected(true)
+        setError(null)
+        return
+      } catch (e) {
+        if (/auth/i.test(String(e))) {
+          setError(String(e))
+          logout()
+          return
+        }
+        if (attempt < 3) {
+          await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)))
+        } else {
+          setError(String(e))
+        }
+      }
     }
   }
+
+  // Connect the playback device automatically once logged in (no button needed).
+  useEffect(() => {
+    if (mock || !loggedIn || connected || autoConnectStarted.current) return
+    autoConnectStarted.current = true
+    void connect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mock, loggedIn, connected])
 
   async function importPlaylistId(id: string): Promise<SpotifyTrack[]> {
     if (mock) return MOCK_TRACKS

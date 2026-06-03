@@ -86,12 +86,9 @@ export default function SetupScreen({
               Log in with Spotify
             </button>
           ) : !session.connected ? (
-            <button
-              className="rounded bg-blue-600 px-3 py-2 text-white"
-              onClick={session.connect}
-            >
-              Connect player
-            </button>
+            <span className="self-center text-sm text-neutral-400">
+              Connecting player...
+            </span>
           ) : (
             <span className="self-center text-sm text-green-700">
               Player ready
