@@ -1,6 +1,6 @@
 // src/ui/game/SetupScreen.tsx
 import { useState } from 'react'
-import type { SpotifyTrack } from '@/spotify'
+import { parsePlaylistId, type SpotifyTrack } from '@/spotify'
 import type { SpotifySession } from './useSpotifySession'
 
 export interface SetupResult {
@@ -37,7 +37,6 @@ export default function SetupScreen({
     setErr(null)
     setBusy(true)
     try {
-      const { parsePlaylistId } = await import('@/spotify')
       const id = session.mock ? 'mock' : parsePlaylistId(playlist)
       if (!id) throw new Error('Could not read a playlist id from that link.')
       setTracks(await session.importPlaylistId(id))
