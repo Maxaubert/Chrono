@@ -202,6 +202,9 @@ export default function SpikeHarness() {
 
       {cards.length > 0 && (
         <section className="mt-6">
+          <p className="mb-3 text-sm font-medium" data-testid="card-count">
+            Imported {cards.length} cards
+          </p>
           <div className="flex items-center gap-3">
             {!scanning ? (
               <button
