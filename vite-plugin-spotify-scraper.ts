@@ -53,14 +53,22 @@ async function getAnonToken(playlistId: string): Promise<string> {
   return token
 }
 
+/** Fetch one page. `ok` is true only when the body actually contains playlist
+ * content, so a stale hash (which can come back as HTTP 200 with an error body,
+ * not just an HTTP error) is detected and can trigger a hash refresh. */
 async function pathfinderPage(
   playlistId: string,
   offset: number,
   hash: string,
   token: string,
-): Promise<Response> {
-  const url = buildFetchPlaylistUrl({ playlistId, offset, limit: PAGE_LIMIT, hash })
-  return fetch(url, {
+): Promise<{ ok: boolean; json: unknown; status: number }> {
+  const url = buildFetchPlaylistUrl({
+    playlistId,
+    offset,
+    limit: PAGE_LIMIT,
+    hash,
+  })
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
       'User-Agent': UA,
@@ -68,6 +76,11 @@ async function pathfinderPage(
       referer: 'https://open.spotify.com/',
     },
   })
+  const json = res.ok ? await res.json().catch(() => null) : null
+  const hasContent = !!(
+    json as { data?: { playlistV2?: { content?: unknown } } }
+  )?.data?.playlistV2?.content
+  return { ok: hasContent, json, status: res.status }
 }
 
 async function scrapeAllTracks(
@@ -76,22 +89,25 @@ async function scrapeAllTracks(
   const token = await getAnonToken(playlistId)
   let hash = await loadHash()
 
-  // First page, with one retry on a fresh hash in case the cached one went stale.
-  let res = await pathfinderPage(playlistId, 0, hash, token)
-  if (!res.ok) {
+  // First page; if it fails (HTTP error OR an error body from a rotated hash),
+  // refresh the hash from the live bundle and retry once.
+  let first = await pathfinderPage(playlistId, 0, hash, token)
+  if (!first.ok) {
     hash = await loadHash(true)
-    res = await pathfinderPage(playlistId, 0, hash, token)
+    first = await pathfinderPage(playlistId, 0, hash, token)
   }
-  if (!res.ok) throw new Error(`pathfinder first page -> ${res.status}`)
+  if (!first.ok) {
+    throw new Error(`pathfinder first page failed (status ${first.status})`)
+  }
 
-  const first = parsePathfinderPage(await res.json())
-  const tracks = [...first.tracks]
-  const total = first.total
+  const parsed = parsePathfinderPage(first.json)
+  const tracks = [...parsed.tracks]
+  const total = parsed.total
 
   for (let offset = PAGE_LIMIT; offset < total; offset += PAGE_LIMIT) {
-    const pageRes = await pathfinderPage(playlistId, offset, hash, token)
-    if (!pageRes.ok) break // partial result rather than failing the whole import
-    tracks.push(...parsePathfinderPage(await pageRes.json()).tracks)
+    const page = await pathfinderPage(playlistId, offset, hash, token)
+    if (!page.ok) break // partial result rather than failing the whole import
+    tracks.push(...parsePathfinderPage(page.json).tracks)
   }
   return { tracks, total }
 }
@@ -101,7 +117,8 @@ export function spotifyScraperPlugin(): Plugin {
     name: 'spotify-scraper',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (!req.url || !req.url.startsWith('/api/playlist-tracks')) return next()
+        if (!req.url || !req.url.startsWith('/api/playlist-tracks'))
+          return next()
         const id = new URL(req.url, 'http://localhost').searchParams.get('id')
         res.setHeader('content-type', 'application/json')
         if (!id) {
