@@ -42,4 +42,11 @@ describe('gameReducer', () => {
     expect(next?.phase).toBe('listening')
     expect(next?.currentPlayerIndex).toBe(1)
   })
+
+  it('place and advance are no-ops before a game has started', () => {
+    expect(gameReducer(null, { type: 'place', slotIndex: 0 })).toBeNull()
+    expect(
+      gameReducer(null, { type: 'advance', nextDrawn: drawn('d1', 2000) }),
+    ).toBeNull()
+  })
 })
