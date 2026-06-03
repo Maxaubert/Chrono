@@ -107,6 +107,19 @@ describe('fetchPlaylistTracks', () => {
     expect(String(fetchImpl.mock.calls[0][0])).toBe('/api/playlist-tracks?id=PL')
   })
 
+  it('fetches a track year from the dev-server endpoint', async () => {
+    const { fetchTrackYear } = await import('./client')
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => ({ year: 2007 }) })
+    const year = await fetchTrackYear({
+      trackId: 'T1',
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+    })
+    expect(year).toBe(2007)
+    expect(String(fetchImpl.mock.calls[0][0])).toBe('/api/track-year?id=T1')
+  })
+
   it("lists the user's playlists across pages", async () => {
     const { fetchMyPlaylists } = await import('./client')
     const page1 = {

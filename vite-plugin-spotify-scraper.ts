@@ -2,9 +2,11 @@ import type { Plugin } from 'vite'
 import type { SpotifyTrack } from './src/spotify/types'
 import {
   buildFetchPlaylistUrl,
+  buildGetTrackUrl,
   extractAnonToken,
-  extractFetchPlaylistHash,
+  extractOperationHash,
   parsePathfinderPage,
+  parseTrackYear,
 } from './src/spotify/pathfinder'
 
 /**
@@ -22,7 +24,8 @@ const UA =
 const PAGE_LIMIT = 100
 const HOME = 'https://open.spotify.com/'
 
-let cachedHash: string | null = null
+let cachedBundle: string | null = null
+const hashCache: Record<string, string> = {}
 
 async function fetchText(url: string): Promise<string> {
   const res = await fetch(url, { headers: { 'User-Agent': UA } })
@@ -30,27 +33,43 @@ async function fetchText(url: string): Promise<string> {
   return res.text()
 }
 
-/** Find the current fetchPlaylist hash from the live web-player bundle. */
-async function loadHash(force = false): Promise<string> {
-  if (cachedHash && !force) return cachedHash
+/** The current web-player JS bundle (cached; carries the operation hashes). */
+async function loadBundle(force = false): Promise<string> {
+  if (cachedBundle && !force) return cachedBundle
   const home = await fetchText(HOME)
   const bundleUrl = home.match(
     /https:\/\/open\.spotifycdn\.com\/cdn\/build\/web-player\/web-player\.[^"']+\.js/,
   )?.[0]
   if (!bundleUrl) throw new Error('could not locate the web-player bundle')
-  const hash = extractFetchPlaylistHash(await fetchText(bundleUrl))
-  if (!hash) throw new Error('could not extract the fetchPlaylist hash')
-  cachedHash = hash
+  cachedBundle = await fetchText(bundleUrl)
+  return cachedBundle
+}
+
+/** Current persisted-query hash for an operation, auto-extracted from the live
+ * bundle and cached. `force` re-downloads the bundle (used when a hash rotates). */
+async function loadHash(operationName: string, force = false): Promise<string> {
+  if (hashCache[operationName] && !force) return hashCache[operationName]
+  const hash = extractOperationHash(await loadBundle(force), operationName)
+  if (!hash) throw new Error(`could not extract the ${operationName} hash`)
+  hashCache[operationName] = hash
   return hash
 }
 
-async function getAnonToken(playlistId: string): Promise<string> {
-  const html = await fetchText(
-    `https://open.spotify.com/embed/playlist/${playlistId}`,
-  )
+/** Any embed page hands out an anonymous web token usable for pathfinder. */
+async function getAnonToken(kind: 'playlist' | 'track', id: string): Promise<string> {
+  const html = await fetchText(`https://open.spotify.com/embed/${kind}/${id}`)
   const token = extractAnonToken(html)
   if (!token) throw new Error('no anonymous token on the embed page')
   return token
+}
+
+function pathfinderHeaders(token: string): Record<string, string> {
+  return {
+    Authorization: `Bearer ${token}`,
+    'User-Agent': UA,
+    origin: 'https://open.spotify.com',
+    referer: 'https://open.spotify.com/',
+  }
 }
 
 /** Fetch one page. `ok` is true only when the body actually contains playlist
@@ -68,14 +87,7 @@ async function pathfinderPage(
     limit: PAGE_LIMIT,
     hash,
   })
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'User-Agent': UA,
-      origin: 'https://open.spotify.com',
-      referer: 'https://open.spotify.com/',
-    },
-  })
+  const res = await fetch(url, { headers: pathfinderHeaders(token) })
   const json = res.ok ? await res.json().catch(() => null) : null
   const hasContent = !!(
     json as { data?: { playlistV2?: { content?: unknown } } }
@@ -86,14 +98,14 @@ async function pathfinderPage(
 async function scrapeAllTracks(
   playlistId: string,
 ): Promise<{ tracks: SpotifyTrack[]; total: number }> {
-  const token = await getAnonToken(playlistId)
-  let hash = await loadHash()
+  const token = await getAnonToken('playlist', playlistId)
+  let hash = await loadHash('fetchPlaylist')
 
   // First page; if it fails (HTTP error OR an error body from a rotated hash),
   // refresh the hash from the live bundle and retry once.
   let first = await pathfinderPage(playlistId, 0, hash, token)
   if (!first.ok) {
-    hash = await loadHash(true)
+    hash = await loadHash('fetchPlaylist', true)
     first = await pathfinderPage(playlistId, 0, hash, token)
   }
   if (!first.ok) {
@@ -112,14 +124,33 @@ async function scrapeAllTracks(
   return { tracks, total }
 }
 
+/** Look up a single track's release year (the playlist query omits it). */
+async function getTrackYear(trackId: string): Promise<number | null> {
+  const token = await getAnonToken('track', trackId)
+  const request = async (hash: string) =>
+    fetch(buildGetTrackUrl({ trackId, hash }), {
+      headers: pathfinderHeaders(token),
+    })
+  let json: unknown = null
+  for (const force of [false, true]) {
+    const hash = await loadHash('getTrack', force)
+    const res = await request(hash)
+    json = res.ok ? await res.json().catch(() => null) : null
+    if ((json as { data?: { trackUnion?: unknown } })?.data?.trackUnion) break
+  }
+  return parseTrackYear(json)
+}
+
 export function spotifyScraperPlugin(): Plugin {
   return {
     name: 'spotify-scraper',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (!req.url || !req.url.startsWith('/api/playlist-tracks'))
-          return next()
-        const id = new URL(req.url, 'http://localhost').searchParams.get('id')
+        const url = req.url ?? ''
+        const isTracks = url.startsWith('/api/playlist-tracks')
+        const isYear = url.startsWith('/api/track-year')
+        if (!isTracks && !isYear) return next()
+        const id = new URL(url, 'http://localhost').searchParams.get('id')
         res.setHeader('content-type', 'application/json')
         if (!id) {
           res.statusCode = 400
@@ -127,7 +158,10 @@ export function spotifyScraperPlugin(): Plugin {
           return
         }
         try {
-          res.end(JSON.stringify(await scrapeAllTracks(id)))
+          const payload = isYear
+            ? { year: await getTrackYear(id) }
+            : await scrapeAllTracks(id)
+          res.end(JSON.stringify(payload))
         } catch (e) {
           res.statusCode = 502
           res.end(JSON.stringify({ error: String(e) }))

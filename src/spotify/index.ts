@@ -21,6 +21,7 @@ export {
   fetchPlaylistTracks,
   fetchPlaylistTracksViaServer,
   fetchMyPlaylists,
+  fetchTrackYear,
 } from './client'
 export type { MyPlaylist } from './client'
 export {

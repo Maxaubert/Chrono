@@ -81,6 +81,18 @@ export async function fetchPlaylistTracksViaServer(args: {
   return (await res.json()) as { tracks: SpotifyTrack[]; total: number }
 }
 
+/** Look up one track's release year via our dev-server (playlist import omits it). */
+export async function fetchTrackYear(args: {
+  trackId: string
+  fetchImpl?: typeof fetch
+}): Promise<number | null> {
+  const f = args.fetchImpl ?? fetch
+  const res = await f(`/api/track-year?id=${args.trackId}`)
+  if (!res.ok) return null
+  const data = (await res.json()) as { year?: number | null }
+  return data.year ?? null
+}
+
 /** A playlist in the logged-in user's library (owned or followed). */
 export interface MyPlaylist {
   id: string

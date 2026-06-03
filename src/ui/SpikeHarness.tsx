@@ -8,6 +8,7 @@ import {
   fetchMyPlaylists,
   fetchPlaylistTracksViaEmbed,
   fetchPlaylistTracksViaServer,
+  fetchTrackYear,
   generateVerifier,
   getSpotifyConfig,
   loadTokens,
@@ -38,6 +39,7 @@ export default function SpikeHarness() {
   const [cards, setCards] = useState<Card[]>([])
   const [importNote, setImportNote] = useState<string | null>(null)
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null)
+  const [revealYear, setRevealYear] = useState<number | null>(null)
   const [revealed, setRevealed] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [scanning, setScanning] = useState(false)
@@ -188,6 +190,11 @@ export default function SpikeHarness() {
     setError(null)
     setRevealed(false)
     setNowPlaying(card)
+    // The playlist import omits the year; fetch it lazily for this one track.
+    setRevealYear(card?.year ?? null)
+    if (card && card.year == null) {
+      fetchTrackYear({ trackId: id }).then(setRevealYear)
+    }
     try {
       await deps.provider.play(trackIdToUri(id))
     } catch (e) {
@@ -275,8 +282,7 @@ export default function SpikeHarness() {
           </div>
           {revealed && (
             <p className="mt-3 text-sm" data-testid="reveal">
-              {nowPlaying.title}, {nowPlaying.artist} (
-              {nowPlaying.year ?? 'unknown'})
+              {nowPlaying.title}, {nowPlaying.artist} ({revealYear ?? 'unknown'})
             </p>
           )}
         </section>
