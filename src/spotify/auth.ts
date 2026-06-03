@@ -8,12 +8,15 @@ const VERIFIER_KEY = 'chrono.spotify.verifier'
 const EXPIRY_SKEW_MS = 60_000
 
 /** streaming + user-read-* are required by the Web Playback SDK; modify lets us
- * start playback on our device. */
+ * start playback on our device; playlist-read-* lets us import the user's
+ * private and collaborative playlists (public ones need no scope). */
 export const SCOPES = [
   'streaming',
   'user-read-email',
   'user-read-private',
   'user-modify-playback-state',
+  'playlist-read-private',
+  'playlist-read-collaborative',
 ]
 
 export function buildAuthorizeUrl(args: {

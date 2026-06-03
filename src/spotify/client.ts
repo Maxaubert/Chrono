@@ -51,7 +51,10 @@ export async function fetchPlaylistTracks(args: {
   const out: SpotifyTrack[] = []
   while (url) {
     const res = await f(url, { headers })
-    if (!res.ok) throw new Error(`Playlist fetch failed: ${res.status}`)
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      throw new Error(`Playlist fetch failed: ${res.status} ${body}`.trim())
+    }
     const page = (await res.json()) as { items: RawItem[]; next: string | null }
     for (const item of page.items) {
       const mapped = mapTrack(item)

@@ -88,14 +88,18 @@ describe('fetchPlaylistTracks', () => {
     expect(firstInit.headers.Authorization).toBe('Bearer AT')
   })
 
-  it('throws on a non-ok response', async () => {
-    const fetchImpl = vi.fn().mockResolvedValue({ ok: false, status: 401 })
+  it('throws on a non-ok response, including the response body', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 403,
+      text: async () => 'Insufficient client scope',
+    })
     await expect(
       fetchPlaylistTracks({
         playlistId: 'PL',
         accessToken: 'AT',
         fetchImpl: fetchImpl as unknown as typeof fetch,
       }),
-    ).rejects.toThrow(/401/)
+    ).rejects.toThrow(/403 Insufficient client scope/)
   })
 })
