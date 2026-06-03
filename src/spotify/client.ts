@@ -1,0 +1,63 @@
+// src/spotify/client.ts
+import type { SpotifyTrack } from './types'
+
+const API = 'https://api.spotify.com/v1'
+
+export function parsePlaylistId(input: string): string | null {
+  const s = input.trim()
+  if (!s) return null
+  const m =
+    s.match(/playlist[/:]([A-Za-z0-9]+)/) ??
+    (/^[A-Za-z0-9]+$/.test(s) ? [s, s] : null)
+  return m ? m[1] : null
+}
+
+export function parseYear(releaseDate: string): number | null {
+  const m = releaseDate.match(/^(\d{4})/)
+  return m ? Number(m[1]) : null
+}
+
+interface RawItem {
+  track: {
+    id: string
+    uri: string
+    name: string
+    artists: { name: string }[]
+    album: { release_date: string }
+  } | null
+}
+
+export function mapTrack(item: RawItem): SpotifyTrack | null {
+  const t = item.track
+  if (!t || !t.id) return null
+  return {
+    id: t.id,
+    uri: t.uri,
+    title: t.name,
+    artist: t.artists.map((a) => a.name).join(', '),
+    year: parseYear(t.album?.release_date ?? ''),
+  }
+}
+
+export async function fetchPlaylistTracks(args: {
+  playlistId: string
+  accessToken: string
+  fetchImpl?: typeof fetch
+}): Promise<SpotifyTrack[]> {
+  const f = args.fetchImpl ?? fetch
+  const headers = { Authorization: `Bearer ${args.accessToken}` }
+  let url: string | null =
+    `${API}/playlists/${args.playlistId}/tracks?limit=100`
+  const out: SpotifyTrack[] = []
+  while (url) {
+    const res = await f(url, { headers })
+    if (!res.ok) throw new Error(`Playlist fetch failed: ${res.status}`)
+    const page = (await res.json()) as { items: RawItem[]; next: string | null }
+    for (const item of page.items) {
+      const mapped = mapTrack(item)
+      if (mapped) out.push(mapped)
+    }
+    url = page.next
+  }
+  return out
+}
