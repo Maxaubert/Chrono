@@ -5,7 +5,7 @@ const AUTHORIZE = 'https://accounts.spotify.com/authorize'
 const TOKEN = 'https://accounts.spotify.com/api/token'
 const TOKENS_KEY = 'chrono.spotify.tokens'
 const VERIFIER_KEY = 'chrono.spotify.verifier'
-const EXPIRY_SKEW_MS = 5_000
+const EXPIRY_SKEW_MS = 60_000
 
 /** streaming + user-read-* are required by the Web Playback SDK; modify lets us
  * start playback on our device. */

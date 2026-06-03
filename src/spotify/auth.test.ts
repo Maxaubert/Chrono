@@ -66,8 +66,8 @@ describe('exchangeCodeForTokens', () => {
 
 describe('isExpired', () => {
   it('treats tokens within a 60s skew as expired', () => {
-    const t = { accessToken: 'a', refreshToken: 'r', expiresAt: 10_000 }
-    expect(isExpired(t, 9_000)).toBe(true) // within 60s skew window
+    const t = { accessToken: 'a', refreshToken: 'r', expiresAt: 120_000 }
+    expect(isExpired(t, 70_000)).toBe(true) // within 60s skew window
     expect(isExpired(t, 1_000)).toBe(false)
   })
 })
