@@ -46,8 +46,9 @@ export async function fetchPlaylistTracks(args: {
 }): Promise<SpotifyTrack[]> {
   const f = args.fetchImpl ?? fetch
   const headers = { Authorization: `Bearer ${args.accessToken}` }
-  let url: string | null =
-    `${API}/playlists/${args.playlistId}/tracks?limit=100`
+  // Spotify renamed /tracks -> /items in Feb 2026; the new endpoint is the
+  // sanctioned one and may behave differently from the (forbidden) /tracks.
+  let url: string | null = `${API}/playlists/${args.playlistId}/items?limit=100`
   const out: SpotifyTrack[] = []
   while (url) {
     const res = await f(url, { headers })

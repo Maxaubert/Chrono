@@ -84,7 +84,7 @@ describe('fetchPlaylistTracks', () => {
     ])
     // first call hits the playlist endpoint with a bearer token
     const [firstUrl, firstInit] = fetchImpl.mock.calls[0]
-    expect(String(firstUrl)).toContain('/playlists/PL/tracks')
+    expect(String(firstUrl)).toContain('/playlists/PL/items')
     expect(firstInit.headers.Authorization).toBe('Bearer AT')
   })
 
