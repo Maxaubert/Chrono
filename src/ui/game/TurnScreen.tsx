@@ -39,13 +39,13 @@ export default function TurnScreen({
         <div className="text-lg font-semibold">Now playing (hidden)</div>
         <div className="mt-2 flex justify-center gap-2">
           <button
-            className="rounded bg-neutral-200 px-3 py-1"
+            className="rounded bg-neutral-200 px-3 py-1 text-neutral-900"
             onClick={onPause}
           >
             Pause
           </button>
           <button
-            className="rounded bg-neutral-200 px-3 py-1"
+            className="rounded bg-neutral-200 px-3 py-1 text-neutral-900"
             onClick={onReplay}
           >
             Replay
@@ -66,7 +66,7 @@ export default function TurnScreen({
             >
               +
             </button>
-            <div className="min-w-[110px] rounded border border-emerald-500 bg-emerald-50 p-3 text-center">
+            <div className="min-w-[110px] rounded border border-emerald-500 bg-emerald-50 p-3 text-center text-emerald-900">
               <div className="text-lg font-bold">{card.year}</div>
             </div>
           </div>
