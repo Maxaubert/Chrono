@@ -15,7 +15,13 @@ export {
   saveVerifier,
   takeVerifier,
 } from './auth'
-export { parsePlaylistId, parseYear, fetchPlaylistTracks } from './client'
+export {
+  parsePlaylistId,
+  parseYear,
+  fetchPlaylistTracks,
+  fetchMyPlaylists,
+} from './client'
+export type { MyPlaylist } from './client'
 export {
   parseEmbedTracks,
   parseEmbedAccessToken,

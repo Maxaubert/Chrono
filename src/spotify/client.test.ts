@@ -88,6 +88,46 @@ describe('fetchPlaylistTracks', () => {
     expect(firstInit.headers.Authorization).toBe('Bearer AT')
   })
 
+  it("lists the user's playlists across pages", async () => {
+    const { fetchMyPlaylists } = await import('./client')
+    const page1 = {
+      items: [
+        {
+          id: 'P1',
+          name: 'Mine',
+          owner: { display_name: 'me' },
+          tracks: { total: 120 },
+        },
+      ],
+      next: 'https://api.spotify.com/v1/me/playlists?offset=50',
+    }
+    const page2 = {
+      items: [
+        {
+          id: 'P2',
+          name: 'Other',
+          owner: { display_name: 'me' },
+          tracks: { total: 5 },
+        },
+      ],
+      next: null,
+    }
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => page1 })
+      .mockResolvedValueOnce({ ok: true, json: async () => page2 })
+    const pls = await fetchMyPlaylists({
+      accessToken: 'AT',
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+    })
+    expect(pls).toEqual([
+      { id: 'P1', name: 'Mine', ownerName: 'me', trackCount: 120 },
+      { id: 'P2', name: 'Other', ownerName: 'me', trackCount: 5 },
+    ])
+    expect(String(fetchImpl.mock.calls[0][0])).toContain('/me/playlists')
+    expect(fetchImpl.mock.calls[0][1].headers.Authorization).toBe('Bearer AT')
+  })
+
   it('throws on a non-ok response, including the response body', async () => {
     const fetchImpl = vi.fn().mockResolvedValue({
       ok: false,

@@ -65,3 +65,52 @@ export async function fetchPlaylistTracks(args: {
   }
   return out
 }
+
+/** A playlist in the logged-in user's library (owned or followed). */
+export interface MyPlaylist {
+  id: string
+  name: string
+  ownerName: string
+  trackCount: number
+}
+
+interface RawPlaylist {
+  id: string
+  name: string
+  owner: { display_name?: string }
+  tracks: { total: number }
+}
+
+/** List the logged-in user's playlists. Allowed in development mode, and a
+ * playlist the user owns returns its full track list via fetchPlaylistTracks. */
+export async function fetchMyPlaylists(args: {
+  accessToken: string
+  fetchImpl?: typeof fetch
+}): Promise<MyPlaylist[]> {
+  const f = args.fetchImpl ?? fetch
+  const headers = { Authorization: `Bearer ${args.accessToken}` }
+  let url: string | null = `${API}/me/playlists?limit=50`
+  const out: MyPlaylist[] = []
+  while (url) {
+    const res = await f(url, { headers })
+    if (!res.ok) {
+      const body = await res.text().catch(() => '')
+      throw new Error(`Playlists fetch failed: ${res.status} ${body}`.trim())
+    }
+    const page = (await res.json()) as {
+      items: (RawPlaylist | null)[]
+      next: string | null
+    }
+    for (const p of page.items) {
+      if (!p || !p.id) continue
+      out.push({
+        id: p.id,
+        name: p.name,
+        ownerName: p.owner?.display_name ?? '',
+        trackCount: p.tracks?.total ?? 0,
+      })
+    }
+    url = page.next
+  }
+  return out
+}

@@ -5,11 +5,13 @@ import {
   clearTokens,
   deriveChallenge,
   exchangeCodeForTokens,
+  fetchMyPlaylists,
   fetchPlaylistTracks,
   fetchPlaylistTracksViaEmbed,
   generateVerifier,
   getSpotifyConfig,
   loadTokens,
+  type MyPlaylist,
   parsePlaylistId,
   saveTokens,
   saveVerifier,
@@ -32,6 +34,7 @@ export default function SpikeHarness() {
   const [loggedIn, setLoggedIn] = useState(deps.mock || !!loadTokens())
   const [connected, setConnected] = useState(deps.mock)
   const [playlist, setPlaylist] = useState('')
+  const [myPlaylists, setMyPlaylists] = useState<MyPlaylist[]>([])
   const [cards, setCards] = useState<Card[]>([])
   const [importNote, setImportNote] = useState<string | null>(null)
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null)
@@ -124,14 +127,23 @@ export default function SpikeHarness() {
     setCards(withQr)
   }
 
-  async function importPlaylist() {
+  async function loadMyPlaylists() {
+    setError(null)
+    const token = loadTokens()?.accessToken
+    if (!token) return setError('Log in first.')
+    try {
+      setMyPlaylists(await fetchMyPlaylists({ accessToken: token }))
+    } catch (e) {
+      setError(String(e))
+    }
+  }
+
+  async function importById(id: string, label?: string) {
     setError(null)
     setImportNote(null)
-    const id = parsePlaylistId(playlist)
-    if (!id) return setError('Could not parse a playlist id from that input.')
 
     // Primary: the official Web API with your own token. Pages past 100 and
-    // works for playlists you own (needs the playlist-read-private scope).
+    // works for a playlist you own (a strangers' playlist returns no tracks).
     const token = loadTokens()?.accessToken
     let officialError: string | null = null
     if (token) {
@@ -143,7 +155,7 @@ export default function SpikeHarness() {
         if (tracks.length > 0) {
           await renderCards(tracks)
           setImportNote(
-            `Imported ${tracks.length} tracks via your Spotify account.`,
+            `Imported ${tracks.length} tracks${label ? ` from "${label}"` : ''} via your Spotify account.`,
           )
           return
         }
@@ -152,20 +164,26 @@ export default function SpikeHarness() {
       }
     }
 
-    // Fallback: the public embed page (up to 100, no login). Good for playlists
-    // you do not own; full lists need a playlist you own while logged in.
+    // Fallback: the public embed page (up to 100, no login).
     try {
       const tracks = await fetchPlaylistTracksViaEmbed({ playlistId: id })
       await renderCards(tracks)
       const why = !token
         ? 'not logged in'
-        : (officialError ?? 'your account returned no tracks')
+        : (officialError ??
+          'your account returned no tracks (not your playlist?)')
       setImportNote(
-        `Loaded ${tracks.length} via the public preview (max 100). Your-account path failed: ${why}`,
+        `Loaded ${tracks.length} via the public preview (max 100). Your-account path: ${why}`,
       )
     } catch (e) {
       setError(String(e))
     }
+  }
+
+  async function importPlaylist() {
+    const id = parsePlaylistId(playlist)
+    if (!id) return setError('Could not parse a playlist id from that input.')
+    await importById(id)
   }
 
   async function handleDecode(text: string) {
@@ -247,6 +265,40 @@ export default function SpikeHarness() {
           >
             Import
           </button>
+        </section>
+      )}
+
+      {loggedIn && !deps.mock && (
+        <section className="mt-4">
+          <button
+            className="rounded bg-emerald-700 px-4 py-2 text-sm text-white"
+            onClick={loadMyPlaylists}
+          >
+            Show my playlists
+          </button>
+          {myPlaylists.length > 0 && (
+            <ul className="mt-3 max-h-64 divide-y overflow-auto rounded border">
+              {myPlaylists.map((p) => (
+                <li
+                  key={p.id}
+                  className="flex items-center justify-between gap-3 px-3 py-2"
+                >
+                  <span className="truncate text-sm">
+                    {p.name}{' '}
+                    <span className="text-neutral-400">
+                      ({p.trackCount} tracks, by {p.ownerName})
+                    </span>
+                  </span>
+                  <button
+                    className="shrink-0 rounded bg-neutral-800 px-3 py-1 text-xs text-white"
+                    onClick={() => importById(p.id, p.name)}
+                  >
+                    Import
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
       )}
 
