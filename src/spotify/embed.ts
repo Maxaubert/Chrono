@@ -120,7 +120,8 @@ export interface PlaylistImport {
   complete: boolean
 }
 
-const PAGE_DELAY_MS = 250
+const PAGE_DELAY_MS = 500
+const MAX_RETRIES = 4
 
 /**
  * Fetch ALL of a public playlist's tracks: grab the anonymous token from the
@@ -150,15 +151,31 @@ export async function fetchAllPlaylistTracks(args: {
   const token = parseEmbedAccessToken(html)
 
   if (token) {
+    const headers = { Authorization: `Bearer ${token}` }
+    // Fetch one page, retrying on 429 (honouring Retry-After) so a transient
+    // rate limit is waited out rather than giving up immediately.
+    const fetchPage = async (offset: number): Promise<Response | null> => {
+      const url =
+        `${apiBase}/v1/playlists/${args.playlistId}/tracks` +
+        `?offset=${offset}&limit=${PAGE_LIMIT}&fields=${encodeURIComponent(TRACK_FIELDS)}`
+      for (let attempt = 0; ; attempt++) {
+        const res = await f(url, { headers })
+        if (res.status !== 429 || attempt >= MAX_RETRIES) return res
+        const retryAfter = Number(res.headers?.get?.('Retry-After'))
+        const waitMs =
+          Number.isFinite(retryAfter) && retryAfter > 0
+            ? Math.min(retryAfter * 1000, 10_000)
+            : Math.min((attempt + 1) * 2000, 8000)
+        await sleep(waitMs)
+      }
+    }
+
     const all: SpotifyTrack[] = []
     let total: number | null = null
     let offset = 0
     while (true) {
-      const url =
-        `${apiBase}/v1/playlists/${args.playlistId}/tracks` +
-        `?offset=${offset}&limit=${PAGE_LIMIT}&fields=${encodeURIComponent(TRACK_FIELDS)}`
-      const res = await f(url, { headers: { Authorization: `Bearer ${token}` } })
-      if (!res.ok) break // rate-limited or unavailable: stop with what we have
+      const res = await fetchPage(offset)
+      if (!res || !res.ok) break // still rate-limited after retries, or unavailable
       const page = (await res.json()) as ApiTracksPage
       total = page.total ?? total
       for (const item of page.items ?? []) {
@@ -172,7 +189,11 @@ export async function fetchAllPlaylistTracks(args: {
     // Prefer the paged API result (full list + release years) whenever it got
     // anything; fall back to the embed preview only if it returned nothing.
     if (all.length > 0) {
-      return { tracks: all, total, complete: total != null && all.length >= total }
+      return {
+        tracks: all,
+        total,
+        complete: total != null && all.length >= total,
+      }
     }
   }
 

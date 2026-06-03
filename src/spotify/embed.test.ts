@@ -136,8 +136,20 @@ describe('fetchAllPlaylistTracks', () => {
       fetchImpl: fetchImpl as unknown as typeof fetch,
     })
     expect(result.tracks).toEqual([
-      { id: 'X1', uri: 'spotify:track:X1', title: 'Name X1', artist: 'Artist X1', year: 1984 },
-      { id: 'X2', uri: 'spotify:track:X2', title: 'Name X2', artist: 'Artist X2', year: 2001 },
+      {
+        id: 'X1',
+        uri: 'spotify:track:X1',
+        title: 'Name X1',
+        artist: 'Artist X1',
+        year: 1984,
+      },
+      {
+        id: 'X2',
+        uri: 'spotify:track:X2',
+        title: 'Name X2',
+        artist: 'Artist X2',
+        year: 2001,
+      },
     ])
     expect(result.total).toBe(2)
     expect(result.complete).toBe(true)
@@ -149,8 +161,14 @@ describe('fetchAllPlaylistTracks', () => {
   })
 
   it('pages through multiple offsets until all tracks are collected', async () => {
-    const page1 = { total: 150, items: Array.from({ length: 100 }, (_, i) => apiTrack('A' + i, '1990')) }
-    const page2 = { total: 150, items: Array.from({ length: 50 }, (_, i) => apiTrack('B' + i, '1991')) }
+    const page1 = {
+      total: 150,
+      items: Array.from({ length: 100 }, (_, i) => apiTrack('A' + i, '1990')),
+    }
+    const page2 = {
+      total: 150,
+      items: Array.from({ length: 50 }, (_, i) => apiTrack('B' + i, '1991')),
+    }
     const fetchImpl = vi
       .fn()
       .mockResolvedValueOnce({ ok: true, text: async () => FIXTURE })
@@ -167,16 +185,19 @@ describe('fetchAllPlaylistTracks', () => {
     expect(String(fetchImpl.mock.calls[2][0])).toContain('offset=100')
   })
 
-  it('falls back to the embed preview when the paged API is unavailable', async () => {
+  it('retries on 429 and falls back to the embed preview if it never clears', async () => {
     const fetchImpl = vi
       .fn()
       .mockResolvedValueOnce({ ok: true, text: async () => FIXTURE })
-      // API rate-limited on the first page
-      .mockResolvedValueOnce({ ok: false, status: 429 })
+      // API stays rate-limited for every page attempt
+      .mockResolvedValue({ ok: false, status: 429 })
     const result = await fetchAllPlaylistTracks({
       playlistId: 'PL',
       fetchImpl: fetchImpl as unknown as typeof fetch,
+      sleep: () => Promise.resolve(),
     })
+    // it retried the page (more than just the one embed + one API call)
+    expect(fetchImpl.mock.calls.length).toBeGreaterThan(2)
     // baseline from the embed (2 tracks, no year), flagged incomplete
     expect(result.tracks).toHaveLength(2)
     expect(result.tracks[0]).toMatchObject({ id: 'AAA111', year: null })
