@@ -133,16 +133,22 @@ export default function SpikeHarness() {
     // Primary: the official Web API with your own token. Pages past 100 and
     // works for playlists you own (needs the playlist-read-private scope).
     const token = loadTokens()?.accessToken
+    let officialError: string | null = null
     if (token) {
       try {
-        const tracks = await fetchPlaylistTracks({ playlistId: id, accessToken: token })
+        const tracks = await fetchPlaylistTracks({
+          playlistId: id,
+          accessToken: token,
+        })
         if (tracks.length > 0) {
           await renderCards(tracks)
-          setImportNote(`Imported ${tracks.length} tracks via your Spotify account.`)
+          setImportNote(
+            `Imported ${tracks.length} tracks via your Spotify account.`,
+          )
           return
         }
-      } catch {
-        // Falls through to the public embed (e.g. 403 for a playlist you do not own).
+      } catch (e) {
+        officialError = String(e)
       }
     }
 
@@ -151,8 +157,11 @@ export default function SpikeHarness() {
     try {
       const tracks = await fetchPlaylistTracksViaEmbed({ playlistId: id })
       await renderCards(tracks)
+      const why = !token
+        ? 'not logged in'
+        : (officialError ?? 'your account returned no tracks')
       setImportNote(
-        `Loaded ${tracks.length} via the public preview (max 100). For the full list, log in and import a playlist you own.`,
+        `Loaded ${tracks.length} via the public preview (max 100). Your-account path failed: ${why}`,
       )
     } catch (e) {
       setError(String(e))
@@ -247,7 +256,10 @@ export default function SpikeHarness() {
             Imported {cards.length} cards
           </p>
           {importNote && (
-            <p className="mb-3 text-sm text-amber-600" data-testid="import-note">
+            <p
+              className="mb-3 text-sm text-amber-600"
+              data-testid="import-note"
+            >
               {importNote}
             </p>
           )}
