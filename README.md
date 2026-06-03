@@ -36,8 +36,9 @@ e2e/       Playwright tests
 
 ## Status
 
-Phase 0 (project setup) is complete. See [`roadmap.md`](./roadmap.md) for what
-comes next.
+Phase 0 complete. Phase 1 Slice 1 (Spotify playback + QR-scan spike) is in
+progress. See [`roadmap.md`](./roadmap.md) and the spec under
+`docs/superpowers/specs/`.
 
 ## Spotify (Phase 1)
 

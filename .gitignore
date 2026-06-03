@@ -17,6 +17,9 @@ dist-ssr
 .env.*
 !.env.example
 
+# Git worktrees (superpowers isolated workspaces)
+.worktrees
+
 # Test + tooling output
 coverage
 playwright-report
