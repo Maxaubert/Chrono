@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDeck } from './deck'
+import { buildDeck, takeNextDrawn } from './deck'
 import type { SpotifyTrack } from '@/spotify'
 
 const track = (id: string): SpotifyTrack => ({
@@ -19,5 +19,33 @@ describe('buildDeck', () => {
     expect(deck).toHaveLength(4)
     // does not mutate the input
     expect(tracks.map((t) => t.id)).toEqual(['1', '2', '3', '4'])
+  })
+})
+
+describe('takeNextDrawn', () => {
+  it('draws the first track, fetching its year', async () => {
+    const tracks = ['1', '2'].map(track)
+    const fetchYear = async (id: string) => (id === '1' ? 1991 : 2001)
+    const { drawn, remaining } = await takeNextDrawn(tracks, fetchYear)
+    expect(drawn).toEqual({
+      card: { id: '1', year: 1991 },
+      reveal: { title: 't-1', subtitle: 'a-1', year: 1991 },
+    })
+    expect(remaining.map((t) => t.id)).toEqual(['2'])
+  })
+
+  it('skips tracks whose year cannot be fetched', async () => {
+    const tracks = ['1', '2'].map(track)
+    const fetchYear = async (id: string) => (id === '1' ? null : 2001)
+    const { drawn, remaining } = await takeNextDrawn(tracks, fetchYear)
+    expect(drawn?.card).toEqual({ id: '2', year: 2001 })
+    expect(remaining).toHaveLength(0)
+  })
+
+  it('returns null when no track yields a year', async () => {
+    const tracks = ['1'].map(track)
+    const { drawn, remaining } = await takeNextDrawn(tracks, async () => null)
+    expect(drawn).toBeNull()
+    expect(remaining).toHaveLength(0)
   })
 })
