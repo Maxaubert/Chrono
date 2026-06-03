@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { startGame, placeCard, advanceTurn, type DrawnCard } from './game'
+import {
+  startGame,
+  placeCard,
+  advanceTurn,
+  currentPlayer,
+  isWon,
+  standings,
+  type DrawnCard,
+} from './game'
 
 const drawn = (id: string, year: number): DrawnCard => ({
   card: { id, year },
@@ -108,5 +116,35 @@ describe('advanceTurn', () => {
   it('is a no-op when not in the revealed phase', () => {
     const s = twoPlayers()
     expect(advanceTurn(s, drawn('d2', 1995))).toBe(s)
+  })
+})
+
+describe('selectors', () => {
+  const s = () =>
+    startGame(
+      { targetCards: 10 },
+      [
+        { id: 'p1', name: 'Anna' },
+        { id: 'p2', name: 'Ben' },
+      ],
+      [
+        { id: 'a1', year: 1980 },
+        { id: 'a2', year: 1990 },
+      ],
+      drawn('d1', 1985),
+    )
+
+  it('currentPlayer returns the player whose turn it is', () => {
+    expect(currentPlayer(s()).name).toBe('Anna')
+  })
+
+  it('isWon reflects the status', () => {
+    expect(isWon(s())).toBe(false)
+    expect(isWon({ ...s(), status: 'won' })).toBe(true)
+  })
+
+  it('standings sorts players by card count, descending', () => {
+    const placed = placeCard(s(), 1) // Anna -> 2 cards, Ben -> 1
+    expect(standings(placed).map((p) => p.name)).toEqual(['Anna', 'Ben'])
   })
 })
