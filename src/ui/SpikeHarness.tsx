@@ -11,6 +11,7 @@ import {
   parsePlaylistId,
   saveTokens,
   saveVerifier,
+  SpotifyProvider,
   takeVerifier,
   type SpotifyTrack,
 } from '@/spotify'
@@ -20,7 +21,6 @@ import {
   renderQrDataUrl,
   trackIdToUri,
 } from '@/scan'
-import { SpotifyProvider } from '@/spotify'
 import { createSpikeDeps } from './spike-deps'
 
 type Card = SpotifyTrack & { qr: string }
