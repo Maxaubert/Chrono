@@ -112,19 +112,32 @@ function mapApiItem(item: ApiTracksPage['items'][number]): SpotifyTrack | null {
   }
 }
 
+export interface PlaylistImport {
+  tracks: SpotifyTrack[]
+  /** The playlist's true track count from the API, or null if the API never responded. */
+  total: number | null
+  /** True when every track was fetched (not cut short by a rate limit). */
+  complete: boolean
+}
+
+const PAGE_DELAY_MS = 250
+
 /**
  * Fetch ALL of a public playlist's tracks: grab the anonymous token from the
  * embed page, then page through the tracks endpoint (offset/limit) with it.
- * Falls back to the embed's first-page preview if the paged API is unavailable
- * (e.g. rate-limited), so an import always yields something for a public list.
+ * Reports the true `total` and whether the fetch was `complete`, so a partial
+ * result (e.g. cut short by a rate limit) is never mistaken for the whole list.
+ * Falls back to the embed's 100-track preview if the paged API never responds.
  */
 export async function fetchAllPlaylistTracks(args: {
   playlistId: string
   fetchImpl?: typeof fetch
   embedBase?: string
   apiBase?: string
-}): Promise<SpotifyTrack[]> {
+  sleep?: (ms: number) => Promise<void>
+}): Promise<PlaylistImport> {
   const f = args.fetchImpl ?? fetch
+  const sleep = args.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)))
   const embedBase = args.embedBase ?? EMBED_PROXY_BASE
   const apiBase = args.apiBase ?? API_PROXY_BASE
 
@@ -138,28 +151,33 @@ export async function fetchAllPlaylistTracks(args: {
 
   if (token) {
     const all: SpotifyTrack[] = []
+    let total: number | null = null
     let offset = 0
     while (true) {
       const url =
         `${apiBase}/v1/playlists/${args.playlistId}/tracks` +
         `?offset=${offset}&limit=${PAGE_LIMIT}&fields=${encodeURIComponent(TRACK_FIELDS)}`
       const res = await f(url, { headers: { Authorization: `Bearer ${token}` } })
-      if (!res.ok) break // rate-limited or unavailable: stop and use what we have
+      if (!res.ok) break // rate-limited or unavailable: stop with what we have
       const page = (await res.json()) as ApiTracksPage
+      total = page.total ?? total
       for (const item of page.items ?? []) {
         const mapped = mapApiItem(item)
         if (mapped) all.push(mapped)
       }
       offset += PAGE_LIMIT
       if (!page.items?.length || offset >= (page.total ?? 0)) break
+      await sleep(PAGE_DELAY_MS) // gentle pacing so a big playlist does not trip rate limits
     }
-    // Prefer the paged API result (full list + release years) whenever it
-    // returned anything; fall back to the embed preview only if it got nothing.
-    if (all.length > 0) return all
+    // Prefer the paged API result (full list + release years) whenever it got
+    // anything; fall back to the embed preview only if it returned nothing.
+    if (all.length > 0) {
+      return { tracks: all, total, complete: total != null && all.length >= total }
+    }
   }
 
   if (baseline.length === 0) {
     throw new Error('No tracks found. Is the playlist public?')
   }
-  return baseline
+  return { tracks: baseline, total: null, complete: false }
 }

@@ -131,14 +131,16 @@ describe('fetchAllPlaylistTracks', () => {
           items: [apiTrack('X1', '1984-01-01'), apiTrack('X2', '2001')],
         }),
       })
-    const tracks = await fetchAllPlaylistTracks({
+    const result = await fetchAllPlaylistTracks({
       playlistId: 'PL',
       fetchImpl: fetchImpl as unknown as typeof fetch,
     })
-    expect(tracks).toEqual([
+    expect(result.tracks).toEqual([
       { id: 'X1', uri: 'spotify:track:X1', title: 'Name X1', artist: 'Artist X1', year: 1984 },
       { id: 'X2', uri: 'spotify:track:X2', title: 'Name X2', artist: 'Artist X2', year: 2001 },
     ])
+    expect(result.total).toBe(2)
+    expect(result.complete).toBe(true)
     // second call is the API with offset=0 and a bearer token
     const [apiUrl, apiInit] = fetchImpl.mock.calls[1]
     expect(String(apiUrl)).toContain('/sp-api/v1/playlists/PL/tracks')
@@ -154,11 +156,14 @@ describe('fetchAllPlaylistTracks', () => {
       .mockResolvedValueOnce({ ok: true, text: async () => FIXTURE })
       .mockResolvedValueOnce({ ok: true, json: async () => page1 })
       .mockResolvedValueOnce({ ok: true, json: async () => page2 })
-    const tracks = await fetchAllPlaylistTracks({
+    const result = await fetchAllPlaylistTracks({
       playlistId: 'PL',
       fetchImpl: fetchImpl as unknown as typeof fetch,
+      sleep: () => Promise.resolve(),
     })
-    expect(tracks).toHaveLength(150)
+    expect(result.tracks).toHaveLength(150)
+    expect(result.total).toBe(150)
+    expect(result.complete).toBe(true)
     expect(String(fetchImpl.mock.calls[2][0])).toContain('offset=100')
   })
 
@@ -168,12 +173,14 @@ describe('fetchAllPlaylistTracks', () => {
       .mockResolvedValueOnce({ ok: true, text: async () => FIXTURE })
       // API rate-limited on the first page
       .mockResolvedValueOnce({ ok: false, status: 429 })
-    const tracks = await fetchAllPlaylistTracks({
+    const result = await fetchAllPlaylistTracks({
       playlistId: 'PL',
       fetchImpl: fetchImpl as unknown as typeof fetch,
     })
-    // baseline from the embed (2 tracks, no year)
-    expect(tracks).toHaveLength(2)
-    expect(tracks[0]).toMatchObject({ id: 'AAA111', year: null })
+    // baseline from the embed (2 tracks, no year), flagged incomplete
+    expect(result.tracks).toHaveLength(2)
+    expect(result.tracks[0]).toMatchObject({ id: 'AAA111', year: null })
+    expect(result.total).toBeNull()
+    expect(result.complete).toBe(false)
   })
 })

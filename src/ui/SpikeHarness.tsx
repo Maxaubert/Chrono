@@ -31,6 +31,7 @@ export default function SpikeHarness() {
   const [connected, setConnected] = useState(deps.mock)
   const [playlist, setPlaylist] = useState('')
   const [cards, setCards] = useState<Card[]>([])
+  const [importNote, setImportNote] = useState<string | null>(null)
   const [nowPlaying, setNowPlaying] = useState<SpotifyTrack | null>(null)
   const [revealed, setRevealed] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -108,20 +109,32 @@ export default function SpikeHarness() {
 
   async function importPlaylist() {
     setError(null)
+    setImportNote(null)
     const id = parsePlaylistId(playlist)
     if (!id) return setError('Could not parse a playlist id from that input.')
     try {
       // Read tracks via the public embed page + its anonymous token (the Web
       // API playlist endpoint is blocked for development-mode apps). Pages
       // through all tracks. Public playlists only.
-      const tracks = await fetchAllPlaylistTracks({ playlistId: id })
+      const result = await fetchAllPlaylistTracks({ playlistId: id })
       const withQr = await Promise.all(
-        tracks.map(async (t) => ({
+        result.tracks.map(async (t) => ({
           ...t,
           qr: await renderQrDataUrl(encodeTrackToken(t.id)),
         })),
       )
       setCards(withQr)
+      if (result.complete) {
+        setImportNote(null)
+      } else if (result.total != null) {
+        setImportNote(
+          `Loaded ${result.tracks.length} of ${result.total}. Spotify rate-limited the rest; click Import again to fetch more.`,
+        )
+      } else {
+        setImportNote(
+          `Loaded ${result.tracks.length} (preview only). Could not page the full list, likely a Spotify rate limit. Wait a minute and Import again.`,
+        )
+      }
     } catch (e) {
       setError(String(e))
     }
@@ -203,9 +216,14 @@ export default function SpikeHarness() {
 
       {cards.length > 0 && (
         <section className="mt-6">
-          <p className="mb-3 text-sm font-medium" data-testid="card-count">
+          <p className="text-sm font-medium" data-testid="card-count">
             Imported {cards.length} cards
           </p>
+          {importNote && (
+            <p className="mb-3 text-sm text-amber-600" data-testid="import-note">
+              {importNote}
+            </p>
+          )}
           <div className="flex items-center gap-3">
             {!scanning ? (
               <button
