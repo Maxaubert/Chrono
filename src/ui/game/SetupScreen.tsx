@@ -1,6 +1,6 @@
 // src/ui/game/SetupScreen.tsx
 import { useState } from 'react'
-import { parsePlaylistId, type SpotifyTrack } from '@/spotify'
+import { parsePlaylistId, type MyPlaylist, type SpotifyTrack } from '@/spotify'
 import type { SpotifySession } from './useSpotifySession'
 
 export interface SetupResult {
@@ -21,6 +21,7 @@ export default function SetupScreen({
   const [target, setTarget] = useState(10)
   const [playlist, setPlaylist] = useState('')
   const [tracks, setTracks] = useState<SpotifyTrack[]>([])
+  const [myPlaylists, setMyPlaylists] = useState<MyPlaylist[]>([])
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState<string | null>(null)
 
@@ -33,17 +34,30 @@ export default function SetupScreen({
     })
   }
 
-  async function importPlaylist() {
+  async function importById(id: string) {
     setErr(null)
     setBusy(true)
     try {
-      const id = session.mock ? 'mock' : parsePlaylistId(playlist)
-      if (!id) throw new Error('Could not read a playlist id from that link.')
       setTracks(await session.importPlaylistId(id))
     } catch (e) {
       setErr(String(e))
     } finally {
       setBusy(false)
+    }
+  }
+
+  async function importFromLink() {
+    const id = session.mock ? 'mock' : parsePlaylistId(playlist)
+    if (!id) return setErr('Could not read a playlist id from that link.')
+    await importById(id)
+  }
+
+  async function showMyPlaylists() {
+    setErr(null)
+    try {
+      setMyPlaylists(await session.loadMyPlaylists())
+    } catch (e) {
+      setErr(String(e))
     }
   }
 
@@ -138,7 +152,7 @@ export default function SetupScreen({
         cards
       </section>
 
-      <section className="mt-4 flex gap-2">
+      <section className="mt-4 flex flex-wrap gap-2">
         {!session.mock && (
           <input
             className="flex-1 rounded border px-2 py-1"
@@ -150,15 +164,47 @@ export default function SetupScreen({
         <button
           data-testid="import"
           className="rounded bg-neutral-800 px-3 py-2 text-white"
-          onClick={importPlaylist}
+          onClick={importFromLink}
           disabled={busy}
         >
-          {busy ? 'Importing...' : 'Import playlist'}
+          {busy ? 'Importing...' : 'Import link'}
         </button>
+        {!session.mock && (
+          <button
+            data-testid="show-my-playlists"
+            className="rounded bg-emerald-700 px-3 py-2 text-sm text-white"
+            onClick={showMyPlaylists}
+          >
+            Show my playlists
+          </button>
+        )}
         {tracks.length > 0 && (
           <span className="self-center text-sm">{tracks.length} songs</span>
         )}
       </section>
+
+      {myPlaylists.length > 0 && (
+        <ul className="mt-3 max-h-64 divide-y overflow-auto rounded border">
+          {myPlaylists.map((p) => (
+            <li
+              key={p.id}
+              className="flex items-center justify-between gap-3 px-3 py-2"
+            >
+              <span className="truncate text-sm">
+                {p.name}{' '}
+                <span className="text-neutral-400">(by {p.ownerName})</span>
+              </span>
+              <button
+                className="shrink-0 rounded bg-neutral-800 px-3 py-1 text-xs text-white"
+                disabled={busy}
+                onClick={() => importById(p.id)}
+              >
+                Use this
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <button
         data-testid="start-game"
