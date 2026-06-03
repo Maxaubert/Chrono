@@ -86,6 +86,7 @@ export function placeCard(state: GameState, slotIndex: number): GameState {
   }
 }
 
+/** Player with the most cards. Ties resolve to the earliest player in turn order. */
 function leaderId(players: Player[]): string {
   return players.reduce((best, p) =>
     p.timeline.length > best.timeline.length ? p : best,

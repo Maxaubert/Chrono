@@ -113,6 +113,15 @@ describe('advanceTurn', () => {
     expect(next.winnerId).toBe('p1')
   })
 
+  it('breaks a deck-exhaustion tie in favour of the earliest player', () => {
+    // Both players still have only their anchor (1 card each): a tie.
+    const s = twoPlayers()
+    const placedWrong = placeCard({ ...s, config: { targetCards: 10 } }, 0) // Anna places wrong, still 1 card
+    const next = advanceTurn(placedWrong, null)
+    expect(next.status).toBe('won')
+    expect(next.winnerId).toBe('p1')
+  })
+
   it('is a no-op when not in the revealed phase', () => {
     const s = twoPlayers()
     expect(advanceTurn(s, drawn('d2', 1995))).toBe(s)
