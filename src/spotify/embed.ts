@@ -1,3 +1,4 @@
+import { parseYear } from './client'
 import type { SpotifyTrack } from './types'
 
 /**
@@ -71,4 +72,94 @@ export async function fetchPlaylistTracksViaEmbed(args: {
     throw new Error('No tracks found. Is the playlist public?')
   }
   return tracks
+}
+
+const API_PROXY_BASE = '/sp-api'
+const PAGE_LIMIT = 100
+const TRACK_FIELDS =
+  'total,items(track(id,uri,name,artists(name),album(release_date)))'
+
+/** Pull the anonymous web access token the embed page ships in its JSON. This
+ * token belongs to Spotify's own web client, not our development-mode app, so
+ * it is not subject to the 403 block on the playlist-items Web API endpoint. */
+export function parseEmbedAccessToken(html: string): string | null {
+  const m = html.match(/"accessToken":"([^"]+)"/)
+  return m ? m[1] : null
+}
+
+interface ApiTracksPage {
+  total: number
+  items: {
+    track: {
+      id: string
+      uri: string
+      name: string
+      artists: { name: string }[]
+      album: { release_date: string }
+    } | null
+  }[]
+}
+
+function mapApiItem(item: ApiTracksPage['items'][number]): SpotifyTrack | null {
+  const t = item.track
+  if (!t || !t.id) return null
+  return {
+    id: t.id,
+    uri: t.uri,
+    title: t.name,
+    artist: t.artists.map((a) => a.name).join(', '),
+    year: parseYear(t.album?.release_date ?? ''),
+  }
+}
+
+/**
+ * Fetch ALL of a public playlist's tracks: grab the anonymous token from the
+ * embed page, then page through the tracks endpoint (offset/limit) with it.
+ * Falls back to the embed's first-page preview if the paged API is unavailable
+ * (e.g. rate-limited), so an import always yields something for a public list.
+ */
+export async function fetchAllPlaylistTracks(args: {
+  playlistId: string
+  fetchImpl?: typeof fetch
+  embedBase?: string
+  apiBase?: string
+}): Promise<SpotifyTrack[]> {
+  const f = args.fetchImpl ?? fetch
+  const embedBase = args.embedBase ?? EMBED_PROXY_BASE
+  const apiBase = args.apiBase ?? API_PROXY_BASE
+
+  const embedRes = await f(`${embedBase}/playlist/${args.playlistId}`)
+  if (!embedRes.ok) {
+    throw new Error(`Playlist embed fetch failed: ${embedRes.status}`)
+  }
+  const html = await embedRes.text()
+  const baseline = parseEmbedTracks(html) // up to 100, no year, used as fallback
+  const token = parseEmbedAccessToken(html)
+
+  if (token) {
+    const all: SpotifyTrack[] = []
+    let offset = 0
+    while (true) {
+      const url =
+        `${apiBase}/v1/playlists/${args.playlistId}/tracks` +
+        `?offset=${offset}&limit=${PAGE_LIMIT}&fields=${encodeURIComponent(TRACK_FIELDS)}`
+      const res = await f(url, { headers: { Authorization: `Bearer ${token}` } })
+      if (!res.ok) break // rate-limited or unavailable: stop and use what we have
+      const page = (await res.json()) as ApiTracksPage
+      for (const item of page.items ?? []) {
+        const mapped = mapApiItem(item)
+        if (mapped) all.push(mapped)
+      }
+      offset += PAGE_LIMIT
+      if (!page.items?.length || offset >= (page.total ?? 0)) break
+    }
+    // Prefer the paged API result (full list + release years) whenever it
+    // returned anything; fall back to the embed preview only if it got nothing.
+    if (all.length > 0) return all
+  }
+
+  if (baseline.length === 0) {
+    throw new Error('No tracks found. Is the playlist public?')
+  }
+  return baseline
 }

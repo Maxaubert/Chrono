@@ -21,6 +21,14 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/sp-embed/, '/embed'),
       },
+      // Proxy the Spotify Web API too, so the browser can page a playlist's
+      // tracks using the anonymous token scraped from the embed page (the token
+      // is not tied to our development-mode app, so it sidesteps the 403 block).
+      '/sp-api': {
+        target: 'https://api.spotify.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sp-api/, ''),
+      },
     },
   },
   resolve: {

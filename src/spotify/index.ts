@@ -16,5 +16,10 @@ export {
   takeVerifier,
 } from './auth'
 export { parsePlaylistId, parseYear, fetchPlaylistTracks } from './client'
-export { parseEmbedTracks, fetchPlaylistTracksViaEmbed } from './embed'
+export {
+  parseEmbedTracks,
+  parseEmbedAccessToken,
+  fetchPlaylistTracksViaEmbed,
+  fetchAllPlaylistTracks,
+} from './embed'
 export { SpotifyProvider } from './provider'
