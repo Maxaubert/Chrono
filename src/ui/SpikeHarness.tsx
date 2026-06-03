@@ -4,7 +4,7 @@ import {
   buildAuthorizeUrl,
   deriveChallenge,
   exchangeCodeForTokens,
-  fetchPlaylistTracks,
+  fetchPlaylistTracksViaEmbed,
   generateVerifier,
   getSpotifyConfig,
   loadTokens,
@@ -110,13 +110,10 @@ export default function SpikeHarness() {
     setError(null)
     const id = parsePlaylistId(playlist)
     if (!id) return setError('Could not parse a playlist id from that input.')
-    const token = loadTokens()?.accessToken
-    if (!token) return setError('Log in first.')
     try {
-      const tracks = await fetchPlaylistTracks({
-        playlistId: id,
-        accessToken: token,
-      })
+      // Read tracks from the public embed page (the Web API playlist endpoint
+      // is blocked for development-mode apps). Public playlists only.
+      const tracks = await fetchPlaylistTracksViaEmbed({ playlistId: id })
       const withQr = await Promise.all(
         tracks.map(async (t) => ({
           ...t,

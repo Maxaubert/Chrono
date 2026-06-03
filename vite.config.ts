@@ -12,6 +12,16 @@ export default defineConfig({
   server: {
     host: '127.0.0.1',
     port: 5173,
+    // Proxy public Spotify embed pages so the browser can read a playlist's
+    // tracks without a CORS error (the Web API playlist endpoint is blocked for
+    // development-mode apps). A real backend replaces this in a later phase.
+    proxy: {
+      '/sp-embed': {
+        target: 'https://open.spotify.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/sp-embed/, '/embed'),
+      },
+    },
   },
   resolve: {
     alias: {
