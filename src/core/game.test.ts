@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { startGame, placeCard, type DrawnCard } from './game'
+import { startGame, placeCard, advanceTurn, type DrawnCard } from './game'
 
 const drawn = (id: string, year: number): DrawnCard => ({
   card: { id, year },
@@ -59,5 +59,54 @@ describe('placeCard', () => {
   it('is a no-op when not in the listening phase', () => {
     const revealed = placeCard(base(), 1)
     expect(placeCard(revealed, 0)).toBe(revealed)
+  })
+})
+
+describe('advanceTurn', () => {
+  const twoPlayers = () =>
+    startGame(
+      { targetCards: 2 },
+      [
+        { id: 'p1', name: 'Anna' },
+        { id: 'p2', name: 'Ben' },
+      ],
+      [
+        { id: 'a1', year: 1980 },
+        { id: 'a2', year: 1990 },
+      ],
+      drawn('d1', 1985),
+    )
+
+  it('rotates to the next player and sets the next drawn card', () => {
+    const placed = placeCard(twoPlayers(), 1) // Anna keeps -> timeline length 2
+    // targetCards is 2, so Anna has actually already won; use a higher target here
+    const hiTarget = { ...placed, config: { targetCards: 10 } }
+    const next = advanceTurn(hiTarget, drawn('d2', 1995))
+    expect(next.currentPlayerIndex).toBe(1)
+    expect(next.phase).toBe('listening')
+    expect(next.drawn).toEqual(drawn('d2', 1995))
+    expect(next.lastOutcome).toBeUndefined()
+  })
+
+  it('declares the current player the winner at the target', () => {
+    const placed = placeCard(twoPlayers(), 1) // Anna reaches 2 cards, target is 2
+    const next = advanceTurn(placed, drawn('d2', 1995))
+    expect(next.status).toBe('won')
+    expect(next.winnerId).toBe('p1')
+  })
+
+  it('ends the game with the leader when the deck is exhausted', () => {
+    const placed = placeCard(
+      { ...twoPlayers(), config: { targetCards: 10 } },
+      1,
+    ) // Anna has 2, Ben has 1
+    const next = advanceTurn(placed, null)
+    expect(next.status).toBe('won')
+    expect(next.winnerId).toBe('p1')
+  })
+
+  it('is a no-op when not in the revealed phase', () => {
+    const s = twoPlayers()
+    expect(advanceTurn(s, drawn('d2', 1995))).toBe(s)
   })
 })
