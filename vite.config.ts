@@ -2,10 +2,11 @@ import { defineConfig } from 'vitest/config'
 import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { spotifyScraperPlugin } from './vite-plugin-spotify-scraper'
 
 // https://vite.dev/config/ and https://vitest.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), spotifyScraperPlugin()],
   // Bind to 127.0.0.1 (not localhost) so the dev origin matches the Spotify
   // redirect URI exactly; on Windows, localhost can resolve to IPv6 ::1 only,
   // leaving http://127.0.0.1:5173 refusing connections.

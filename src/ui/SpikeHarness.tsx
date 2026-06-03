@@ -6,8 +6,8 @@ import {
   deriveChallenge,
   exchangeCodeForTokens,
   fetchMyPlaylists,
-  fetchPlaylistTracks,
   fetchPlaylistTracksViaEmbed,
+  fetchPlaylistTracksViaServer,
   generateVerifier,
   getSpotifyConfig,
   loadTokens,
@@ -140,40 +140,31 @@ export default function SpikeHarness() {
 
   async function importById(id: string, label?: string) {
     setError(null)
-    setImportNote(null)
+    setImportNote(`Importing${label ? ` "${label}"` : ''}...`)
 
-    // Primary: the official Web API with your own token. Pages past 100 and
-    // works for a playlist you own (a strangers' playlist returns no tracks).
-    const token = loadTokens()?.accessToken
-    let officialError: string | null = null
-    if (token) {
-      try {
-        const tracks = await fetchPlaylistTracks({
-          playlistId: id,
-          accessToken: token,
-        })
-        if (tracks.length > 0) {
-          await renderCards(tracks)
-          setImportNote(
-            `Imported ${tracks.length} tracks${label ? ` from "${label}"` : ''} via your Spotify account.`,
-          )
-          return
-        }
-      } catch (e) {
-        officialError = String(e)
+    // Primary: our dev-server scraper (web-player GraphQL) pages the FULL list.
+    let serverError: string | null = null
+    try {
+      const { tracks, total } = await fetchPlaylistTracksViaServer({
+        playlistId: id,
+      })
+      if (tracks.length > 0) {
+        await renderCards(tracks)
+        setImportNote(
+          `Imported ${tracks.length} of ${total} tracks${label ? ` from "${label}"` : ''}.`,
+        )
+        return
       }
+    } catch (e) {
+      serverError = String(e)
     }
 
-    // Fallback: the public embed page (up to 100, no login).
+    // Fallback: the public embed page (up to 100, no server).
     try {
       const tracks = await fetchPlaylistTracksViaEmbed({ playlistId: id })
       await renderCards(tracks)
-      const why = !token
-        ? 'not logged in'
-        : (officialError ??
-          'your account returned no tracks (not your playlist?)')
       setImportNote(
-        `Loaded ${tracks.length} via the public preview (max 100). Your-account path: ${why}`,
+        `Loaded ${tracks.length} via the public preview (max 100).${serverError ? ` Full import failed: ${serverError}` : ''}`,
       )
     } catch (e) {
       setError(String(e))

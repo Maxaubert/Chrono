@@ -66,6 +66,21 @@ export async function fetchPlaylistTracks(args: {
   return out
 }
 
+/** Read a full public playlist via our dev-server scraper (web-player GraphQL).
+ * Works for any public playlist, paging past 100, without Extended Quota. */
+export async function fetchPlaylistTracksViaServer(args: {
+  playlistId: string
+  fetchImpl?: typeof fetch
+}): Promise<{ tracks: SpotifyTrack[]; total: number }> {
+  const f = args.fetchImpl ?? fetch
+  const res = await f(`/api/playlist-tracks?id=${args.playlistId}`)
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`Server import failed: ${res.status} ${body}`.trim())
+  }
+  return (await res.json()) as { tracks: SpotifyTrack[]; total: number }
+}
+
 /** A playlist in the logged-in user's library (owned or followed). */
 export interface MyPlaylist {
   id: string

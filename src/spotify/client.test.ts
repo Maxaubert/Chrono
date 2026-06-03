@@ -88,6 +88,25 @@ describe('fetchPlaylistTracks', () => {
     expect(firstInit.headers.Authorization).toBe('Bearer AT')
   })
 
+  it('fetches scraped tracks from the dev-server endpoint', async () => {
+    const { fetchPlaylistTracksViaServer } = await import('./client')
+    const payload = {
+      total: 512,
+      tracks: [
+        { id: 'T1', uri: 'spotify:track:T1', title: 'A', artist: 'X', year: null },
+      ],
+    }
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => payload })
+    const result = await fetchPlaylistTracksViaServer({
+      playlistId: 'PL',
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+    })
+    expect(result).toEqual(payload)
+    expect(String(fetchImpl.mock.calls[0][0])).toBe('/api/playlist-tracks?id=PL')
+  })
+
   it("lists the user's playlists across pages", async () => {
     const { fetchMyPlaylists } = await import('./client')
     const page1 = {

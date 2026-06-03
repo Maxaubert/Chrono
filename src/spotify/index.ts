@@ -19,6 +19,7 @@ export {
   parsePlaylistId,
   parseYear,
   fetchPlaylistTracks,
+  fetchPlaylistTracksViaServer,
   fetchMyPlaylists,
 } from './client'
 export type { MyPlaylist } from './client'
