@@ -180,7 +180,12 @@ export default function SpikeHarness() {
   async function handleDecode(text: string) {
     const id = decodeTrackToken(text)
     if (!id) return
+    if (!connected) {
+      setError('Connect the player first (click "Connect player").')
+      return
+    }
     const card = cards.find((c) => c.id === id) ?? null
+    setError(null)
     setRevealed(false)
     setNowPlaying(card)
     try {
@@ -241,6 +246,41 @@ export default function SpikeHarness() {
           </button>
         )}
       </section>
+
+      {nowPlaying && (
+        <section
+          className="sticky top-0 z-10 mt-6 rounded-lg border bg-white p-5 dark:bg-neutral-900"
+          data-testid="now-playing"
+        >
+          <p className="text-lg font-semibold">Now playing (hidden)</p>
+          <div className="mt-3 flex gap-2">
+            <button
+              className="rounded bg-neutral-200 px-3 py-1"
+              onClick={() => deps.provider.pause()}
+            >
+              Pause
+            </button>
+            <button
+              className="rounded bg-neutral-200 px-3 py-1"
+              onClick={() => deps.provider.stop()}
+            >
+              Stop
+            </button>
+            <button
+              className="rounded bg-neutral-200 px-3 py-1"
+              onClick={() => setRevealed(true)}
+            >
+              Reveal
+            </button>
+          </div>
+          {revealed && (
+            <p className="mt-3 text-sm" data-testid="reveal">
+              {nowPlaying.title}, {nowPlaying.artist} (
+              {nowPlaying.year ?? 'unknown'})
+            </p>
+          )}
+        </section>
+      )}
 
       {loggedIn && !deps.mock && (
         <section className="mt-6 flex gap-2">
@@ -361,41 +401,6 @@ export default function SpikeHarness() {
               </li>
             ))}
           </ul>
-        </section>
-      )}
-
-      {nowPlaying && (
-        <section
-          className="mt-8 rounded-lg border p-5"
-          data-testid="now-playing"
-        >
-          <p className="text-lg font-semibold">Now playing (hidden)</p>
-          <div className="mt-3 flex gap-2">
-            <button
-              className="rounded bg-neutral-200 px-3 py-1"
-              onClick={() => deps.provider.pause()}
-            >
-              Pause
-            </button>
-            <button
-              className="rounded bg-neutral-200 px-3 py-1"
-              onClick={() => deps.provider.stop()}
-            >
-              Stop
-            </button>
-            <button
-              className="rounded bg-neutral-200 px-3 py-1"
-              onClick={() => setRevealed(true)}
-            >
-              Reveal
-            </button>
-          </div>
-          {revealed && (
-            <p className="mt-3 text-sm" data-testid="reveal">
-              {nowPlaying.title}, {nowPlaying.artist} (
-              {nowPlaying.year ?? 'unknown'})
-            </p>
-          )}
         </section>
       )}
     </main>
