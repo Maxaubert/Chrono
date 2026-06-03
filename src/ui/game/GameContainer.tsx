@@ -55,6 +55,15 @@ export default function GameContainer() {
   }
 
   async function next() {
+    if (!state) return
+    // If this turn just won the game, stop the music and end here, do not draw
+    // or play another song.
+    const player = state.players[state.currentPlayerIndex]
+    if (player.timeline.length >= state.config.targetCards) {
+      session.provider.stop().catch(() => {})
+      dispatch({ type: 'advance', nextDrawn: null })
+      return
+    }
     const nextDrawn = await drawNext()
     dispatch({ type: 'advance', nextDrawn })
     if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
