@@ -118,6 +118,8 @@ export interface PlaylistImport {
   total: number | null
   /** True when every track was fetched (not cut short by a rate limit). */
   complete: boolean
+  /** HTTP status of the last paged-API response (e.g. 429), or null if no token / not called. */
+  apiStatus: number | null
 }
 
 const PAGE_DELAY_MS = 500
@@ -149,6 +151,7 @@ export async function fetchAllPlaylistTracks(args: {
   const html = await embedRes.text()
   const baseline = parseEmbedTracks(html) // up to 100, no year, used as fallback
   const token = parseEmbedAccessToken(html)
+  let apiStatus: number | null = null
 
   if (token) {
     const headers = { Authorization: `Bearer ${token}` }
@@ -175,6 +178,7 @@ export async function fetchAllPlaylistTracks(args: {
     let offset = 0
     while (true) {
       const res = await fetchPage(offset)
+      if (res) apiStatus = res.status
       if (!res || !res.ok) break // still rate-limited after retries, or unavailable
       const page = (await res.json()) as ApiTracksPage
       total = page.total ?? total
@@ -193,6 +197,7 @@ export async function fetchAllPlaylistTracks(args: {
         tracks: all,
         total,
         complete: total != null && all.length >= total,
+        apiStatus,
       }
     }
   }
@@ -200,5 +205,5 @@ export async function fetchAllPlaylistTracks(args: {
   if (baseline.length === 0) {
     throw new Error('No tracks found. Is the playlist public?')
   }
-  return { tracks: baseline, total: null, complete: false }
+  return { tracks: baseline, total: null, complete: false, apiStatus }
 }

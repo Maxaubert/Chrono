@@ -128,11 +128,17 @@ export default function SpikeHarness() {
         setImportNote(null)
       } else if (result.total != null) {
         setImportNote(
-          `Loaded ${result.tracks.length} of ${result.total}. Spotify rate-limited the rest; click Import again to fetch more.`,
+          `Loaded ${result.tracks.length} of ${result.total}. Paging cut short (Spotify API ${result.apiStatus}); click Import again to fetch more.`,
         )
       } else {
+        const reason =
+          result.apiStatus === 429
+            ? 'rate-limited (429); this IP is throttled, wait and retry'
+            : result.apiStatus
+              ? `the tracks API returned ${result.apiStatus}, so the token workaround is not paging`
+              : 'no Spotify token was found on the embed page'
         setImportNote(
-          `Loaded ${result.tracks.length} (preview only). Could not page the full list, likely a Spotify rate limit. Wait a minute and Import again.`,
+          `Loaded ${result.tracks.length} (preview only): ${reason}.`,
         )
       }
     } catch (e) {
