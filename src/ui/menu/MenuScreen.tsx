@@ -1,4 +1,4 @@
-import './menu.css'
+import './menu-base.css'
 import { CardFront, SAMPLE_DECK } from './SongCard'
 
 /**

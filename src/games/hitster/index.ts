@@ -1,5 +1,6 @@
 import type { GameModule } from '../types'
 import { FanCard } from './HitsterCard'
+import './skin.css'
 
 /**
  * Hitster (music) game module. Retro-scifi vibe. Phase 1 adds Spotify playlist
