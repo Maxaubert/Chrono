@@ -206,13 +206,15 @@
   background-repeat: no-repeat;
   background-size: 250% 250%;
   background-position: -120% -120%;
+  /* warm-white so it reads as a gloss of light sweeping over the artwork
+     (a gold tint would vanish against the gold-duotone image) */
   background-image: linear-gradient(
     135deg,
-    transparent 32%,
-    color-mix(in srgb, var(--accent) 14%, transparent) 44%,
-    rgba(205, 163, 73, 0.14) 50%,
-    color-mix(in srgb, var(--accent) 14%, transparent) 56%,
-    transparent 68%
+    transparent 30%,
+    rgba(255, 248, 230, 0.05) 44%,
+    rgba(255, 250, 236, 0.34) 50%,
+    rgba(255, 248, 230, 0.05) 56%,
+    transparent 70%
   );
   /* linear = constant-speed glide; 30s = slow, with a long calm rest */
   animation: historySheen 30s linear infinite;
