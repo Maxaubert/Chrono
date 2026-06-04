@@ -1,0 +1,714 @@
+/* Front-page (main menu) styling. Ultra Violet palette, cyberpunk/HUD.
+   All rules scoped under .menu-screen and keyframes are menu-prefixed so the
+   generic class names (.card, .btn, .title) never leak into other screens. */
+
+.menu-screen {
+  --bg: #08060f;
+  --panel: #0e0a1a;
+  --accent: #9a6bff;
+  --accent2: #6b3fd6;
+  --glow: rgba(154, 107, 255, 0.17);
+  --ink: #0f0820;
+  --ok: #46e08a;
+  --no: #ff4d6a;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(820px 520px at 30% 40%, var(--glow), transparent 60%),
+    var(--bg);
+  color: var(--accent);
+  font-family: 'Segoe UI', Verdana, system-ui, sans-serif;
+}
+
+/* ---------- decorative card ---------- */
+.menu-screen .card {
+  position: relative;
+  width: 240px;
+  height: 344px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #160e26, #0c0814);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 22px 46px -14px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 30px -10px var(--glow);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.menu-screen .foil {
+  position: absolute;
+  top: -40%;
+  left: 0;
+  width: 46%;
+  height: 180%;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  filter: blur(7px);
+  transform: rotate(20deg) translateX(-170%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 55%, #fff) 50%,
+    transparent
+  );
+  animation: menuFoil 5.5s ease-in-out infinite;
+}
+@keyframes menuFoil {
+  0% {
+    transform: rotate(20deg) translateX(-170%);
+  }
+  24% {
+    transform: rotate(20deg) translateX(370%);
+  }
+  100% {
+    transform: rotate(20deg) translateX(370%);
+  }
+}
+
+.menu-screen .idx {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--accent);
+  z-index: 3;
+}
+.menu-screen .idx i {
+  font-style: normal;
+  font-size: 13px;
+  margin-top: 3px;
+  color: var(--accent2);
+}
+.menu-screen .idx.tl {
+  top: 12px;
+  left: 13px;
+  font-size: 21px;
+}
+.menu-screen .idx.br {
+  bottom: 12px;
+  right: 13px;
+  font-size: 21px;
+  transform: rotate(180deg);
+}
+
+.menu-screen .front .art {
+  margin: 30px auto 0;
+  width: 196px;
+  height: 196px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 6px 18px -6px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+.menu-screen .art-disc {
+  position: absolute;
+  right: -44px;
+  bottom: -44px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.35) 0 2px,
+    transparent 2px 5px
+  );
+  opacity: 0.5;
+}
+.menu-screen .art-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35),
+    transparent 45%
+  );
+}
+.menu-screen .art-bars {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 34px;
+}
+.menu-screen .art-bars i {
+  width: 5px;
+  height: 30%;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1px;
+  animation: menuBars 1s ease-in-out infinite alternate;
+}
+@keyframes menuBars {
+  from {
+    height: 18%;
+  }
+  to {
+    height: 95%;
+  }
+}
+
+.menu-screen .info {
+  margin-top: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.menu-screen .title {
+  font-size: 17px;
+  font-weight: 900;
+  color: #f3eefb;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+}
+.menu-screen .artist {
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.menu-screen .brand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 13px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 5px;
+  font-weight: 900;
+  color: var(--accent2);
+  opacity: 0.7;
+  transform: skewX(-7deg);
+}
+
+.menu-screen .front.ok {
+  border-color: var(--ok);
+  box-shadow:
+    0 22px 46px -14px rgba(0, 0, 0, 0.8),
+    0 0 26px -4px var(--ok);
+}
+.menu-screen .front.no {
+  border-color: var(--no);
+  box-shadow:
+    0 22px 46px -14px rgba(0, 0, 0, 0.8),
+    0 0 26px -4px var(--no);
+  filter: saturate(0.85);
+}
+.menu-screen .badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 4;
+}
+.menu-screen .badge.ok {
+  background: var(--ok);
+  color: #04210f;
+}
+.menu-screen .badge.no {
+  background: var(--no);
+  color: #2a040c;
+}
+
+/* card back (mystery / now playing) */
+.menu-screen .back {
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: radial-gradient(circle at 50% 40%, #1a1030, #0a0714 70%);
+}
+.menu-screen .back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(var(--accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 72%);
+}
+.menu-screen .back-brand {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 6px;
+  font-weight: 900;
+  color: var(--accent);
+  transform: skewX(-7deg);
+  text-shadow: 0 0 16px var(--glow);
+}
+.menu-screen .vinyl {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  background: repeating-radial-gradient(circle, #000 0 2px, #1c1430 2px 4px);
+  box-shadow:
+    0 0 0 2px var(--accent2),
+    0 10px 26px -8px rgba(0, 0, 0, 0.8);
+  animation: menuSpin 4s linear infinite;
+}
+.menu-screen .vinyl-label {
+  position: absolute;
+  inset: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent), var(--accent2));
+  box-shadow: 0 0 0 3px #0a0714;
+}
+@keyframes menuSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.menu-screen .eq {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+}
+.menu-screen .eq i {
+  width: 5px;
+  height: 40%;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--glow);
+  animation: menuBars 0.9s ease-in-out infinite alternate;
+}
+.menu-screen .prompt {
+  position: relative;
+  z-index: 2;
+  font-size: 12px;
+  letter-spacing: 4px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.menu-screen .qmark {
+  position: absolute;
+  right: 16px;
+  bottom: 10px;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.18;
+  z-index: 1;
+}
+
+/* ---------- page framing ---------- */
+.menu-screen .slash {
+  position: absolute;
+  pointer-events: none;
+}
+.menu-screen .s-tl {
+  top: -140px;
+  left: -160px;
+  width: 520px;
+  height: 340px;
+  background: var(--accent);
+  opacity: 0.16;
+  transform: rotate(-24deg);
+}
+.menu-screen .s-br {
+  bottom: -150px;
+  right: -150px;
+  width: 560px;
+  height: 360px;
+  background: var(--accent);
+  opacity: 0.13;
+  transform: rotate(-24deg);
+}
+.menu-screen .corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--accent);
+  opacity: 0.5;
+}
+.menu-screen .corner.tl {
+  top: 24px;
+  left: 24px;
+  border-right: none;
+  border-bottom: none;
+}
+.menu-screen .corner.br {
+  bottom: 24px;
+  right: 24px;
+  border-left: none;
+  border-top: none;
+}
+
+.menu-screen .split {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+/* left: decorative fan */
+.menu-screen .left {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.menu-screen .hand {
+  position: relative;
+  width: 520px;
+  height: 430px;
+  transform: scale(0.74);
+}
+.menu-screen .fan-slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -172px 0 0 -120px;
+  transform-origin: 50% 135%;
+  pointer-events: none;
+  opacity: 0;
+  animation: menuDeal 0.7s cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+.menu-screen .c1 {
+  --rot: -22deg;
+  --ty: 14px;
+  animation-delay: 0.15s;
+}
+.menu-screen .c2 {
+  --rot: -8deg;
+  --ty: -8px;
+  animation-delay: 0.3s;
+}
+.menu-screen .c3 {
+  --rot: 8deg;
+  --ty: -8px;
+  animation-delay: 0.45s;
+}
+.menu-screen .c4 {
+  --rot: 22deg;
+  --ty: 14px;
+  animation-delay: 0.6s;
+}
+.menu-screen .c1 .foil {
+  animation-delay: 0s;
+}
+.menu-screen .c2 .foil {
+  animation-delay: 1.3s;
+}
+.menu-screen .c3 .foil {
+  animation-delay: 2.6s;
+}
+.menu-screen .c4 .foil {
+  animation-delay: 3.9s;
+}
+@keyframes menuDeal {
+  from {
+    opacity: 0;
+    transform: rotate(0) translateY(80px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--rot)) translateY(var(--ty));
+  }
+}
+
+/* right: menu */
+.menu-screen .right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 8% 0 4%;
+}
+.menu-screen .kicker {
+  font-size: 12px;
+  letter-spacing: 6px;
+  font-weight: 800;
+  color: var(--accent2);
+}
+.menu-screen .tag {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--accent2);
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.menu-screen .logo {
+  position: relative;
+  font-size: clamp(48px, 7vw, 92px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: var(--accent);
+  transform: skewX(-7deg);
+  text-shadow:
+    0 0 30px var(--glow),
+    0 0 60px var(--glow);
+  margin: -2px 0;
+}
+.menu-screen .logo::before,
+.menu-screen .logo::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  mix-blend-mode: screen;
+}
+.menu-screen .logo::before {
+  color: #fff;
+  opacity: 0.45;
+  animation: menuGA 2.2s infinite;
+}
+.menu-screen .logo::after {
+  color: var(--accent2);
+  opacity: 0.75;
+  animation: menuGB 2.2s infinite;
+}
+@keyframes menuGA {
+  0%,
+  92%,
+  100% {
+    transform: translate(0, 0);
+  }
+  93% {
+    transform: translate(-3px, 1px);
+  }
+  97% {
+    transform: translate(2px, -1px);
+  }
+}
+@keyframes menuGB {
+  0%,
+  90%,
+  100% {
+    transform: translate(0, 0);
+  }
+  91% {
+    transform: translate(3px, -1px);
+  }
+  96% {
+    transform: translate(-2px, 1px);
+  }
+}
+.menu-screen .crt {
+  animation: menuCrt 6s infinite;
+}
+@keyframes menuCrt {
+  0% {
+    opacity: 0;
+    transform: skewX(-7deg) scaleY(0.02);
+    filter: brightness(3);
+  }
+  2% {
+    opacity: 1;
+    transform: skewX(-7deg) scaleY(1.15);
+    filter: brightness(2.4);
+  }
+  4% {
+    transform: skewX(-7deg) scaleY(1);
+    filter: brightness(1);
+  }
+  30% {
+    filter: brightness(1);
+    transform: skewX(-7deg) scaleY(1);
+  }
+  30.5% {
+    filter: brightness(2.4);
+    transform: skewX(-7deg) translateY(-2px);
+  }
+  31% {
+    filter: brightness(1);
+    transform: skewX(-7deg) translateY(0);
+  }
+  60% {
+    filter: brightness(1);
+    transform: skewX(-7deg) scaleY(1);
+  }
+  60.5% {
+    filter: brightness(2.6);
+    transform: skewX(-7deg) scaleY(1.04);
+  }
+  61% {
+    filter: brightness(1);
+    transform: skewX(-7deg) scaleY(1);
+  }
+  92% {
+    opacity: 1;
+    transform: skewX(-7deg) scaleY(1);
+    filter: brightness(1);
+  }
+  94% {
+    opacity: 1;
+    transform: skewX(-7deg) scaleY(1.2);
+    filter: brightness(3);
+  }
+  96% {
+    opacity: 1;
+    transform: skewX(-7deg) scaleY(0.02);
+    filter: brightness(4);
+  }
+  97% {
+    opacity: 0;
+    transform: skewX(-7deg) scaleY(0.02);
+  }
+  100% {
+    opacity: 0;
+    transform: skewX(-7deg) scaleY(0.02);
+  }
+}
+
+.menu-screen .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(420px, 90%);
+  margin-top: 6px;
+}
+.menu-screen .btn {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+  padding: 13px 18px;
+  text-align: left;
+  transition: 0.16s;
+  clip-path: polygon(
+    11px 0,
+    100% 0,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    0 100%,
+    0 11px
+  );
+}
+.menu-screen .btn .bt {
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.menu-screen .btn .bx {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent2);
+}
+.menu-screen .btn .bk {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+.menu-screen .btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: 0 0 26px -4px var(--accent);
+}
+.menu-screen .btn:hover:not(:disabled) .bx {
+  color: var(--ink);
+}
+.menu-screen .btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.menu-screen .btn.primary {
+  padding: 18px 22px;
+  align-items: center;
+  flex-direction: row;
+}
+.menu-screen .btn.primary .bt {
+  font-size: 26px;
+  letter-spacing: 6px;
+}
+
+.menu-screen .foot {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent2);
+  opacity: 0.7;
+}
+
+/* launch stagger */
+.menu-screen .el {
+  opacity: 0;
+  animation: menuRise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.menu-screen .d1 {
+  animation-delay: 0.1s;
+}
+.menu-screen .d2 {
+  animation-delay: 0.25s;
+}
+.menu-screen .d3 {
+  animation-delay: 0.45s;
+}
+.menu-screen .d4 {
+  animation-delay: 0.6s;
+}
+.menu-screen .d5 {
+  animation-delay: 0.72s;
+}
+.menu-screen .d6 {
+  animation-delay: 0.84s;
+}
+.menu-screen .d7 {
+  animation-delay: 0.96s;
+}
+.menu-screen .d8 {
+  animation-delay: 1.08s;
+}
+@keyframes menuRise {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.menu-screen .el.crt {
+  opacity: 1;
+  animation: menuCrt 6s infinite;
+  animation-delay: 0.25s;
+}
+
+@media (max-width: 820px) {
+  .menu-screen .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .menu-screen .left {
+    padding: 24px 0 6px;
+  }
+  .menu-screen .hand {
+    transform: scale(0.58);
+  }
+  .menu-screen .right {
+    padding: 10px 24px 40px;
+    text-align: left;
+  }
+}
