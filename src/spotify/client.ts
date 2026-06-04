@@ -99,6 +99,8 @@ export interface MyPlaylist {
   name: string
   ownerName: string
   trackCount: number
+  /** Cover image URL, or null if the playlist has no cover. */
+  image: string | null
 }
 
 interface RawPlaylist {
@@ -106,6 +108,7 @@ interface RawPlaylist {
   name: string
   owner: { display_name?: string }
   tracks: { total: number }
+  images?: { url: string }[] | null
 }
 
 /** List the logged-in user's playlists. Allowed in development mode, and a
@@ -135,6 +138,7 @@ export async function fetchMyPlaylists(args: {
         name: p.name,
         ownerName: p.owner?.display_name ?? '',
         trackCount: p.tracks?.total ?? 0,
+        image: p.images?.[0]?.url ?? null,
       })
     }
     url = page.next

@@ -295,8 +295,18 @@ export default function SetupScreen({
               <div className="su-pl-list">
                 {myPlaylists.map((p) => (
                   <div className="su-pl-row" key={p.id}>
+                    <span className="su-pl-cover">
+                      {p.image ? (
+                        <img src={p.image} alt="" loading="lazy" />
+                      ) : (
+                        <span className="su-pl-noart">&#9834;</span>
+                      )}
+                    </span>
                     <span className="su-pl-name">
-                      {p.name} <span className="su-pl-by">by {p.ownerName}</span>
+                      {p.name}
+                      <span className="su-pl-by">
+                        by {p.ownerName} &middot; {p.trackCount} songs
+                      </span>
                     </span>
                     <button
                       className="su-use"

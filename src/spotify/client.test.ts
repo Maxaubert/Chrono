@@ -93,7 +93,13 @@ describe('fetchPlaylistTracks', () => {
     const payload = {
       total: 512,
       tracks: [
-        { id: 'T1', uri: 'spotify:track:T1', title: 'A', artist: 'X', year: null },
+        {
+          id: 'T1',
+          uri: 'spotify:track:T1',
+          title: 'A',
+          artist: 'X',
+          year: null,
+        },
       ],
     }
     const fetchImpl = vi
@@ -104,7 +110,9 @@ describe('fetchPlaylistTracks', () => {
       fetchImpl: fetchImpl as unknown as typeof fetch,
     })
     expect(result).toEqual(payload)
-    expect(String(fetchImpl.mock.calls[0][0])).toBe('/api/playlist-tracks?id=PL')
+    expect(String(fetchImpl.mock.calls[0][0])).toBe(
+      '/api/playlist-tracks?id=PL',
+    )
   })
 
   it('fetches a track year from the dev-server endpoint', async () => {
@@ -129,6 +137,7 @@ describe('fetchPlaylistTracks', () => {
           name: 'Mine',
           owner: { display_name: 'me' },
           tracks: { total: 120 },
+          images: [{ url: 'https://img/p1.jpg' }],
         },
       ],
       next: 'https://api.spotify.com/v1/me/playlists?offset=50',
@@ -153,8 +162,14 @@ describe('fetchPlaylistTracks', () => {
       fetchImpl: fetchImpl as unknown as typeof fetch,
     })
     expect(pls).toEqual([
-      { id: 'P1', name: 'Mine', ownerName: 'me', trackCount: 120 },
-      { id: 'P2', name: 'Other', ownerName: 'me', trackCount: 5 },
+      {
+        id: 'P1',
+        name: 'Mine',
+        ownerName: 'me',
+        trackCount: 120,
+        image: 'https://img/p1.jpg',
+      },
+      { id: 'P2', name: 'Other', ownerName: 'me', trackCount: 5, image: null },
     ])
     expect(String(fetchImpl.mock.calls[0][0])).toContain('/me/playlists')
     expect(fetchImpl.mock.calls[0][1].headers.Authorization).toBe('Bearer AT')
