@@ -14,6 +14,7 @@ export const hitster: GameModule = {
   theme: {
     title: 'Hitster',
     tagline: 'Hear it. Place it. Hold the line.',
+    titleFont: "'Techno Race', 'Segoe UI', Verdana, sans-serif",
     palette: {
       bg: '#08060f',
       panel: '#0e0a1a',

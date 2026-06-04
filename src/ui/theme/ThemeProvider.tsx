@@ -22,6 +22,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     '--accent2': p.accent2,
     '--glow': p.glow,
     '--ink': p.ink,
+    '--title-font': game.theme.titleFont,
   } as CSSProperties
 
   return (

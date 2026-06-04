@@ -14,6 +14,7 @@ const stub: GameModule = {
   theme: {
     title: 'Stub',
     tagline: '',
+    titleFont: 'serif',
     skinClass: 'skin-stub',
     palette: {
       bg: '#000',

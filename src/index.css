@@ -1,3 +1,6 @@
+/* Techno Race (italic display) for the Hitster wordmark. Hosted on cdnfonts for
+   now; self-host the .woff under public/fonts for production + licence clarity. */
+@import url('https://fonts.cdnfonts.com/css/techno-race');
 @import 'tailwindcss';
 
 :root {

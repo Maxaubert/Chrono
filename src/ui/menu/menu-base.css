@@ -112,6 +112,7 @@
   position: relative;
   font-size: clamp(48px, 7vw, 92px);
   margin: -2px 0;
+  font-family: var(--title-font, inherit);
 }
 
 .menu-screen .menu {

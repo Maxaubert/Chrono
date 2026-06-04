@@ -15,6 +15,7 @@ export const history: GameModule = {
   theme: {
     title: 'History',
     tagline: 'When did it happen? Place it on the line.',
+    titleFont: "Georgia, 'Times New Roman', serif",
     palette: {
       bg: '#11140f',
       panel: '#1a1f16',

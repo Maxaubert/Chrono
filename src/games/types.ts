@@ -22,6 +22,8 @@ export interface GameTheme {
   title: string
   /** Short tagline under the title. */
   tagline: string
+  /** font-family for the wordmark (applied via the --title-font CSS variable). */
+  titleFont: string
   /** Palette written to CSS variables on the themed root. */
   palette: ThemePalette
   /** Root class that the game's skin CSS is scoped under (e.g. 'skin-hitster'). */

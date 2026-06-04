@@ -30,6 +30,7 @@
 .skin-hitster .menu-screen .logo {
   font-weight: 900;
   letter-spacing: 8px;
+  text-transform: uppercase;
   color: var(--accent);
   transform: skewX(-7deg);
   text-shadow:
