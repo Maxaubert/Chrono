@@ -1,60 +1,63 @@
-/* Covering wipe transition with a glitch-settle wordmark. Reads the theme vars
-   (var(--accent) etc.) so it re-colours per active game. */
+/* Covering "mosaic" page transition: a grid of tiles materializes in a diagonal
+   wave, the wordmark fades in, then the tiles dissolve outward to reveal the new
+   page. Reads the theme vars (var(--accent) etc.) so it recolours per game. */
 
 .xover {
   position: fixed;
   inset: 0;
   z-index: 200;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.xpanel {
+/* the tile grid */
+.xmosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+}
+.xtile {
+  background: linear-gradient(180deg, #1c1340, #0a0717);
+  box-shadow: inset 0 0 0 1px rgba(154, 107, 255, 0.1);
+  transform: scale(0);
+}
+.xover.in .xtile {
+  animation: xTileIn 0.28s ease-out forwards;
+  animation-delay: calc(var(--d) * 14ms);
+}
+.xover.hold .xtile {
+  transform: scale(1.05); /* slight overlap seals any sub-pixel gaps */
+}
+.xover.out .xtile {
+  animation: xTileOut 0.28s ease-in forwards;
+  animation-delay: calc(var(--dr) * 13ms);
+}
+@keyframes xTileIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+@keyframes xTileOut {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+/* wordmark, revealed once the screen is covered */
+.xlogo-wrap {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  overflow: hidden;
-  background: radial-gradient(120% 90% at 50% 42%, #1a1136, #07060d 78%);
-  transform: translateX(-100%);
 }
-/* glowing accent edge that leads the wipe */
-.xpanel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 4px;
-  background: var(--accent);
-  box-shadow: 0 0 40px 4px var(--accent);
-}
-.xover.in .xpanel {
-  animation: xWipeIn 0.45s cubic-bezier(0.7, 0, 0.25, 1) forwards;
-}
-.xover.hold .xpanel {
-  transform: translateX(0);
-}
-.xover.out .xpanel {
-  animation: xWipeOut 0.45s cubic-bezier(0.3, 0, 0.3, 1) forwards;
-}
-@keyframes xWipeIn {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-@keyframes xWipeOut {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(110%);
-  }
-}
-
-/* glitch-settle wordmark (style E), revealed once covered */
 .xlogo {
   position: relative;
   opacity: 0;
@@ -68,73 +71,20 @@
   text-shadow: 0 0 36px var(--glow);
 }
 .xover.hold .xlogo {
-  animation: xGlShow 0.12s linear forwards;
+  animation: xLogoIn 0.2s ease forwards;
 }
 .xover.out .xlogo {
-  opacity: 1;
-}
-.xlogo::before,
-.xlogo::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  mix-blend-mode: screen;
   opacity: 0;
+  transition: opacity 0.22s ease;
 }
-.xover.hold .xlogo::before {
-  color: #ff4df0;
-  animation: xGlA 0.8s steps(2) forwards;
-}
-.xover.hold .xlogo::after {
-  color: #4dffff;
-  animation: xGlB 0.8s steps(2) forwards;
-}
-@keyframes xGlShow {
+@keyframes xLogoIn {
   to {
     opacity: 1;
   }
 }
-@keyframes xGlA {
-  0% {
-    transform: translate(-9px, 2px);
-    opacity: 0.9;
-  }
-  40% {
-    transform: translate(6px, -3px);
-  }
-  70% {
-    transform: translate(-3px, 1px);
-  }
-  100% {
-    transform: translate(0, 0);
-    opacity: 0;
-  }
-}
-@keyframes xGlB {
-  0% {
-    transform: translate(9px, -2px);
-    opacity: 0.9;
-  }
-  40% {
-    transform: translate(-6px, 3px);
-  }
-  70% {
-    transform: translate(3px, -1px);
-  }
-  100% {
-    transform: translate(0, 0);
-    opacity: 0;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .xover.in .xpanel {
-    animation: none;
-    transform: translateX(0);
-  }
-  .xover.out .xpanel {
-    animation: none;
-    transform: translateX(110%);
+  .xover .xtile {
+    animation-duration: 0.01ms !important;
   }
 }
