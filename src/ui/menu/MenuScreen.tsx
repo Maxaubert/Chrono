@@ -1,6 +1,6 @@
 import './menu-base.css'
 import { useState } from 'react'
-import { useActiveGame } from '../theme/ThemeProvider'
+import { useActiveGame } from '../theme/activeGameContext'
 import GamePicker from './GamePicker'
 
 /**

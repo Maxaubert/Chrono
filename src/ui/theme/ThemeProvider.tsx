@@ -1,28 +1,8 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  type CSSProperties,
-  type ReactNode,
-} from 'react'
-import { getGame, listGames, type GameModule } from '@/games'
+import { useState, type CSSProperties, type ReactNode } from 'react'
+import { getGame, listGames } from '@/games'
+import { ActiveGameContext } from './activeGameContext'
 
 const DEFAULT_GAME_ID = 'hitster'
-
-type ActiveGame = {
-  game: GameModule
-  setGame: (id: string) => void
-}
-
-const ActiveGameContext = createContext<ActiveGame | null>(null)
-
-/** Read the active game + a setter to switch it. Must be inside <ThemeProvider>. */
-export function useActiveGame(): ActiveGame {
-  const value = useContext(ActiveGameContext)
-  if (!value)
-    throw new Error('useActiveGame must be used within <ThemeProvider>')
-  return value
-}
 
 /**
  * Applies the active game's vibe: writes its palette to CSS variables and adds

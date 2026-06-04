@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { FanCard, SAMPLE_DECK } from './HitsterCard'
+import { FanCard } from './HitsterCard'
+import { SAMPLE_DECK } from './deck'
 import { hitster } from './index'
 
 test('FanCard renders the indexed song year', () => {

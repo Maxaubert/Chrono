@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import { FanCard, SAMPLE_EVENTS } from './HistoryCard'
+import { FanCard } from './HistoryCard'
+import { SAMPLE_EVENTS } from './events'
 import { history } from './index'
 
 test('FanCard renders the event year', () => {

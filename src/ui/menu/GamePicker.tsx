@@ -1,5 +1,5 @@
 import { listGames } from '@/games'
-import { useActiveGame } from '../theme/ThemeProvider'
+import { useActiveGame } from '../theme/activeGameContext'
 
 /**
  * Overlay to switch the active game. Lists every registered game with its

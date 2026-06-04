@@ -4,6 +4,9 @@ import { expect, test } from '@playwright/test'
 test('a mock game plays through to a win', async ({ page }) => {
   await page.goto('/?mock=1')
 
+  // Enter the game from the front-page menu.
+  await page.getByTestId('menu-play').click()
+
   // Setup: 2 players, target 3, import the mock deck.
   await page.getByTestId('name-0').fill('Anna')
   await page.getByTestId('name-1').fill('Ben')

@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { registerGame, resetRegistry, type GameModule } from '@/games'
 import { hitster } from '@/games/hitster'
-import { ThemeProvider, useActiveGame } from './ThemeProvider'
+import { ThemeProvider } from './ThemeProvider'
+import { useActiveGame } from './activeGameContext'
 
 const stub: GameModule = {
   id: 'stub',
