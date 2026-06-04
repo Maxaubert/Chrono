@@ -1,5 +1,7 @@
 import './menu-base.css'
+import { useState } from 'react'
 import { useActiveGame } from '../theme/ThemeProvider'
+import GamePicker from './GamePicker'
 
 /**
  * The front page / main menu. Game-agnostic: it reads the active game's theme
@@ -10,6 +12,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
   const { game } = useActiveGame()
   const { theme } = game
   const fan = ['c1', 'c2', 'c3', 'c4']
+  const [pickerOpen, setPickerOpen] = useState(false)
 
   return (
     <div className="menu-screen">
@@ -47,8 +50,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
             <button
               className="btn el d4"
               data-testid="menu-choose-game"
-              disabled
-              title="Coming soon"
+              onClick={() => setPickerOpen(true)}
             >
               <span className="bt">CHOOSE GAME</span>
               <span className="bx">HITSTER &middot; HISTORY</span>
@@ -85,6 +87,8 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
           <div className="foot el d8">v0.3.0</div>
         </div>
       </div>
+
+      {pickerOpen && <GamePicker onClose={() => setPickerOpen(false)} />}
     </div>
   )
 }

@@ -3,12 +3,14 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { registerGame, resetRegistry } from '@/games'
 import { hitster } from '@/games/hitster'
+import { history } from '@/games/history'
 import { ThemeProvider } from '../theme/ThemeProvider'
 import MenuScreen from './MenuScreen'
 
 beforeEach(() => {
   resetRegistry()
   registerGame(hitster)
+  registerGame(history)
 })
 
 function renderMenu(onPlay: () => void = () => {}) {
@@ -27,14 +29,10 @@ test('shows the active game title and PLAY works', async () => {
   expect(onPlay).toHaveBeenCalledOnce()
 })
 
-test('placeholder buttons are present but disabled', () => {
+test('CHOOSE GAME is enabled; the other placeholders are disabled', () => {
   renderMenu()
-  for (const id of [
-    'menu-choose-game',
-    'menu-create-room',
-    'menu-join-room',
-    'menu-settings',
-  ]) {
+  expect(screen.getByTestId('menu-choose-game')).toBeEnabled()
+  for (const id of ['menu-create-room', 'menu-join-room', 'menu-settings']) {
     expect(screen.getByTestId(id)).toBeDisabled()
   }
 })
