@@ -1,0 +1,334 @@
+/* History vibe: natural-history almanac / museum. Warm, organic, elegant — a
+   deliberate calm counterpoint to Hitster's retro-scifi glitch. All rules scoped
+   under .skin-history .menu-screen so they reliably win over menu-base (which
+   sets geometry only). Custom keyframes are history-prefixed. Imported by the
+   History game module. */
+
+.skin-history .menu-screen {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* faint organic paper grain over the whole screen, kept very subtle */
+.skin-history .menu-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(205, 163, 73, 0.5) 0.5px, transparent 0.6px),
+    radial-gradient(rgba(138, 154, 107, 0.4) 0.5px, transparent 0.6px);
+  background-size:
+    7px 7px,
+    11px 11px;
+  background-position:
+    0 0,
+    3px 4px;
+}
+
+/* understated corner shapes: soft warm washes, no neon wedges */
+.skin-history .menu-screen .s-tl {
+  top: -180px;
+  left: -200px;
+  width: 560px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--glow), transparent 70%);
+  opacity: 0.7;
+  filter: blur(8px);
+}
+.skin-history .menu-screen .s-br {
+  bottom: -190px;
+  right: -190px;
+  width: 540px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--accent2) 22%, transparent),
+    transparent 70%
+  );
+  opacity: 0.55;
+  filter: blur(10px);
+}
+
+/* ---------- right column ---------- */
+.skin-history .menu-screen .right {
+  z-index: 2;
+}
+
+.skin-history .menu-screen .tag {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  letter-spacing: 3px;
+  color: var(--accent2);
+}
+
+/* ---------- logo: elegant serif wordmark that settles in gently ---------- */
+.skin-history .menu-screen .logo {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-shadow: 0 1px 24px var(--glow);
+  animation: historyLogoSettle 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+/* a slim warm underline rule beneath the wordmark */
+.skin-history .menu-screen .logo::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  bottom: -6px;
+  width: 64%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 30%, transparent) 70%,
+    transparent
+  );
+  transform-origin: left center;
+  animation: historyRule 1s 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes historyLogoSettle {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    letter-spacing: 5px;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 1px;
+  }
+}
+@keyframes historyRule {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- buttons: soft, warm, rounded ---------- */
+.skin-history .menu-screen .btn {
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 12px;
+  color: var(--accent);
+  font-family: Georgia, 'Times New Roman', serif;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 6px 18px -12px rgba(0, 0, 0, 0.7);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease;
+}
+.skin-history .menu-screen .btn .bt {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+.skin-history .menu-screen .btn .bx {
+  font-style: italic;
+  color: var(--accent2);
+  letter-spacing: 1px;
+}
+.skin-history .menu-screen .btn .bk {
+  color: var(--accent);
+  transition: transform 0.25s ease;
+}
+.skin-history .menu-screen .btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 14%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 0 24px -8px var(--glow),
+    0 8px 22px -14px rgba(0, 0, 0, 0.8);
+}
+.skin-history .menu-screen .btn:hover:not(:disabled) .bk {
+  transform: translateY(-50%) translateX(3px);
+}
+.skin-history .menu-screen .btn.primary {
+  border-radius: 14px;
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.skin-history .menu-screen .btn.primary .bt {
+  letter-spacing: 4px;
+}
+.skin-history .menu-screen .btn:disabled {
+  opacity: 0.4;
+  filter: saturate(0.6);
+}
+
+.skin-history .menu-screen .foot {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  letter-spacing: 1.5px;
+  color: var(--accent2);
+}
+
+/* ---------- card: warm museum plaque ---------- */
+.skin-history .menu-screen .card {
+  border-radius: 14px;
+  background:
+    radial-gradient(
+      120% 80% at 30% 12%,
+      rgba(255, 255, 255, 0.04),
+      transparent 60%
+    ),
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--panel) 86%, #2a2a1c),
+      var(--ink)
+    );
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    0 22px 46px -18px rgba(0, 0, 0, 0.78),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 0 6px color-mix(in srgb, var(--accent) 8%, transparent) inset;
+}
+/* a gentle, slow warm sheen — subtle, no rainbow */
+.skin-history .menu-screen .card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(205, 163, 73, 0.1) 48%,
+    rgba(255, 248, 230, 0.14) 50%,
+    rgba(205, 163, 73, 0.08) 52%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  background-position: 100% 100%;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  animation: historySheen 16s ease-in-out infinite;
+}
+@keyframes historySheen {
+  0%,
+  100% {
+    background-position: 100% 100%;
+  }
+  50% {
+    background-position: 0% 0%;
+  }
+}
+/* stagger the sheen gently across the fan */
+.skin-history .menu-screen .c1 .card::before {
+  animation-delay: -12s;
+}
+.skin-history .menu-screen .c2 .card::before {
+  animation-delay: -8s;
+}
+.skin-history .menu-screen .c3 .card::before {
+  animation-delay: -4s;
+}
+.skin-history .menu-screen .c4 .card::before {
+  animation-delay: 0s;
+}
+
+/* corner years */
+.skin-history .menu-screen .idx {
+  position: absolute;
+  z-index: 3;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  line-height: 1;
+}
+.skin-history .menu-screen .idx.tl {
+  top: 14px;
+  left: 16px;
+}
+.skin-history .menu-screen .idx.br {
+  bottom: 14px;
+  right: 16px;
+  transform: rotate(180deg);
+}
+
+/* centered plaque block */
+.skin-history .menu-screen .plaque {
+  position: relative;
+  z-index: 3;
+  margin: auto 0;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+.skin-history .menu-screen .ev-era {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  opacity: 0.85;
+}
+/* hairline flourishes around the era line */
+.skin-history .menu-screen .ev-era::before,
+.skin-history .menu-screen .ev-era::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  vertical-align: middle;
+  margin: 0 8px;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.skin-history .menu-screen .ev-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.12;
+  color: color-mix(in srgb, var(--accent) 30%, #f3ecd6);
+  text-shadow: 0 1px 16px var(--glow);
+}
+.skin-history .menu-screen .ev-sub {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--accent2);
+}
+
+/* small museum brand mark near the bottom */
+.skin-history .menu-screen .brand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  z-index: 3;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skin-history .menu-screen .logo,
+  .skin-history .menu-screen .logo::after {
+    animation: none;
+  }
+  .skin-history .menu-screen .card::before {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
