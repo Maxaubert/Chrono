@@ -17,6 +17,7 @@ test('starts on the menu, PLAY enters the game setup', async () => {
 
   await userEvent.click(screen.getByTestId('menu-play'))
 
-  // SetupScreen is now showing (its player-count target input has testid "target")
-  expect(screen.getByTestId('target')).toBeInTheDocument()
+  // The wipe transition covers the screen, swaps to the game behind it, then
+  // reveals SetupScreen (its player-count target input has testid "target").
+  expect(await screen.findByTestId('target')).toBeInTheDocument()
 })
