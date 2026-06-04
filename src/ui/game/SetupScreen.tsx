@@ -12,18 +12,20 @@ export interface SetupResult {
 }
 
 /**
- * New-game setup wizard, cyberpunk HUD (layout D):
+ * New-game setup, shown as a popup over the menu. Wizard:
  *   Gate    — if Spotify isn't connected, the only option is to log in.
  *   Players — players + win target  -> NEXT
  *   Playlist— playlist (auto-fetches your playlists) -> START GAME
- * The playlist step is temporary; it gets its own redesign later.
+ * START hands the result back; the caller runs the load-in transition.
  */
 export default function SetupScreen({
   session,
   onStart,
+  onClose,
 }: {
   session: SpotifySession
   onStart: (result: SetupResult) => void
+  onClose?: () => void
 }) {
   const { game } = useActiveGame()
   const [step, setStep] = useState<'players' | 'playlist'>('players')
@@ -110,149 +112,138 @@ export default function SetupScreen({
     )
   }
 
-  // ----------------------------------------------------------- login gate
+  let inner: ReactNode
+
   if (needLogin) {
-    return (
-      <div className="setup-screen">
-        <div className="su-frame">
-          {rail(
-            '// CONNECT',
-            'Full tracks play in your browser, so the host signs in.',
-            <>
-              <span className="su-dot" /> SPOTIFY PREMIUM
-            </>,
-          )}
-          <main className="su-form su-gate">
-            {errorBanner}
-            <div className="su-gate-msg">
-              <div className="su-label">Spotify</div>
-              <h2 className="su-gate-title">Connect Spotify to play</h2>
-              <p className="su-gate-sub">
-                {game.theme.title} needs your Spotify (Premium) to play the
-                songs. Only the host logs in, players just pass the device.
-              </p>
+    inner = (
+      <>
+        {rail(
+          '// CONNECT',
+          'Full tracks play in your browser, so the host signs in.',
+          <>
+            <span className="su-dot" /> SPOTIFY PREMIUM
+          </>,
+        )}
+        <main className="su-form su-gate">
+          {errorBanner}
+          <div className="su-gate-msg">
+            <div className="su-label">Spotify</div>
+            <h2 className="su-gate-title">Connect Spotify to play</h2>
+            <p className="su-gate-sub">
+              {game.theme.title} needs your Spotify (Premium) to play the songs.
+              Only the host logs in, players just pass the device.
+            </p>
+            <button
+              className="su-login su-login-big"
+              data-testid="spotify-login"
+              onClick={session.login}
+            >
+              LOG IN WITH SPOTIFY
+            </button>
+          </div>
+        </main>
+      </>
+    )
+  } else if (step === 'players') {
+    inner = (
+      <>
+        {rail(
+          '// NEW GAME',
+          game.theme.tagline,
+          <>
+            <span className="su-dot" /> LOCAL &middot; PASS &amp; PLAY
+            {!session.mock && (
+              <button className="su-foot-logout" onClick={session.logout}>
+                Log out
+              </button>
+            )}
+          </>,
+        )}
+        <main className="su-form">
+          {errorBanner}
+
+          <section className="su-section">
+            <div className="su-label">Players</div>
+            <div className="su-stepper">
               <button
-                className="su-login su-login-big"
-                data-testid="spotify-login"
-                onClick={session.login}
+                className="su-step-btn"
+                data-testid="player-minus"
+                disabled={count <= 2}
+                onClick={() => setCountAndNames(count - 1)}
               >
-                LOG IN WITH SPOTIFY
+                &minus;
+              </button>
+              <div className="su-step-val">
+                {count}
+                <span className="su-step-unit">/ 6</span>
+              </div>
+              <button
+                className="su-step-btn"
+                data-testid="player-plus"
+                disabled={count >= 6}
+                onClick={() => setCountAndNames(count + 1)}
+              >
+                +
               </button>
             </div>
-          </main>
-        </div>
-      </div>
+            <div className="su-names">
+              {names.map((name, i) => (
+                <label className="su-name" key={i}>
+                  <span className="su-name-idx">P{i + 1}</span>
+                  <input
+                    data-testid={`name-${i}`}
+                    placeholder={`Player ${i + 1}`}
+                    value={name}
+                    onChange={(e) =>
+                      setNames((prev) =>
+                        prev.map((v, j) => (j === i ? e.target.value : v)),
+                      )
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          </section>
+
+          <section className="su-section">
+            <div className="su-label">Win At</div>
+            <div className="su-winrow">
+              <input
+                className="su-win"
+                data-testid="target"
+                type="number"
+                min={2}
+                value={target}
+                onChange={(e) => setTarget(Math.max(2, Number(e.target.value)))}
+              />
+              <span className="su-win-sub">cards to win</span>
+              <input
+                className="su-slider"
+                type="range"
+                min={2}
+                max={20}
+                value={Math.min(20, target)}
+                onChange={(e) => setTarget(Number(e.target.value))}
+                aria-label="cards to win"
+              />
+            </div>
+          </section>
+
+          <button
+            className="su-next"
+            data-testid="setup-next"
+            disabled={!namesReady}
+            onClick={goNext}
+          >
+            <span>NEXT</span>
+            <span className="su-k">&#9654;</span>
+          </button>
+        </main>
+      </>
     )
-  }
-
-  // ----------------------------------------------------------- players
-  if (step === 'players') {
-    return (
-      <div className="setup-screen">
-        <div className="su-frame">
-          {rail(
-            '// NEW GAME',
-            game.theme.tagline,
-            <>
-              <span className="su-dot" /> LOCAL &middot; PASS &amp; PLAY
-              {!session.mock && (
-                <button className="su-foot-logout" onClick={session.logout}>
-                  Log out
-                </button>
-              )}
-            </>,
-          )}
-          <main className="su-form">
-            {errorBanner}
-
-            <section className="su-section">
-              <div className="su-label">Players</div>
-              <div className="su-stepper">
-                <button
-                  className="su-step-btn"
-                  data-testid="player-minus"
-                  disabled={count <= 2}
-                  onClick={() => setCountAndNames(count - 1)}
-                >
-                  &minus;
-                </button>
-                <div className="su-step-val">
-                  {count}
-                  <span className="su-step-unit">/ 6</span>
-                </div>
-                <button
-                  className="su-step-btn"
-                  data-testid="player-plus"
-                  disabled={count >= 6}
-                  onClick={() => setCountAndNames(count + 1)}
-                >
-                  +
-                </button>
-              </div>
-              <div className="su-names">
-                {names.map((name, i) => (
-                  <label className="su-name" key={i}>
-                    <span className="su-name-idx">P{i + 1}</span>
-                    <input
-                      data-testid={`name-${i}`}
-                      placeholder={`Player ${i + 1}`}
-                      value={name}
-                      onChange={(e) =>
-                        setNames((prev) =>
-                          prev.map((v, j) => (j === i ? e.target.value : v)),
-                        )
-                      }
-                    />
-                  </label>
-                ))}
-              </div>
-            </section>
-
-            <section className="su-section">
-              <div className="su-label">Win At</div>
-              <div className="su-winrow">
-                <input
-                  className="su-win"
-                  data-testid="target"
-                  type="number"
-                  min={2}
-                  value={target}
-                  onChange={(e) =>
-                    setTarget(Math.max(2, Number(e.target.value)))
-                  }
-                />
-                <span className="su-win-sub">cards to win</span>
-                <input
-                  className="su-slider"
-                  type="range"
-                  min={2}
-                  max={20}
-                  value={Math.min(20, target)}
-                  onChange={(e) => setTarget(Number(e.target.value))}
-                  aria-label="cards to win"
-                />
-              </div>
-            </section>
-
-            <button
-              className="su-next"
-              data-testid="setup-next"
-              disabled={!namesReady}
-              onClick={goNext}
-            >
-              <span>NEXT</span>
-              <span className="su-k">&#9654;</span>
-            </button>
-          </main>
-        </div>
-      </div>
-    )
-  }
-
-  // ----------------------------------------------------------- playlist
-  return (
-    <div className="setup-screen">
-      <div className="su-frame">
+  } else {
+    inner = (
+      <>
         {rail(
           '// CHOOSE PLAYLIST',
           'Pick the soundtrack for your timeline.',
@@ -305,8 +296,7 @@ export default function SetupScreen({
                 {myPlaylists.map((p) => (
                   <div className="su-pl-row" key={p.id}>
                     <span className="su-pl-name">
-                      {p.name}{' '}
-                      <span className="su-pl-by">by {p.ownerName}</span>
+                      {p.name} <span className="su-pl-by">by {p.ownerName}</span>
                     </span>
                     <button
                       className="su-use"
@@ -337,6 +327,29 @@ export default function SetupScreen({
             <span className="su-k">&#9654;</span>
           </button>
         </main>
+      </>
+    )
+  }
+
+  return (
+    <div
+      className="setup-screen"
+      onClick={(e) => {
+        if (onClose && e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div className="su-frame">
+        {onClose && (
+          <button
+            className="su-close"
+            data-testid="setup-close"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        )}
+        {inner}
       </div>
     </div>
   )

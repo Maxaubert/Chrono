@@ -5,16 +5,44 @@
 .setup-screen {
   position: fixed;
   inset: 0;
-  background: var(--bg, #08060f);
+  z-index: 150;
+  padding: 24px;
+  /* popup over the menu: dim + blur the page behind */
+  background: rgba(4, 3, 10, 0.72);
+  backdrop-filter: blur(6px);
   color: #e8e2ff;
   font-family: 'Segoe UI', system-ui, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: auto;
+  animation: suFade 0.18s ease-out;
 }
 .setup-screen * {
   box-sizing: border-box;
+}
+@keyframes suFade {
+  from {
+    opacity: 0;
+  }
+}
+.setup-screen .su-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(15, 8, 32, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  cursor: pointer;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+.setup-screen .su-close:hover {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .setup-screen .su-frame {
   position: relative;
