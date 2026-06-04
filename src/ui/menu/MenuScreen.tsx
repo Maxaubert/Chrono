@@ -25,8 +25,8 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
         </div>
 
         <div className="right">
-          <div className="logo crt el d2" data-text="CHRONO">
-            CHRONO
+          <div className="logo crt el d2" data-text="Hitster">
+            Hitster
           </div>
           <div className="tag el d3">Hear it. Place it. Hold the line.</div>
 

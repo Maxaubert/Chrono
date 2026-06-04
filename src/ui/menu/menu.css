@@ -93,7 +93,7 @@
 }
 @keyframes menuSheenSweep {
   0% {
-    background-position: 0% 0%;
+    background-position: 200% 200%;
     filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06)
       hue-rotate(-8deg);
     opacity: 0.42;
@@ -105,7 +105,7 @@
     opacity: 0.6;
   }
   100% {
-    background-position: 200% 200%;
+    background-position: 0% 0%;
     filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06)
       hue-rotate(-8deg);
     opacity: 0.42;
@@ -113,15 +113,15 @@
 }
 @keyframes menuSheenDrift {
   0% {
-    background-position: 100% 100%;
+    background-position: 0% 0%;
     opacity: 0.4;
   }
   50% {
-    background-position: 0% 0%;
+    background-position: 100% 100%;
     opacity: 0.52;
   }
   100% {
-    background-position: 100% 100%;
+    background-position: 0% 0%;
     opacity: 0.4;
   }
 }
@@ -450,23 +450,23 @@
   --ty: 14px;
   animation-delay: 0.6s;
 }
-/* Stagger the sheen so it drifts across the fan (c1 -> c4); negative delays
+/* Stagger the sheen so it drifts across the fan (c4 -> c1); negative delays
    keep every card mid-flow from the first frame (no discrete flash). */
 .menu-screen .c1 .card::before,
 .menu-screen .c1 .card::after {
-  animation-delay: 0s;
+  animation-delay: -13.5s;
 }
 .menu-screen .c2 .card::before,
 .menu-screen .c2 .card::after {
-  animation-delay: -4.5s;
+  animation-delay: -9s;
 }
 .menu-screen .c3 .card::before,
 .menu-screen .c3 .card::after {
-  animation-delay: -9s;
+  animation-delay: -4.5s;
 }
 .menu-screen .c4 .card::before,
 .menu-screen .c4 .card::after {
-  animation-delay: -13.5s;
+  animation-delay: 0s;
 }
 @keyframes menuDeal {
   from {
