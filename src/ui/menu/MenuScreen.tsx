@@ -12,8 +12,6 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
     <div className="menu-screen">
       <span className="slash s-tl" />
       <span className="slash s-br" />
-      <span className="corner tl" />
-      <span className="corner br" />
 
       <div className="split">
         <div className="left">
@@ -27,7 +25,6 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
         </div>
 
         <div className="right">
-          <div className="kicker el d1">// TIMELINE PROTOCOL</div>
           <div className="logo crt el d2" data-text="CHRONO">
             CHRONO
           </div>
@@ -80,9 +77,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
             </button>
           </div>
 
-          <div className="foot el d8">
-            v0.3.0 // BUILD 2049 &middot; LOCAL PASS &amp; PLAY
-          </div>
+          <div className="foot el d8">v0.3.0</div>
         </div>
       </div>
     </div>
