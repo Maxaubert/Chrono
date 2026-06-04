@@ -338,6 +338,23 @@
   color: #6f6593;
 }
 
+/* review step: read-only player + win summaries */
+.setup-screen .su-rv-name span:last-child {
+  color: #e8e2ff;
+  font-size: 14px;
+}
+.setup-screen .su-rv-win {
+  font-size: 18px;
+  color: #cfc6ef;
+}
+.setup-screen .su-rv-win strong {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 60%, transparent);
+  margin: 0 4px;
+}
+
 /* win at */
 .setup-screen .su-winrow {
   display: flex;

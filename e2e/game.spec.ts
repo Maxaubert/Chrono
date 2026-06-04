@@ -13,8 +13,12 @@ test('a mock game plays through to a win', async ({ page }) => {
   await page.getByTestId('target').fill('3')
   await page.getByTestId('setup-next').click()
 
-  // Setup step 2: add the mock deck, then start.
+  // Setup step 2: add the mock deck, then advance to the review step.
   await page.getByTestId('import').click()
+  await expect(page.getByTestId('review-next')).toBeEnabled()
+  await page.getByTestId('review-next').click()
+
+  // Setup step 3: review the game, then start.
   await expect(page.getByTestId('start-game')).toBeEnabled()
   await page.getByTestId('start-game').click()
 

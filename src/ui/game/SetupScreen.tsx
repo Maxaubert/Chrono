@@ -48,7 +48,7 @@ export default function SetupScreen({
   onClose?: () => void
 }) {
   const { game } = useActiveGame()
-  const [step, setStep] = useState<'players' | 'playlist'>('players')
+  const [step, setStep] = useState<'players' | 'playlist' | 'review'>('players')
   const [count, setCount] = useState(2)
   const [names, setNames] = useState<string[]>(['', ''])
   const [target, setTarget] = useState(10)
@@ -293,7 +293,7 @@ export default function SetupScreen({
         </main>
       </>
     )
-  } else {
+  } else if (step === 'playlist') {
     const filtered = myPlaylists.filter((p) =>
       p.name.toLowerCase().includes(search.trim().toLowerCase()),
     )
@@ -414,6 +414,73 @@ export default function SetupScreen({
               </div>
             </section>
           )}
+
+          <button
+            className="su-next"
+            data-testid="review-next"
+            disabled={combined.length === 0}
+            onClick={() => setStep('review')}
+          >
+            <span>NEXT</span>
+            <span className="su-k">&#9654;</span>
+          </button>
+        </main>
+      </>
+    )
+  } else {
+    inner = (
+      <>
+        {rail(
+          '// REVIEW',
+          'Everything set? Start the game.',
+          <button className="su-back" onClick={() => setStep('playlist')}>
+            &#9664; Back
+          </button>,
+        )}
+        <main className="su-form">
+          {errorBanner}
+
+          <section className="su-section">
+            <div className="su-label">Players</div>
+            <div className="su-names">
+              {names.map((name, i) => (
+                <div className="su-name su-rv-name" key={i}>
+                  <span className="su-name-idx">P{i + 1}</span>
+                  <span>{name.trim() || `Player ${i + 1}`}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="su-section">
+            <div className="su-label">Win Condition</div>
+            <div className="su-rv-win">
+              First to <strong>{target}</strong> cards wins
+            </div>
+          </section>
+
+          <section className="su-section su-selected">
+            <div className="su-label">
+              Playlists &middot; {combined.length} songs
+            </div>
+            <div className="su-pl-list">
+              {selected.map((s) => (
+                <div className="su-pl-row" key={s.id}>
+                  <span className="su-pl-cover">
+                    {s.image ? (
+                      <img src={s.image} alt="" loading="lazy" />
+                    ) : (
+                      <span className="su-pl-noart">&#9834;</span>
+                    )}
+                  </span>
+                  <span className="su-pl-name">
+                    {s.name}
+                    <span className="su-pl-by">{s.count} songs</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
 
           <button
             className="su-start"
