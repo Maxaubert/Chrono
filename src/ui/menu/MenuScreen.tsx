@@ -1,13 +1,16 @@
 import './menu-base.css'
-import { CardFront, SAMPLE_DECK } from './SongCard'
+import { useActiveGame } from '../theme/ThemeProvider'
 
 /**
- * The front page / main menu. PLAY enters the game; the other actions are
- * visible placeholders until those features exist. The card fan is decorative
- * (pointer-events disabled in menu.css).
+ * The front page / main menu. Game-agnostic: it reads the active game's theme
+ * (title, tagline, card, palette via ThemeProvider) and renders the shared
+ * layout. PLAY enters the game when it's playable; the rest are placeholders.
  */
 export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
+  const { game } = useActiveGame()
+  const { theme } = game
   const fan = ['c1', 'c2', 'c3', 'c4']
+
   return (
     <div className="menu-screen">
       <span className="slash s-tl" />
@@ -18,29 +21,31 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
           <div className="hand">
             {fan.map((cls, i) => (
               <div className={`fan-slot ${cls}`} key={cls}>
-                <CardFront song={SAMPLE_DECK[i]} />
+                <theme.FanCard index={i} />
               </div>
             ))}
           </div>
         </div>
 
         <div className="right">
-          <div className="logo crt el d2" data-text="Hitster">
-            Hitster
+          <div className="logo" data-text={theme.title}>
+            {theme.title}
           </div>
-          <div className="tag el d3">Hear it. Place it. Hold the line.</div>
+          <div className="tag el d2">{theme.tagline}</div>
 
           <div className="menu">
             <button
-              className="btn primary el d4"
+              className="btn primary el d3"
               data-testid="menu-play"
               onClick={onPlay}
+              disabled={!game.playable}
+              title={game.playable ? undefined : 'Coming soon'}
             >
               <span className="bt">PLAY</span>
               <span className="bk">&#9654;</span>
             </button>
             <button
-              className="btn el d5"
+              className="btn el d4"
               data-testid="menu-choose-game"
               disabled
               title="Coming soon"
@@ -49,7 +54,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
               <span className="bx">HITSTER &middot; HISTORY</span>
             </button>
             <button
-              className="btn el d6"
+              className="btn el d5"
               data-testid="menu-create-room"
               disabled
               title="Coming soon"
@@ -58,7 +63,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
               <span className="bx">HOST ONLINE</span>
             </button>
             <button
-              className="btn el d7"
+              className="btn el d6"
               data-testid="menu-join-room"
               disabled
               title="Coming soon"
@@ -67,7 +72,7 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
               <span className="bx">ENTER CODE</span>
             </button>
             <button
-              className="btn el d8"
+              className="btn el d7"
               data-testid="menu-settings"
               disabled
               title="Coming soon"
