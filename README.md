@@ -36,9 +36,9 @@ e2e/       Playwright tests
 
 ## Status
 
-Phase 0 complete. Phase 1 Slice 1 (Spotify playback + QR-scan spike) is in
-progress. See [`roadmap.md`](./roadmap.md) and the spec under
-`docs/superpowers/specs/`.
+Phase 1 in progress. Slice 1 (Spotify playback + import + scan spike) is merged.
+Slice 2 adds the minimal single-device game loop (setup, turns, scoring, win). See
+[`roadmap.md`](./roadmap.md) and `docs/superpowers/`.
 
 ## Spotify (Phase 1)
 

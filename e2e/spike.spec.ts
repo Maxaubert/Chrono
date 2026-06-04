@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test'
 
 test('mock scan starts playback and shows Now playing', async ({ page }) => {
-  await page.goto('/?mock=1')
+  await page.goto('/?spike=1&mock=1')
 
   // Mock mode is pre-logged-in and pre-connected.
   await expect(page.getByText('Player ready')).toBeVisible()

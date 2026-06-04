@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-test('home page shows the spike harness', async ({ page }) => {
-  await page.goto('/')
+test('the spike harness route shows the spike harness', async ({ page }) => {
+  await page.goto('/?spike=1')
   await expect(
     page.getByRole('heading', {
       name: 'Chrono spike: playback + scan',
