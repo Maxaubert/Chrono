@@ -6,6 +6,7 @@ import GameContainer from './game/GameContainer'
 import HCardShowcase from './menu/hcard/HCardShowcase'
 import RealArtDemo from './menu/hcard/RealArtDemo'
 import ScreenTransition from './transition/ScreenTransition'
+import SetupMockShowcase from './setupmock/SetupMockShowcase'
 import { ThemeProvider } from './theme/ThemeProvider'
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
   const [transitioning, setTransitioning] = useState(false)
   if (params.get('hcard') === '1') return <HCardShowcase />
   if (params.get('artdemo') === '1') return <RealArtDemo />
+  if (params.get('setupmock') === '1') return <SetupMockShowcase />
   if (spike) return <SpikeHarness />
   return (
     <ThemeProvider>
