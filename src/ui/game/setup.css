@@ -489,6 +489,45 @@
   color: var(--accent);
 }
 
+/* ---------- login gate (first step when not connected) ---------- */
+.setup-screen .su-gate {
+  justify-content: center;
+}
+.setup-screen .su-gate-msg {
+  max-width: 400px;
+}
+.setup-screen .su-gate-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f3eeff;
+  margin: 8px 0 10px;
+  letter-spacing: 0.01em;
+}
+.setup-screen .su-gate-sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #a99ccf;
+  margin-bottom: 26px;
+}
+.setup-screen .su-login-big {
+  padding: 16px 28px;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+}
+.setup-screen .su-foot-logout {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #8a7caf;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.setup-screen .su-foot-logout:hover {
+  color: var(--accent);
+}
+
 @media (max-width: 760px) {
   .setup-screen .su-frame {
     grid-template-columns: 1fr;

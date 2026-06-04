@@ -1,5 +1,5 @@
 // src/ui/game/SetupScreen.tsx
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { parsePlaylistId, type MyPlaylist, type SpotifyTrack } from '@/spotify'
 import { useActiveGame } from '../theme/activeGameContext'
 import type { SpotifySession } from './useSpotifySession'
@@ -12,10 +12,11 @@ export interface SetupResult {
 }
 
 /**
- * Two-step new-game setup, cyberpunk HUD (layout D):
- *   Step 1 — Spotify login + players + win target  -> NEXT
- *   Step 2 — playlist (auto-fetches your playlists) -> START GAME
- * Step 2 is a temporary working screen; it gets its own redesign later.
+ * New-game setup wizard, cyberpunk HUD (layout D):
+ *   Gate    — if Spotify isn't connected, the only option is to log in.
+ *   Players — players + win target  -> NEXT
+ *   Playlist— playlist (auto-fetches your playlists) -> START GAME
+ * The playlist step is temporary; it gets its own redesign later.
  */
 export default function SetupScreen({
   session,
@@ -25,7 +26,7 @@ export default function SetupScreen({
   onStart: (result: SetupResult) => void
 }) {
   const { game } = useActiveGame()
-  const [step, setStep] = useState<1 | 2>(1)
+  const [step, setStep] = useState<'players' | 'playlist'>('players')
   const [count, setCount] = useState(2)
   const [names, setNames] = useState<string[]>(['', ''])
   const [target, setTarget] = useState(10)
@@ -72,64 +73,97 @@ export default function SetupScreen({
     }
   }
 
-  const namesReady = names.every((n) => n.trim().length > 0)
-  const canNext = (session.mock || session.loggedIn) && namesReady
-  const ready =
-    session.loggedIn && session.connected && tracks.length > 0 && namesReady
-
   // Advancing to the playlist step auto-fetches the host's playlists.
   function goNext() {
     if (!session.mock && session.loggedIn && myPlaylists.length === 0) {
       showMyPlaylists()
     }
-    setStep(2)
+    setStep('playlist')
   }
 
-  // ---------------------------------------------------------------- step 1
-  if (step === 1) {
+  const namesReady = names.every((n) => n.trim().length > 0)
+  const ready =
+    session.loggedIn && session.connected && tracks.length > 0 && namesReady
+  const needLogin = !session.mock && !session.loggedIn
+
+  const errorBanner = (err || session.error) && (
+    <div className="su-error">{err ?? session.error}</div>
+  )
+
+  function rail(kicker: string, blurb: string, foot: ReactNode) {
+    return (
+      <aside className="su-rail">
+        <span className="su-slash su-slash-tl" />
+        <span className="su-slash su-slash-br" />
+        <div>
+          <div className="su-kicker">{kicker}</div>
+          <div className="su-wordmark">{game.theme.title}</div>
+          <div className="su-blurb">{blurb}</div>
+        </div>
+        <div className="su-fan" aria-hidden="true">
+          <div className="su-card su-card-1" />
+          <div className="su-card su-card-2" />
+          <div className="su-card su-card-3" />
+        </div>
+        <div className="su-foot">{foot}</div>
+      </aside>
+    )
+  }
+
+  // ----------------------------------------------------------- login gate
+  if (needLogin) {
     return (
       <div className="setup-screen">
         <div className="su-frame">
-          <aside className="su-rail">
-            <span className="su-slash su-slash-tl" />
-            <span className="su-slash su-slash-br" />
-            <div>
-              <div className="su-kicker">// NEW GAME</div>
-              <div className="su-wordmark">{game.theme.title}</div>
-              <div className="su-blurb">{game.theme.tagline}</div>
+          {rail(
+            '// CONNECT',
+            'Full tracks play in your browser, so the host signs in.',
+            <>
+              <span className="su-dot" /> SPOTIFY PREMIUM
+            </>,
+          )}
+          <main className="su-form su-gate">
+            {errorBanner}
+            <div className="su-gate-msg">
+              <div className="su-label">Spotify</div>
+              <h2 className="su-gate-title">Connect Spotify to play</h2>
+              <p className="su-gate-sub">
+                {game.theme.title} needs your Spotify (Premium) to play the
+                songs. Only the host logs in, players just pass the device.
+              </p>
+              <button
+                className="su-login su-login-big"
+                data-testid="spotify-login"
+                onClick={session.login}
+              >
+                LOG IN WITH SPOTIFY
+              </button>
             </div>
-            <div className="su-fan" aria-hidden="true">
-              <div className="su-card su-card-1" />
-              <div className="su-card su-card-2" />
-              <div className="su-card su-card-3" />
-            </div>
-            <div className="su-foot">
+          </main>
+        </div>
+      </div>
+    )
+  }
+
+  // ----------------------------------------------------------- players
+  if (step === 'players') {
+    return (
+      <div className="setup-screen">
+        <div className="su-frame">
+          {rail(
+            '// NEW GAME',
+            game.theme.tagline,
+            <>
               <span className="su-dot" /> LOCAL &middot; PASS &amp; PLAY
-            </div>
-          </aside>
-
+              {!session.mock && (
+                <button className="su-foot-logout" onClick={session.logout}>
+                  Log out
+                </button>
+              )}
+            </>,
+          )}
           <main className="su-form">
-            {(err || session.error) && (
-              <div className="su-error">{err ?? session.error}</div>
-            )}
-
-            {!session.mock && (
-              <section className="su-section su-row">
-                <div className="su-label">Spotify</div>
-                {!session.loggedIn ? (
-                  <button className="su-login" onClick={session.login}>
-                    LOG IN WITH SPOTIFY
-                  </button>
-                ) : (
-                  <div className="su-row" style={{ gap: 16 }}>
-                    <span className="su-linked">Linked</span>
-                    <button className="su-logout" onClick={session.logout}>
-                      Log out
-                    </button>
-                  </div>
-                )}
-              </section>
-            )}
+            {errorBanner}
 
             <section className="su-section">
               <div className="su-label">Players</div>
@@ -203,7 +237,7 @@ export default function SetupScreen({
             <button
               className="su-next"
               data-testid="setup-next"
-              disabled={!canNext}
+              disabled={!namesReady}
               onClick={goNext}
             >
               <span>NEXT</span>
@@ -215,34 +249,19 @@ export default function SetupScreen({
     )
   }
 
-  // ---------------------------------------------------------------- step 2
+  // ----------------------------------------------------------- playlist
   return (
     <div className="setup-screen">
       <div className="su-frame">
-        <aside className="su-rail">
-          <span className="su-slash su-slash-tl" />
-          <span className="su-slash su-slash-br" />
-          <div>
-            <div className="su-kicker">// CHOOSE PLAYLIST</div>
-            <div className="su-wordmark">{game.theme.title}</div>
-            <div className="su-blurb">
-              Pick the soundtrack for your timeline.
-            </div>
-          </div>
-          <div className="su-fan" aria-hidden="true">
-            <div className="su-card su-card-1" />
-            <div className="su-card su-card-2" />
-            <div className="su-card su-card-3" />
-          </div>
-          <button className="su-back" onClick={() => setStep(1)}>
+        {rail(
+          '// CHOOSE PLAYLIST',
+          'Pick the soundtrack for your timeline.',
+          <button className="su-back" onClick={() => setStep('players')}>
             &#9664; Back
-          </button>
-        </aside>
-
+          </button>,
+        )}
         <main className="su-form">
-          {(err || session.error) && (
-            <div className="su-error">{err ?? session.error}</div>
-          )}
+          {errorBanner}
 
           <section className="su-section">
             <div className="su-label">Playlist</div>
