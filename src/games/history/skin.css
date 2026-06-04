@@ -245,88 +245,75 @@
   animation-delay: 19.6875s;
 }
 
-/* corner years */
-.skin-history .menu-screen .idx {
+/* real image art (Wikimedia public domain), unified by a warm gold duotone */
+.skin-history .menu-screen .hist-art {
   position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.skin-history .menu-screen .hist-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* unify paintings + photographs into one warm, slightly faded look */
+  filter: grayscale(1) contrast(1.06) brightness(0.94);
+}
+.skin-history .menu-screen .hist-duo {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: color;
+  opacity: 0.5;
+  background: linear-gradient(180deg, #e6c069, #7a5a23 55%, #2a1e0c);
+}
+.skin-history .menu-screen .hist-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 8, 4, 0.28) 0%,
+    transparent 30%,
+    transparent 52%,
+    rgba(10, 8, 4, 0.85) 88%
+  );
+}
+.skin-history .menu-screen .hist-year {
+  position: absolute;
+  top: 10px;
+  right: 14px;
   z-index: 3;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: #f3e3b8;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+.skin-history .menu-screen .hist-cap {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.skin-history .menu-screen .hist-era {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #e6c069;
+}
+.skin-history .menu-screen .hist-title {
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 700;
   font-size: 18px;
-  letter-spacing: 1px;
-  color: var(--accent);
-  line-height: 1;
-}
-.skin-history .menu-screen .idx.tl {
-  top: 14px;
-  left: 16px;
-}
-.skin-history .menu-screen .idx.br {
-  bottom: 14px;
-  right: 16px;
-  transform: rotate(180deg);
-}
-
-/* centered plaque block */
-.skin-history .menu-screen .plaque {
-  position: relative;
-  z-index: 3;
-  margin: auto 0;
-  padding: 0 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 8px;
-}
-.skin-history .menu-screen .ev-era {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 10px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--accent2);
-  opacity: 0.85;
-}
-/* hairline flourishes around the era line */
-.skin-history .menu-screen .ev-era::before,
-.skin-history .menu-screen .ev-era::after {
-  content: '';
-  display: inline-block;
-  width: 18px;
-  height: 1px;
-  vertical-align: middle;
-  margin: 0 8px;
-  background: color-mix(in srgb, var(--accent) 55%, transparent);
-}
-.skin-history .menu-screen .ev-title {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1.12;
-  color: color-mix(in srgb, var(--accent) 30%, #f3ecd6);
-  text-shadow: 0 1px 16px var(--glow);
-}
-.skin-history .menu-screen .ev-sub {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-style: italic;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-  color: var(--accent2);
-}
-
-/* small museum brand mark near the bottom */
-.skin-history .menu-screen .brand {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 14px;
-  z-index: 3;
-  text-align: center;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--accent2);
-  opacity: 0.7;
+  line-height: 1.08;
+  color: #fbf3df;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
 }
 
 @media (prefers-reduced-motion: reduce) {
