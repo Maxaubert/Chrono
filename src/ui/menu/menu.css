@@ -38,34 +38,98 @@
   display: flex;
   flex-direction: column;
 }
-.menu-screen .foil {
+/* Prismatic Sheen highlight: a violet-forward iridescent foil that sweeps
+   diagonally across each card and gently hue-shifts, like holographic foil
+   tilting under light. Two layers (sweep + counter-drift wash) live on the
+   card pseudo-elements; the per-card stagger is set further below so the sheen
+   drifts across the fan. (The .foil span CardFront renders is unused now.) */
+.menu-screen .card::before {
+  content: '';
   position: absolute;
-  top: -40%;
-  left: 0;
-  width: 46%;
-  height: 180%;
+  inset: -30%;
   pointer-events: none;
-  opacity: 0.55;
-  mix-blend-mode: screen;
-  filter: blur(7px);
-  transform: rotate(20deg) translateX(-170%);
+  z-index: 6;
   background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in srgb, var(--accent) 55%, #fff) 50%,
-    transparent
+    120deg,
+    transparent 0%,
+    rgba(154, 107, 255, 0) 36%,
+    rgba(154, 107, 255, 0.55) 44%,
+    rgba(120, 220, 255, 0.42) 47%,
+    rgba(238, 224, 255, 0.78) 50%,
+    rgba(255, 130, 240, 0.42) 53%,
+    rgba(120, 70, 230, 0.5) 56%,
+    rgba(107, 63, 214, 0) 64%,
+    transparent 100%
   );
-  animation: menuFoil 5.5s ease-in-out infinite;
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  background-position: 0% 0%;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06);
+  animation: menuSheenSweep 18s linear infinite;
 }
-@keyframes menuFoil {
+.menu-screen .card::after {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(
+    300deg,
+    transparent 0%,
+    rgba(154, 107, 255, 0.32) 38%,
+    rgba(150, 235, 255, 0.2) 50%,
+    rgba(255, 150, 235, 0.22) 62%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 260% 260%;
+  background-position: 100% 100%;
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+  filter: saturate(1.3);
+  animation: menuSheenDrift 18s ease-in-out infinite;
+}
+@keyframes menuSheenSweep {
   0% {
-    transform: rotate(20deg) translateX(-170%);
+    background-position: 0% 0%;
+    filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06)
+      hue-rotate(-8deg);
+    opacity: 0.42;
   }
-  24% {
-    transform: rotate(20deg) translateX(370%);
+  50% {
+    background-position: 100% 100%;
+    filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06)
+      hue-rotate(8deg);
+    opacity: 0.6;
   }
   100% {
-    transform: rotate(20deg) translateX(370%);
+    background-position: 200% 200%;
+    filter: blur(0.4px) saturate(1.4) contrast(1.1) brightness(1.06)
+      hue-rotate(-8deg);
+    opacity: 0.42;
+  }
+}
+@keyframes menuSheenDrift {
+  0% {
+    background-position: 100% 100%;
+    opacity: 0.4;
+  }
+  50% {
+    background-position: 0% 0%;
+    opacity: 0.52;
+  }
+  100% {
+    background-position: 100% 100%;
+    opacity: 0.4;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-screen .card::before,
+  .menu-screen .card::after {
+    animation: none;
+    background-position: 50% 50%;
   }
 }
 
@@ -336,26 +400,6 @@
   opacity: 0.13;
   transform: rotate(-24deg);
 }
-.menu-screen .corner {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  border: 2px solid var(--accent);
-  opacity: 0.5;
-}
-.menu-screen .corner.tl {
-  top: 24px;
-  left: 24px;
-  border-right: none;
-  border-bottom: none;
-}
-.menu-screen .corner.br {
-  bottom: 24px;
-  right: 24px;
-  border-left: none;
-  border-top: none;
-}
-
 .menu-screen .split {
   position: relative;
   min-height: 100vh;
@@ -406,17 +450,23 @@
   --ty: 14px;
   animation-delay: 0.6s;
 }
-.menu-screen .c1 .foil {
+/* Stagger the sheen so it drifts across the fan (c1 -> c4); negative delays
+   keep every card mid-flow from the first frame (no discrete flash). */
+.menu-screen .c1 .card::before,
+.menu-screen .c1 .card::after {
   animation-delay: 0s;
 }
-.menu-screen .c2 .foil {
-  animation-delay: 1.3s;
+.menu-screen .c2 .card::before,
+.menu-screen .c2 .card::after {
+  animation-delay: -4.5s;
 }
-.menu-screen .c3 .foil {
-  animation-delay: 2.6s;
+.menu-screen .c3 .card::before,
+.menu-screen .c3 .card::after {
+  animation-delay: -9s;
 }
-.menu-screen .c4 .foil {
-  animation-delay: 3.9s;
+.menu-screen .c4 .card::before,
+.menu-screen .c4 .card::after {
+  animation-delay: -13.5s;
 }
 @keyframes menuDeal {
   from {
@@ -651,10 +701,13 @@
   opacity: 0.7;
 }
 
-/* launch stagger */
+/* launch stagger. fill-mode "both" so the hidden start-state (opacity 0) also
+   applies during each element's delay, keeping it fully hidden until its turn
+   (overrides .btn:disabled opacity, which otherwise showed disabled buttons
+   faded before their cue). */
 .menu-screen .el {
   opacity: 0;
-  animation: menuRise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation: menuRise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .menu-screen .d1 {
   animation-delay: 0.1s;
