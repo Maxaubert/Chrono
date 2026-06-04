@@ -11,12 +11,32 @@ export interface SetupResult {
   tracks: SpotifyTrack[]
 }
 
+/** A playlist the host has added to the game's pool. */
+type Added = {
+  id: string
+  name: string
+  image: string | null
+  count: number
+  tracks: SpotifyTrack[]
+}
+
+function dedupeTracks(list: SpotifyTrack[]): SpotifyTrack[] {
+  const seen = new Set<string>()
+  const out: SpotifyTrack[] = []
+  for (const t of list) {
+    if (!seen.has(t.id)) {
+      seen.add(t.id)
+      out.push(t)
+    }
+  }
+  return out
+}
+
 /**
  * New-game setup, shown as a popup over the menu. Wizard:
- *   Gate    — if Spotify isn't connected, the only option is to log in.
+ *   Gate    — log in to Spotify (required).
  *   Players — players + win target  -> NEXT
- *   Playlist— playlist (auto-fetches your playlists) -> START GAME
- * START hands the result back; the caller runs the load-in transition.
+ *   Playlist— search + add one or more playlists -> START GAME
  */
 export default function SetupScreen({
   session,
@@ -33,8 +53,9 @@ export default function SetupScreen({
   const [names, setNames] = useState<string[]>(['', ''])
   const [target, setTarget] = useState(10)
   const [playlist, setPlaylist] = useState('')
-  const [tracks, setTracks] = useState<SpotifyTrack[]>([])
+  const [search, setSearch] = useState('')
   const [myPlaylists, setMyPlaylists] = useState<MyPlaylist[]>([])
+  const [selected, setSelected] = useState<Added[]>([])
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState<string | null>(null)
 
@@ -48,11 +69,29 @@ export default function SetupScreen({
     })
   }
 
-  async function importById(id: string) {
+  async function addById(
+    id: string,
+    meta: { name: string; image: string | null },
+  ) {
+    if (selected.some((s) => s.id === id)) return
     setErr(null)
     setBusy(true)
     try {
-      setTracks(await session.importPlaylistId(id))
+      const tracks = await session.importPlaylistId(id)
+      setSelected((prev) =>
+        prev.some((s) => s.id === id)
+          ? prev
+          : [
+              ...prev,
+              {
+                id,
+                name: meta.name,
+                image: meta.image,
+                count: tracks.length,
+                tracks,
+              },
+            ],
+      )
     } catch (e) {
       setErr(String(e))
     } finally {
@@ -60,10 +99,22 @@ export default function SetupScreen({
     }
   }
 
-  async function importFromLink() {
+  function addPlaylist(p: MyPlaylist) {
+    addById(p.id, { name: p.name, image: p.image })
+  }
+
+  async function addFromLink() {
     const id = session.mock ? 'mock' : parsePlaylistId(playlist)
     if (!id) return setErr('Could not read a playlist id from that link.')
-    await importById(id)
+    await addById(id, {
+      name: session.mock ? 'Mock deck' : 'Imported playlist',
+      image: null,
+    })
+    setPlaylist('')
+  }
+
+  function removeSelected(id: string) {
+    setSelected((prev) => prev.filter((s) => s.id !== id))
   }
 
   async function showMyPlaylists() {
@@ -84,8 +135,9 @@ export default function SetupScreen({
   }
 
   const namesReady = names.every((n) => n.trim().length > 0)
+  const combined = dedupeTracks(selected.flatMap((s) => s.tracks))
   const ready =
-    session.loggedIn && session.connected && tracks.length > 0 && namesReady
+    session.loggedIn && session.connected && combined.length > 0 && namesReady
   const needLogin = !session.mock && !session.loggedIn
 
   const errorBanner = (err || session.error) && (
@@ -242,11 +294,14 @@ export default function SetupScreen({
       </>
     )
   } else {
+    const filtered = myPlaylists.filter((p) =>
+      p.name.toLowerCase().includes(search.trim().toLowerCase()),
+    )
     inner = (
       <>
         {rail(
-          '// CHOOSE PLAYLIST',
-          'Pick the soundtrack for your timeline.',
+          '// CHOOSE PLAYLISTS',
+          'Add one or more playlists for your timeline.',
           <button className="su-back" onClick={() => setStep('players')}>
             &#9664; Back
           </button>,
@@ -255,12 +310,63 @@ export default function SetupScreen({
           {errorBanner}
 
           <section className="su-section">
-            <div className="su-label">Playlist</div>
+            <div className="su-label">Your Playlists</div>
+
+            {!session.mock && (
+              <input
+                className="su-search"
+                data-testid="playlist-search"
+                placeholder="Search your playlists..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            )}
+
+            {!session.mock && (
+              <div className="su-pl-list">
+                {filtered.length === 0 && (
+                  <div className="su-pl-empty">
+                    {myPlaylists.length === 0
+                      ? 'Loading your playlists...'
+                      : 'No playlists match.'}
+                  </div>
+                )}
+                {filtered.map((p) => {
+                  const added = selected.some((s) => s.id === p.id)
+                  return (
+                    <div className="su-pl-row" key={p.id}>
+                      <span className="su-pl-cover">
+                        {p.image ? (
+                          <img src={p.image} alt="" loading="lazy" />
+                        ) : (
+                          <span className="su-pl-noart">&#9834;</span>
+                        )}
+                      </span>
+                      <span className="su-pl-name">
+                        {p.name}
+                        <span className="su-pl-by">
+                          by {p.ownerName} &middot; {p.trackCount} songs
+                        </span>
+                      </span>
+                      <button
+                        className="su-use"
+                        disabled={busy || added}
+                        onClick={() => addPlaylist(p)}
+                      >
+                        {added ? 'ADDED' : 'ADD'}
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* import a link (under the playlists) */}
             <div className="su-inputrow">
               {!session.mock && (
                 <input
                   className="su-input"
-                  placeholder="Spotify playlist link"
+                  placeholder="Or paste a Spotify playlist link"
                   value={playlist}
                   onChange={(e) => setPlaylist(e.target.value)}
                 />
@@ -268,58 +374,46 @@ export default function SetupScreen({
               <button
                 className="su-import"
                 data-testid="import"
-                onClick={importFromLink}
+                onClick={addFromLink}
                 disabled={busy}
               >
-                {busy ? 'IMPORTING...' : 'IMPORT'}
+                {busy ? 'ADDING...' : 'IMPORT'}
               </button>
             </div>
-            <div className="su-pl-meta">
-              {!session.mock && (
-                <button
-                  className="su-mine"
-                  data-testid="show-my-playlists"
-                  onClick={showMyPlaylists}
-                >
-                  MY PLAYLISTS
-                </button>
-              )}
-              {tracks.length > 0 && (
-                <span className="su-count">
-                  <span className="su-count-num">{tracks.length}</span> SONGS
-                </span>
-              )}
-            </div>
+          </section>
 
-            {myPlaylists.length > 0 && (
+          {selected.length > 0 && (
+            <section className="su-section su-selected">
+              <div className="su-label">
+                Added &middot; {combined.length} songs
+              </div>
               <div className="su-pl-list">
-                {myPlaylists.map((p) => (
-                  <div className="su-pl-row" key={p.id}>
+                {selected.map((s) => (
+                  <div className="su-pl-row" key={s.id}>
                     <span className="su-pl-cover">
-                      {p.image ? (
-                        <img src={p.image} alt="" loading="lazy" />
+                      {s.image ? (
+                        <img src={s.image} alt="" loading="lazy" />
                       ) : (
                         <span className="su-pl-noart">&#9834;</span>
                       )}
                     </span>
                     <span className="su-pl-name">
-                      {p.name}
-                      <span className="su-pl-by">
-                        by {p.ownerName} &middot; {p.trackCount} songs
-                      </span>
+                      {s.name}
+                      <span className="su-pl-by">{s.count} songs</span>
                     </span>
                     <button
-                      className="su-use"
-                      disabled={busy}
-                      onClick={() => importById(p.id)}
+                      className="su-remove"
+                      data-testid={`remove-${s.id}`}
+                      aria-label={`Remove ${s.name}`}
+                      onClick={() => removeSelected(s.id)}
                     >
-                      USE
+                      &times;
                     </button>
                   </div>
                 ))}
               </div>
-            )}
-          </section>
+            </section>
+          )}
 
           <button
             className="su-start"
@@ -329,7 +423,7 @@ export default function SetupScreen({
               onStart({
                 names: names.map((n) => n.trim()),
                 targetCards: target,
-                tracks,
+                tracks: combined,
               })
             }
           >

@@ -13,9 +13,9 @@ test('a mock game plays through to a win', async ({ page }) => {
   await page.getByTestId('target').fill('3')
   await page.getByTestId('setup-next').click()
 
-  // Setup step 2: import the mock deck, then start.
+  // Setup step 2: add the mock deck, then start.
   await page.getByTestId('import').click()
-  await expect(page.getByText('songs')).toBeVisible()
+  await expect(page.getByTestId('start-game')).toBeEnabled()
   await page.getByTestId('start-game').click()
 
   // Each turn: place at the rightmost gap (always correct in mock), then Next.

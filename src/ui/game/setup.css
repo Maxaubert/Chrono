@@ -554,6 +554,58 @@
   color: var(--accent);
 }
 
+/* search field above the playlist list */
+.setup-screen .su-search {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #d8d0ff;
+  background: rgba(8, 6, 15, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  outline: none;
+  font-family: inherit;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+.setup-screen .su-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.setup-screen .su-pl-empty {
+  padding: 14px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #7d6fa6;
+}
+/* import row sits under the playlist list */
+.setup-screen .su-inputrow {
+  margin-top: 12px;
+}
+
+/* added playlists (managed list) */
+.setup-screen .su-selected .su-pl-list {
+  max-height: 150px;
+  margin-top: 10px;
+}
+.setup-screen .su-remove {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(15, 8, 32, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  cursor: pointer;
+  clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+}
+.setup-screen .su-remove:hover {
+  background: color-mix(in srgb, var(--no, #ff4d6a) 22%, transparent);
+  border-color: var(--no, #ff4d6a);
+  color: #ffd0d8;
+}
+
 /* ---------- login gate (first step when not connected) ---------- */
 .setup-screen .su-gate {
   justify-content: center;
