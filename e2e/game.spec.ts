@@ -22,8 +22,9 @@ test('a mock game plays through to a win', async ({ page }) => {
   await expect(page.getByTestId('start-game')).toBeEnabled()
   await page.getByTestId('start-game').click()
 
-  // Each turn: place at the rightmost gap (always correct in mock), then Next.
-  // With target 3 and 2 players, the first player to 3 cards wins within a few turns.
+  // Each turn: pick the newest (rightmost) card, then place AFTER it (the
+  // rightmost slot is always correct in mock), then Next. With target 3 and 2
+  // players, the first player to 3 cards wins within a few turns.
   for (let i = 0; i < 8; i++) {
     if (
       await page
@@ -32,9 +33,10 @@ test('a mock game plays through to a win', async ({ page }) => {
         .catch(() => false)
     )
       break
-    // rightmost gap = the highest-indexed gap currently rendered
-    const gaps = page.locator('[data-testid^="gap-"]')
-    await gaps.last().click()
+    // pick the rightmost card, then tap its "after" slot
+    const cards = page.locator('[data-testid^="hand-card-"]')
+    await cards.last().click()
+    await page.getByTestId('place-after').click()
     await expect(page.getByTestId('reveal')).toBeVisible()
     await page.getByTestId('next').click()
   }

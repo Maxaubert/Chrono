@@ -9,11 +9,34 @@ const timeline: Card[] = [
   { id: 'b', year: 2001 },
 ]
 
-test('renders one placement gap per slot (N+1) and reports the tapped slot', async () => {
+test('placement slots appear only after a card is picked', () => {
+  render(<Hand timeline={timeline} onPlace={vi.fn()} />)
+  expect(screen.queryByTestId('place-before')).toBeNull()
+  expect(screen.queryByTestId('place-after')).toBeNull()
+})
+
+test('picking a card then tapping "after" places at index + 1', async () => {
   const onPlace = vi.fn()
   render(<Hand timeline={timeline} onPlace={onPlace} />)
-  expect(screen.getByTestId('gap-0')).toBeInTheDocument()
-  expect(screen.getByTestId('gap-2')).toBeInTheDocument()
-  await userEvent.click(screen.getByTestId('gap-2'))
-  expect(onPlace).toHaveBeenCalledWith(2)
+  await userEvent.click(screen.getByTestId('hand-card-1')) // pick the 2nd card
+  expect(screen.getByTestId('place-before')).toBeInTheDocument()
+  expect(screen.getByTestId('place-after')).toBeInTheDocument()
+  await userEvent.click(screen.getByTestId('place-after'))
+  expect(onPlace).toHaveBeenCalledWith(2) // after card index 1 = slot 2
+})
+
+test('tapping "before" places at the card index', async () => {
+  const onPlace = vi.fn()
+  render(<Hand timeline={timeline} onPlace={onPlace} />)
+  await userEvent.click(screen.getByTestId('hand-card-0')) // pick the 1st card
+  await userEvent.click(screen.getByTestId('place-before'))
+  expect(onPlace).toHaveBeenCalledWith(0)
+})
+
+test('tapping the picked card again cancels (slots disappear)', async () => {
+  render(<Hand timeline={timeline} onPlace={vi.fn()} />)
+  await userEvent.click(screen.getByTestId('hand-card-0'))
+  expect(screen.getByTestId('place-after')).toBeInTheDocument()
+  await userEvent.click(screen.getByTestId('hand-card-0'))
+  expect(screen.queryByTestId('place-after')).toBeNull()
 })
