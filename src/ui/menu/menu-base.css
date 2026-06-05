@@ -75,8 +75,8 @@
   }
 }
 
-/* outer card frame; internals are game-specific (in each skin) */
-.menu-screen .card {
+/* outer card frame, reusable on any screen; internals come from each game skin */
+.h-card {
   position: relative;
   width: 240px;
   height: 344px;
