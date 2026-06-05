@@ -23,6 +23,11 @@
   box-shadow: inset 0 0 0 1px rgba(154, 107, 255, 0.1);
   transform: scale(0);
 }
+/* History: warm museum tiles + a faint gold inset, instead of Hitster's purple */
+.skin-history .xtile {
+  background: linear-gradient(180deg, #1a1f16, #0d0f0a);
+  box-shadow: inset 0 0 0 1px rgba(205, 163, 73, 0.1);
+}
 .xover.in .xtile {
   animation: xTileIn 0.28s ease-out forwards;
   animation-delay: calc(var(--d) * 14ms);
@@ -69,6 +74,12 @@
   color: var(--accent);
   transform: skewX(-7deg);
   text-shadow: 0 0 36px var(--glow);
+}
+/* History: upright serif wordmark — no skew, gentler tracking */
+.skin-history .xlogo {
+  transform: none;
+  letter-spacing: 2px;
+  text-transform: none;
 }
 .xover.hold .xlogo {
   animation: xLogoIn 0.2s ease forwards;
