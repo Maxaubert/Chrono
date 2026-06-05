@@ -265,8 +265,11 @@ export default function SetupScreen({
                 data-testid="target"
                 type="number"
                 min={2}
+                max={20}
                 value={target}
-                onChange={(e) => setTarget(Math.max(2, Number(e.target.value)))}
+                onChange={(e) =>
+                  setTarget(Math.min(20, Math.max(2, Number(e.target.value))))
+                }
               />
               <span className="su-win-sub">cards to win</span>
               <input
