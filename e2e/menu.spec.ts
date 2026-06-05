@@ -14,7 +14,7 @@ test('the menu opens on Hitster and Choose Game swaps to History', async ({
   await page.getByTestId('menu-choose-game').click()
   await page.getByTestId('game-option-history').click()
 
-  // Reskinned: the History wordmark shows and PLAY is disabled (placeholder).
+  // Reskinned: the History wordmark shows and PLAY is enabled (it's playable).
   await expect(page.getByText('History', { exact: true }).first()).toBeVisible()
-  await expect(page.getByTestId('menu-play')).toBeDisabled()
+  await expect(page.getByTestId('menu-play')).toBeEnabled()
 })

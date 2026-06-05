@@ -1,0 +1,47 @@
+/* History in-play styling. Only the clue mystery card needs new rules; the
+ * reveal/hand/background inherit the History palette via the theme CSS vars.
+ * Generic layout classes (.mystery-wrap, .myst-hint) come from mystery-card.css;
+ * we only style the .hist-myst clue card itself. Scoped under .skin-history
+ * where it needs to win over shared CSS. */
+
+.skin-history .game-screen .h-card.hist-myst {
+  width: 248px;
+  height: 344px;
+  padding: 26px 22px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  border-radius: 16px;
+  background:
+    radial-gradient(
+      120% 90% at 50% 0%,
+      color-mix(in srgb, var(--accent) 16%, transparent),
+      transparent 60%
+    ),
+    color-mix(in srgb, var(--panel) 92%, #000);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 18px 40px -16px rgba(0, 0, 0, 0.7),
+    0 0 36px -10px var(--glow);
+}
+
+.skin-history .game-screen .hist-myst-kicker {
+  font-family: var(--title-font, Georgia, 'Times New Roman', serif);
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.92;
+}
+
+.skin-history .game-screen .hist-myst-clue {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 19px;
+  line-height: 1.42;
+  color: color-mix(in srgb, #fff 88%, var(--accent2));
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}

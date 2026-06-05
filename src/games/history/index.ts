@@ -11,7 +11,7 @@ export const history: GameModule = {
   id: 'history',
   name: 'History',
   description: 'Place historic events where they belong on the timeline.',
-  playable: false,
+  playable: true,
   theme: {
     title: 'History',
     tagline: 'When did it happen? Place it on the line.',
