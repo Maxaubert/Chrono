@@ -1,0 +1,140 @@
+/* Covering wipe transition with a glitch-settle wordmark. Reads the theme vars
+   (var(--accent) etc.) so it re-colours per active game. */
+
+.xover {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.xpanel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 42%, #1a1136, #07060d 78%);
+  transform: translateX(-100%);
+}
+/* glowing accent edge that leads the wipe */
+.xpanel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 40px 4px var(--accent);
+}
+.xover.in .xpanel {
+  animation: xWipeIn 0.45s cubic-bezier(0.7, 0, 0.25, 1) forwards;
+}
+.xover.hold .xpanel {
+  transform: translateX(0);
+}
+.xover.out .xpanel {
+  animation: xWipeOut 0.45s cubic-bezier(0.3, 0, 0.3, 1) forwards;
+}
+@keyframes xWipeIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes xWipeOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+
+/* glitch-settle wordmark (style E), revealed once covered */
+.xlogo {
+  position: relative;
+  opacity: 0;
+  font-family: var(--title-font, inherit);
+  font-size: clamp(44px, 9vw, 104px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--accent);
+  transform: skewX(-7deg);
+  text-shadow: 0 0 36px var(--glow);
+}
+.xover.hold .xlogo {
+  animation: xGlShow 0.12s linear forwards;
+}
+.xover.out .xlogo {
+  opacity: 1;
+}
+.xlogo::before,
+.xlogo::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.xover.hold .xlogo::before {
+  color: #ff4df0;
+  animation: xGlA 0.8s steps(2) forwards;
+}
+.xover.hold .xlogo::after {
+  color: #4dffff;
+  animation: xGlB 0.8s steps(2) forwards;
+}
+@keyframes xGlShow {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes xGlA {
+  0% {
+    transform: translate(-9px, 2px);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translate(6px, -3px);
+  }
+  70% {
+    transform: translate(-3px, 1px);
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+@keyframes xGlB {
+  0% {
+    transform: translate(9px, -2px);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translate(-6px, 3px);
+  }
+  70% {
+    transform: translate(3px, -1px);
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xover.in .xpanel {
+    animation: none;
+    transform: translateX(0);
+  }
+  .xover.out .xpanel {
+    animation: none;
+    transform: translateX(110%);
+  }
+}

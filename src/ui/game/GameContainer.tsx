@@ -1,19 +1,29 @@
 // src/ui/game/GameContainer.tsx
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { isWon, startGame, type Card } from '@/core'
 import type { SpotifyTrack } from '@/spotify'
 import { buildDeck, takeNextDrawn } from './deck'
 import { useGame } from './useGame'
-import { useSpotifySession } from './useSpotifySession'
-import SetupScreen, { type SetupResult } from './SetupScreen'
+import type { SpotifySession } from './useSpotifySession'
+import type { SetupResult } from './SetupScreen'
 import TurnScreen from './TurnScreen'
 import RevealPanel from './RevealPanel'
 import WinScreen from './WinScreen'
 
-export default function GameContainer() {
-  const session = useSpotifySession()
+/**
+ * Runs an in-progress game. The setup (players, target, tracks) is collected in
+ * the menu's Setup popup and handed in; the game starts on mount.
+ */
+export default function GameContainer({
+  session,
+  setup,
+}: {
+  session: SpotifySession
+  setup: SetupResult
+}) {
   const [state, dispatch] = useGame()
   const remaining = useRef<SpotifyTrack[]>([])
+  const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
 
   function play(uri: string) {
@@ -26,12 +36,12 @@ export default function GameContainer() {
     return result.drawn
   }
 
-  async function start(setup: SetupResult) {
+  async function start(s: SetupResult) {
     setError(null)
     try {
-      remaining.current = buildDeck(setup.tracks, Math.random)
+      remaining.current = buildDeck(s.tracks, Math.random)
       const anchors: Card[] = []
-      for (let i = 0; i < setup.names.length; i++) {
+      for (let i = 0; i < s.names.length; i++) {
         const drawn = await drawNext()
         if (!drawn)
           throw new Error('Not enough playable songs in the playlist.')
@@ -42,8 +52,8 @@ export default function GameContainer() {
       dispatch({
         type: 'start',
         state: startGame(
-          { targetCards: setup.targetCards },
-          setup.names.map((name, i) => ({ id: `p${i}`, name })),
+          { targetCards: s.targetCards },
+          s.names.map((name, i) => ({ id: `p${i}`, name })),
           anchors,
           first,
         ),
@@ -69,7 +79,36 @@ export default function GameContainer() {
     if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
   }
 
-  if (!state) return <SetupScreen session={session} onStart={start} />
+  // Start the game once, from the setup handed in by the menu.
+  useEffect(() => {
+    if (started.current) return
+    started.current = true
+    start(setup)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!state)
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          display: 'grid',
+          placeItems: 'center',
+          background: 'var(--bg, #08060f)',
+          color: 'var(--accent, #9a6bff)',
+          fontFamily: "'Segoe UI', system-ui, sans-serif",
+          letterSpacing: '0.3em',
+          fontSize: 14,
+          textTransform: 'uppercase',
+          padding: 24,
+          textAlign: 'center',
+        }}
+      >
+        {error ?? 'Dealing the deck...'}
+      </div>
+    )
+
   if (isWon(state))
     return (
       <WinScreen state={state} onPlayAgain={() => window.location.reload()} />
