@@ -213,4 +213,8 @@
     animation: none;
     background-position: 50% 50%;
   }
+  .myst-disc,
+  .myst-eq i {
+    animation: none;
+  }
 }
