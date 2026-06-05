@@ -1,14 +1,15 @@
 // src/ui/game/GameContainer.tsx
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { isWon, startGame, type Card } from '@/core'
 import type { SpotifyTrack } from '@/spotify'
 import { buildDeck, takeNextDrawn } from './deck'
 import { useGame } from './useGame'
 import type { SpotifySession } from './useSpotifySession'
 import type { SetupResult } from './SetupScreen'
-import TurnScreen from './TurnScreen'
-import RevealPanel from './RevealPanel'
-import WinScreen from './WinScreen'
+import GameScreen from './play/GameScreen'
+import RevealOverlay from './play/RevealOverlay'
+import TurnSwitch from './play/TurnSwitch'
+import WinScreen from './play/WinScreen'
 
 /**
  * Runs an in-progress game. The setup (players, target, tracks) is collected in
@@ -25,6 +26,16 @@ export default function GameContainer({
   const remaining = useRef<SpotifyTrack[]>([])
   const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
+  const [piled, setPiled] = useState(false)
+  const [ending, setEnding] = useState(false) // post-OK turn-end sequence
+  const [switching, setSwitching] = useState(false)
+  const [nextName, setNextName] = useState('')
+
+  const titleById = useMemo(() => {
+    const m = new Map<string, string>()
+    for (const t of setup.tracks) m.set(t.id, t.title)
+    return (id: string) => m.get(id)
+  }, [setup.tracks])
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
@@ -64,19 +75,40 @@ export default function GameContainer({
     }
   }
 
-  async function next() {
+  // The reveal's OK button starts the turn-end choreography:
+  // show the placed card in the deck -> pile -> "next player" cover (swap behind
+  // it) -> deal the next player's hand. If the turn won, go to the win screen.
+  function beginEndTurn() {
     if (!state) return
-    // If this turn just won the game, stop the music and end here, do not draw
-    // or play another song.
-    const player = state.players[state.currentPlayerIndex]
-    if (player.timeline.length >= state.config.targetCards) {
-      session.provider.stop().catch(() => {})
-      dispatch({ type: 'advance', nextDrawn: null })
+    const cur = state
+    const player = cur.players[cur.currentPlayerIndex]
+    const won = player.timeline.length >= cur.config.targetCards
+    setEnding(true) // hides the reveal; the hand shows the placed card
+    if (won) {
+      window.setTimeout(() => {
+        session.provider.stop().catch(() => {})
+        dispatch({ type: 'advance', nextDrawn: null }) // -> won -> WinScreen
+        setEnding(false)
+      }, 1100)
       return
     }
+    window.setTimeout(() => {
+      const nextIdx = (cur.currentPlayerIndex + 1) % cur.players.length
+      setNextName(cur.players[nextIdx].name)
+      setPiled(true) // collapse the hand into a pile
+      window.setTimeout(() => setSwitching(true), 600) // then cover for the swap
+    }, 1100)
+  }
+
+  async function switchCovered() {
     const nextDrawn = await drawNext()
     dispatch({ type: 'advance', nextDrawn })
     if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
+  }
+  function switchDone() {
+    setSwitching(false)
+    setPiled(false) // deal: the next player's pile spreads into their hand
+    setEnding(false)
   }
 
   // Start the game once, from the setup handed in by the menu.
@@ -115,24 +147,31 @@ export default function GameContainer({
     )
 
   return (
-    <div>
+    <>
       {(error || session.error) && (
-        <p className="mx-auto mt-4 max-w-2xl rounded bg-red-100 p-2 text-center text-sm text-red-800">
-          {error ?? session.error}
-        </p>
+        <p className="reveal-err">{error ?? session.error}</p>
       )}
-      {state.phase === 'listening' ? (
-        <TurnScreen
-          state={state}
-          onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
-          onPause={() => session.provider.pause()}
-          onReplay={() =>
-            state.drawn && play(`spotify:track:${state.drawn.card.id}`)
-          }
+      <GameScreen
+        state={state}
+        titleOf={titleById}
+        piled={piled}
+        interactive={!ending && !switching}
+        onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
+        onPause={() => session.provider.pause()}
+        onReplay={() =>
+          state.drawn && play(`spotify:track:${state.drawn.card.id}`)
+        }
+      />
+      {state.phase === 'revealed' && !ending && (
+        <RevealOverlay state={state} onNext={beginEndTurn} />
+      )}
+      {switching && (
+        <TurnSwitch
+          name={nextName}
+          onCovered={() => void switchCovered()}
+          onDone={switchDone}
         />
-      ) : (
-        <RevealPanel state={state} onNext={next} />
       )}
-    </div>
+    </>
   )
 }

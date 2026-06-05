@@ -1,15 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { useActiveGame } from '../theme/activeGameContext'
 import './screen-transition.css'
 
 /**
- * A covering screen transition: an accent panel wipes in to cover the screen,
- * the active game's wordmark does a glitch-settle, then the panel wipes off.
- * The screen swap happens behind the cover (onCover), hidden from view.
+ * A covering screen transition: a grid of tiles materializes in a diagonal
+ * wave to cover the screen, the active game's wordmark fades in, then the tiles
+ * dissolve outward to reveal the new page. The screen swap happens behind the
+ * cover (onCover), hidden from view.
  *
- * Phases: in (wipe in) -> hold (logo) -> out (wipe off). onCover fires once the
- * screen is fully covered; onDone fires when the panel has wiped away.
+ * Phases: in (tiles fill) -> hold (wordmark) -> out (tiles dissolve). onCover
+ * fires once the screen is covered; onDone fires when the tiles have cleared.
  */
+const TIMING = { cover: 560, hold: 1240, done: 1820 }
+
+const COLS = 12
+const ROWS = 7
+const DMAX = COLS - 1 + (ROWS - 1)
+const TILES = Array.from({ length: COLS * ROWS }, (_, i) => ({
+  i,
+  d: (i % COLS) + Math.floor(i / COLS),
+}))
+
 export default function ScreenTransition({
   onCover,
   onDone,
@@ -26,9 +37,9 @@ export default function ScreenTransition({
     const t1 = setTimeout(() => {
       onCover()
       setPhase('hold')
-    }, 450)
-    const t2 = setTimeout(() => setPhase('out'), 1200)
-    const t3 = setTimeout(() => onDone(), 1650)
+    }, TIMING.cover)
+    const t2 = setTimeout(() => setPhase('out'), TIMING.hold)
+    const t3 = setTimeout(() => onDone(), TIMING.done)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
@@ -39,7 +50,16 @@ export default function ScreenTransition({
 
   return (
     <div className={`xover ${phase}`} aria-hidden="true">
-      <div className="xpanel">
+      <div className="xmosaic">
+        {TILES.map((t) => (
+          <span
+            className="xtile"
+            key={t.i}
+            style={{ '--d': t.d, '--dr': DMAX - t.d } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="xlogo-wrap">
         <div className="xlogo" data-text={game.theme.title}>
           {game.theme.title}
         </div>

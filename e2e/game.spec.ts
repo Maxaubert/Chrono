@@ -22,23 +22,27 @@ test('a mock game plays through to a win', async ({ page }) => {
   await expect(page.getByTestId('start-game')).toBeEnabled()
   await page.getByTestId('start-game').click()
 
-  // Each turn: place at the rightmost gap (always correct in mock), then Next.
-  // With target 3 and 2 players, the first player to 3 cards wins within a few turns.
-  for (let i = 0; i < 8; i++) {
-    if (
-      await page
-        .getByTestId('winner')
-        .isVisible()
-        .catch(() => false)
-    )
-      break
-    // rightmost gap = the highest-indexed gap currently rendered
-    const gaps = page.locator('[data-testid^="gap-"]')
-    await gaps.last().click()
+  // Each turn: pick the newest (rightmost) enabled card, place AFTER it (the
+  // rightmost slot is always correct in mock), OK, then wait out the turn-end
+  // sequence (cards are disabled while it runs). Enabled cards only return when
+  // the next hand is dealt, so we race that against the win.
+  const winner = page.getByTestId('winner')
+  const enabledCards = page.locator(
+    '[data-testid^="hand-card-"]:not([disabled])',
+  )
+  for (let i = 0; i < 12; i++) {
+    if (await winner.isVisible().catch(() => false)) break
+    await enabledCards.last().click()
+    await page.getByTestId('place-after').click()
     await expect(page.getByTestId('reveal')).toBeVisible()
     await page.getByTestId('next').click()
+    // turn resolves into either a win or the next player's dealt hand
+    await Promise.race([
+      winner.waitFor({ state: 'visible' }),
+      enabledCards.last().waitFor({ state: 'visible' }),
+    ])
   }
 
-  await expect(page.getByTestId('winner')).toBeVisible()
-  await expect(page.getByTestId('winner')).toContainText('wins')
+  await expect(winner).toBeVisible()
+  await expect(winner).toContainText('wins')
 })

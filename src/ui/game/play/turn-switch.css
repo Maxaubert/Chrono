@@ -1,0 +1,79 @@
+/* Between-turns cover that announces the next player. */
+.tswitch {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+/* the dark cover that fades in/out */
+.tswitch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 42%, #160d2e, #06050c 78%);
+  opacity: 0;
+}
+.tswitch.in::before {
+  animation: tsCover 0.43s ease forwards;
+}
+.tswitch.hold::before {
+  opacity: 1;
+}
+.tswitch.out::before {
+  animation: tsCover 0.43s ease reverse forwards;
+}
+@keyframes tsCover {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tswitch-panel {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+}
+.tswitch.hold .tswitch-panel,
+.tswitch.out .tswitch-panel {
+  animation: tsPanel 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@keyframes tsPanel {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.tswitch-kicker {
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  font-weight: 800;
+  color: var(--accent2);
+}
+.tswitch-name {
+  margin: 10px 0 6px;
+  font-family: var(--title-font, inherit);
+  font-size: clamp(44px, 9vw, 96px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 40px var(--glow);
+}
+.tswitch-sub {
+  font-size: 13px;
+  letter-spacing: 0.34em;
+  color: #9a8cc4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tswitch::before,
+  .tswitch-panel {
+    animation-duration: 0.01ms !important;
+  }
+}

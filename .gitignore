@@ -39,3 +39,6 @@ test-results
 *.njsproj
 *.sln
 *.sw?
+
+# Large local mockup assets (videos), do not commit
+public/bg/

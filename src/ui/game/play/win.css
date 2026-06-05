@@ -1,0 +1,64 @@
+/* src/ui/game/play/win.css */
+.win-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  color: #e8e2ff;
+  background:
+    radial-gradient(820px 520px at 50% 36%, var(--glow), transparent 60%),
+    var(--bg, #060509);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.win-title {
+  font-family: var(--title-font, inherit);
+  font-size: clamp(40px, 8vw, 92px);
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  color: var(--accent);
+  text-shadow: 0 0 40px var(--glow);
+}
+.win-standings {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: min(320px, 86vw);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.win-standings li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  border-radius: 8px;
+}
+.win-standings b {
+  color: var(--accent);
+}
+.win-again {
+  margin-top: 8px;
+  cursor: pointer;
+  padding: 14px 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+}
+.win-again:hover {
+  box-shadow: 0 0 30px -4px var(--accent);
+}

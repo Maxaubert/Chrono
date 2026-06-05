@@ -175,7 +175,7 @@
 }
 
 /* ---------- card: warm museum plaque ---------- */
-.skin-history .menu-screen .card {
+.skin-history .menu-screen .h-card {
   border-radius: 14px;
   background:
     radial-gradient(
@@ -196,7 +196,7 @@
 }
 /* a wide, soft, slow warm glint that glides left -> right (top-left to
    bottom-right) across each card, one card at a time, then a long rest */
-.skin-history .menu-screen .card::before {
+.skin-history .menu-screen .h-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -234,16 +234,16 @@
   }
 }
 /* one at a time: 1215, then 1492, then 1789, then 1969, then a rest */
-.skin-history .menu-screen .c1 .card::before {
+.skin-history .menu-screen .c1 .h-card::before {
   animation-delay: 0s;
 }
-.skin-history .menu-screen .c2 .card::before {
+.skin-history .menu-screen .c2 .h-card::before {
   animation-delay: 6.5625s;
 }
-.skin-history .menu-screen .c3 .card::before {
+.skin-history .menu-screen .c3 .h-card::before {
   animation-delay: 13.125s;
 }
-.skin-history .menu-screen .c4 .card::before {
+.skin-history .menu-screen .c4 .h-card::before {
   animation-delay: 19.6875s;
 }
 
@@ -323,7 +323,7 @@
   .skin-history .menu-screen .logo::after {
     animation: none;
   }
-  .skin-history .menu-screen .card::before {
+  .skin-history .menu-screen .h-card::before {
     animation: none;
     background-position: 50% 50%;
   }
