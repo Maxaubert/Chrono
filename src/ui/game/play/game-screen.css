@@ -6,3 +6,68 @@
   font-family: 'Segoe UI', system-ui, sans-serif;
   background: var(--bg, #060509);
 }
+
+/* ---- entrance: elements animate in once when the game screen mounts ----
+   Each of these roots persists across turns (only the hand's inner slots
+   re-key), so the animation plays once on game start, not every turn. */
+.game-screen .game-bg {
+  animation: gsFade 0.7s ease 0.15s both;
+}
+.game-screen .ov {
+  animation: gsSlideL 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both;
+}
+.game-screen .mystery-wrap {
+  animation: gsPop 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s both;
+}
+.game-screen .hand {
+  animation: gsRise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both;
+}
+
+@keyframes gsFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes gsSlideL {
+  from {
+    opacity: 0;
+    transform: translateX(-26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes gsPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+/* the hand keeps its --hand-scale; only opacity + a small rise animate */
+@keyframes gsRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(var(--hand-scale));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(var(--hand-scale));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-screen .game-bg,
+  .game-screen .ov,
+  .game-screen .mystery-wrap,
+  .game-screen .hand {
+    animation: none;
+  }
+}
