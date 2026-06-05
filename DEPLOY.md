@@ -71,4 +71,10 @@ Open the deployed URL and check both modes:
   occasionally fail and need a retry. The durable fix (a real backend or shipping
   curated static decks) is future work.
 - The redirect URI must match the deployed domain **exactly**, or login fails.
+- **Public endpoints:** `/api/playlist-tracks` and `/api/track-year` are
+  unauthenticated. They validate the `id` as a Spotify base62 id (no SSRF) and cap
+  each request to `MAX_TRACKS` (no unbounded fan-out), and they only ever return
+  public Spotify data. They are **not** IP-rate-limited yet — if abuse/cost ever
+  becomes a concern, add rate limiting (e.g. Vercel KV / Upstash) or a request
+  signature so only the frontend can call them.
 - Auto-deploy: once connected, pushing to `main` redeploys automatically.

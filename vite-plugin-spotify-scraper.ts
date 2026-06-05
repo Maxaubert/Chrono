@@ -1,5 +1,9 @@
 import type { Plugin } from 'vite'
-import { scrapeAllTracks, getTrackYear } from './server/spotifyScraper'
+import {
+  isSpotifyId,
+  scrapeAllTracks,
+  getTrackYear,
+} from './server/spotifyScraper'
 
 /**
  * Dev-server adapter over server/spotifyScraper.ts: serves /api/playlist-tracks
@@ -18,9 +22,9 @@ export function spotifyScraperPlugin(): Plugin {
         if (!isTracks && !isYear) return next()
         const id = new URL(url, 'http://localhost').searchParams.get('id')
         res.setHeader('content-type', 'application/json')
-        if (!id) {
+        if (!isSpotifyId(id)) {
           res.statusCode = 400
-          res.end(JSON.stringify({ error: 'missing id' }))
+          res.end(JSON.stringify({ error: 'bad id' }))
           return
         }
         try {

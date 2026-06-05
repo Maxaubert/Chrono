@@ -25,6 +25,16 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'
 const PAGE_LIMIT = 100
 const HOME = 'https://open.spotify.com/'
+/** Hard cap on tracks read per request, so a huge (or hostile) playlist can't
+ * turn one unauthenticated call into an unbounded fan-out of upstream fetches. */
+const MAX_TRACKS = 1000
+
+/** Spotify resource ids are 22-char base62. Validating before any id is
+ * interpolated into a URL closes off SSRF / path-injection on these public,
+ * unauthenticated endpoints (e.g. an id of `../../foo` or a full URL). */
+export function isSpotifyId(id: unknown): id is string {
+  return typeof id === 'string' && /^[A-Za-z0-9]{22}$/.test(id)
+}
 
 let cachedBundle: string | null = null
 const hashCache: Record<string, string> = {}
@@ -103,6 +113,7 @@ async function pathfinderPage(
 export async function scrapeAllTracks(
   playlistId: string,
 ): Promise<{ tracks: SpotifyTrack[]; total: number }> {
+  if (!isSpotifyId(playlistId)) throw new Error('invalid playlist id')
   const token = await getAnonToken('playlist', playlistId)
   let hash = await loadHash('fetchPlaylist')
 
@@ -121,16 +132,23 @@ export async function scrapeAllTracks(
   const tracks = [...parsed.tracks]
   const total = parsed.total
 
-  for (let offset = PAGE_LIMIT; offset < total; offset += PAGE_LIMIT) {
+  // Bounded fan-out: never page past MAX_TRACKS regardless of the playlist size.
+  const limit = Math.min(total, MAX_TRACKS)
+  for (
+    let offset = PAGE_LIMIT;
+    offset < limit && tracks.length < MAX_TRACKS;
+    offset += PAGE_LIMIT
+  ) {
     const page = await pathfinderPage(playlistId, offset, hash, token)
     if (!page.ok) break // partial result rather than failing the whole import
     tracks.push(...parsePathfinderPage(page.json).tracks)
   }
-  return { tracks, total }
+  return { tracks: tracks.slice(0, MAX_TRACKS), total }
 }
 
 /** Look up a single track's release year (the playlist query omits it). */
 export async function getTrackYear(trackId: string): Promise<number | null> {
+  if (!isSpotifyId(trackId)) throw new Error('invalid track id')
   const token = await getAnonToken('track', trackId)
   const request = async (hash: string) =>
     fetch(buildGetTrackUrl({ trackId, hash }), {
