@@ -13,9 +13,6 @@ export default function GameScreen({
   onReplay,
   titleOf,
   piled = false,
-  isPlaying = true,
-  playEpoch = 0,
-  analysisEnabled = false,
 }: {
   state: GameState
   onPlace: (slotIndex: number) => void
@@ -23,18 +20,10 @@ export default function GameScreen({
   onReplay: () => void
   titleOf?: (id: string) => string | undefined
   piled?: boolean
-  isPlaying?: boolean
-  playEpoch?: number
-  analysisEnabled?: boolean
 }) {
   return (
     <div className="game-screen">
-      <GameBackground
-        trackId={state.drawn?.card.id}
-        isPlaying={isPlaying}
-        playEpoch={playEpoch}
-        analysisEnabled={analysisEnabled}
-      />
+      <GameBackground />
       <Overview
         players={state.players}
         currentIndex={state.currentPlayerIndex}

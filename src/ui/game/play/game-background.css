@@ -88,15 +88,6 @@
   filter: blur(var(--eq-blur-back));
   opacity: 0.34;
 }
-/* when real audio analysis drives the bars, stop the decorative animation so
-   the JS-set transform takes effect */
-.bg-eq-front.live .bg-eq-bar {
-  animation: none;
-}
-/* freeze the decorative loop while playback is paused */
-.game-bg.paused .bg-eq-bar {
-  animation-play-state: paused;
-}
 @media (prefers-reduced-motion: reduce) {
   .game-bg * {
     animation: none !important;
