@@ -25,6 +25,23 @@ export default function GameContainer({
   const [state, dispatch] = useGame()
   const remaining = useRef<SpotifyTrack[]>([])
   const started = useRef(false)
+  const timers = useRef<number[]>([])
+
+  // setTimeout that registers its id so every pending choreography timer can be
+  // cleared on unmount (e.g. a future "quit to menu"), instead of firing against
+  // a torn-down tree.
+  function schedule(fn: () => void, ms: number) {
+    const id = window.setTimeout(fn, ms)
+    timers.current.push(id)
+    return id
+  }
+  useEffect(
+    () => () => {
+      timers.current.forEach((id) => window.clearTimeout(id))
+      timers.current = []
+    },
+    [],
+  )
   const [error, setError] = useState<string | null>(null)
   const [piled, setPiled] = useState(false)
   const [ending, setEnding] = useState(false) // post-OK turn-end sequence
@@ -46,8 +63,14 @@ export default function GameContainer({
   const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
 
   function play(uri: string) {
-    session.provider.play({ uri }).catch((e) => setError(String(e)))
+    // Optimistically show the playing state, but undo it if the provider
+    // rejects (device gone, 404) so the card never shows a spinning disc /
+    // pause icon while nothing is actually playing.
     setPlaying(true)
+    session.provider.play({ uri }).catch((e) => {
+      setError(String(e))
+      setPlaying(false)
+    })
   }
 
   async function drawNext() {
@@ -94,18 +117,18 @@ export default function GameContainer({
     const won = player.timeline.length >= cur.config.targetCards
     setEnding(true) // hides the reveal; the hand shows the placed card
     if (won) {
-      window.setTimeout(() => {
+      schedule(() => {
         session.provider.stop().catch(() => {})
         dispatch({ type: 'advance', nextDrawn: null }) // -> won -> WinScreen
         setEnding(false)
       }, 1100)
       return
     }
-    window.setTimeout(() => {
+    schedule(() => {
       const nextIdx = (cur.currentPlayerIndex + 1) % cur.players.length
       setNextName(cur.players[nextIdx].name)
       setPiled(true) // collapse the hand into a pile
-      window.setTimeout(() => setSwitching(true), 600) // then cover for the swap
+      schedule(() => setSwitching(true), 600) // then cover for the swap
     }, 1100)
   }
 

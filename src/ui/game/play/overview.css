@@ -1,5 +1,7 @@
-/* Overview scoreboard overlay -- ported from game-mock.css, prefix gm-ov- -> ov- */
-.ov {
+/* Overview scoreboard overlay -- ported from game-mock.css, prefix gm-ov- -> ov-
+ * Scoped under .game-screen: all CSS is bundled globally, so generic names like
+ * `.ov` must stay fenced to this screen to avoid cross-screen collisions. */
+.game-screen .ov {
   position: absolute;
   top: 22px;
   left: 22px;
@@ -19,7 +21,7 @@
     0 13px
   );
 }
-.ov-turn {
+.game-screen .ov-turn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -31,19 +33,19 @@
   margin-bottom: 11px;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
 }
-.ov-dot {
+.game-screen .ov-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--accent2);
   box-shadow: 0 0 10px var(--accent2);
 }
-.ov-rows {
+.game-screen .ov-rows {
   display: flex;
   flex-direction: column;
   gap: 9px;
 }
-.ov-row {
+.game-screen .ov-row {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -51,33 +53,33 @@
   color: #b3a6d8;
   opacity: 0.7;
 }
-.ov-row.on {
+.game-screen .ov-row.on {
   opacity: 1;
 }
-.ov-name {
+.game-screen .ov-name {
   width: 44px;
   font-weight: 700;
   color: #e8e2ff;
 }
-.ov-bar {
+.game-screen .ov-bar {
   flex: 1;
   height: 6px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
-.ov-bar i {
+.game-screen .ov-bar i {
   display: block;
   height: 100%;
   background: linear-gradient(90deg, var(--accent2), var(--accent));
 }
-.ov-count {
+.game-screen .ov-count {
   width: 38px;
   text-align: right;
   font-weight: 800;
   color: var(--accent);
 }
-.ov-count b {
+.game-screen .ov-count b {
   font-weight: 600;
   color: #8b7fb5;
 }

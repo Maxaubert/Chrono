@@ -24,11 +24,6 @@ export function extractOperationHash(
   return m ? m[1] : null
 }
 
-/** Pull the current `fetchPlaylist` persisted-query hash out of the web-player JS bundle. */
-export function extractFetchPlaylistHash(bundleJs: string): string | null {
-  return extractOperationHash(bundleJs, 'fetchPlaylist')
-}
-
 /** Pull the anonymous web access token the embed page ships in its JSON. */
 export function extractAnonToken(embedHtml: string): string | null {
   const m = embedHtml.match(/"accessToken":"([^"]+)"/)

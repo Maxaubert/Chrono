@@ -1,6 +1,9 @@
-/* Mystery now-playing card — ported from src/ui/game/mock/game-mock.css */
+/* Mystery now-playing card — ported from src/ui/game/mock/game-mock.css
+ * Generic `.myst-*` / `.mystery` selectors are scoped under .game-screen (all
+ * CSS is bundled globally). The `.skin-hitster .h-card.mystery` sheen rules stay
+ * skin-scoped, matching the rest of the skin architecture. */
 
-.mystery-wrap {
+.game-screen .mystery-wrap {
   position: absolute;
   left: 50%;
   top: 38%;
@@ -12,13 +15,13 @@
   gap: 14px;
 }
 
-.mystery {
+.game-screen .mystery {
   align-items: center;
   justify-content: flex-start;
 }
 
 /* faint vinyl ring behind the mark */
-.myst-disc {
+.game-screen .myst-disc {
   position: absolute;
   top: 58px;
   left: 50%;
@@ -40,7 +43,7 @@
   z-index: 1;
 }
 
-.myst-disc::after {
+.game-screen .myst-disc::after {
   content: '';
   position: absolute;
   inset: 41%;
@@ -55,7 +58,7 @@
   }
 }
 
-.myst-q {
+.game-screen .myst-q {
   position: absolute;
   top: 92px;
   left: 0;
@@ -69,7 +72,7 @@
   z-index: 2;
 }
 
-.myst-eq {
+.game-screen .myst-eq {
   position: absolute;
   left: 0;
   right: 0;
@@ -82,7 +85,7 @@
   z-index: 2;
 }
 
-.myst-eq i {
+.game-screen .myst-eq i {
   width: 5px;
   height: 40%;
   border-radius: 2px;
@@ -99,7 +102,7 @@
   }
 }
 
-.myst-label {
+.game-screen .myst-label {
   position: absolute;
   left: 0;
   right: 0;
@@ -111,7 +114,7 @@
   color: var(--accent);
 }
 
-.myst-sub {
+.game-screen .myst-sub {
   position: absolute;
   left: 0;
   right: 0;
@@ -123,12 +126,12 @@
   opacity: 0.8;
 }
 
-.myst-controls {
+.game-screen .myst-controls {
   display: flex;
   gap: 12px;
 }
 
-.myst-ctl {
+.game-screen .myst-ctl {
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -140,13 +143,13 @@
   transition: 0.15s;
 }
 
-.myst-ctl:hover {
+.game-screen .myst-ctl:hover {
   background: var(--accent);
   color: var(--ink);
   box-shadow: 0 0 22px -4px var(--accent);
 }
 
-.myst-hint {
+.game-screen .myst-hint {
   font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -208,8 +211,8 @@
 }
 
 /* freeze the spinning disc + equalizer while playback is paused */
-.mystery.paused .myst-disc,
-.mystery.paused .myst-eq i {
+.game-screen .mystery.paused .myst-disc,
+.game-screen .mystery.paused .myst-eq i {
   animation-play-state: paused;
 }
 
@@ -219,8 +222,8 @@
     animation: none;
     background-position: 50% 50%;
   }
-  .myst-disc,
-  .myst-eq i {
+  .game-screen .myst-disc,
+  .game-screen .myst-eq i {
     animation: none;
   }
 }

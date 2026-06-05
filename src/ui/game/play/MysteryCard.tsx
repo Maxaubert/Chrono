@@ -13,7 +13,7 @@ export default function MysteryCard({
 }) {
   return (
     <div className="mystery-wrap">
-      <div className={`h-card front mystery ${isPlaying ? '' : 'paused'}`}>
+      <div className={`h-card mystery ${isPlaying ? '' : 'paused'}`}>
         <div className="myst-disc" />
         <div className="myst-eq" aria-hidden="true">
           {[0, 1, 2, 3, 4, 5, 6].map((i) => (
