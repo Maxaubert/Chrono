@@ -25,6 +25,7 @@ export default function GameContainer({
   const remaining = useRef<SpotifyTrack[]>([])
   const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
+  const [piled, setPiled] = useState(false)
 
   const titleById = useMemo(() => {
     const m = new Map<string, string>()
@@ -85,6 +86,13 @@ export default function GameContainer({
     if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
   }
 
+  async function nextWithTransition() {
+    setPiled(true) // collapse the current hand (behind the scrim)
+    await next() // dismiss the scrim; new hand renders already piled
+    await new Promise((r) => setTimeout(r, 420)) // brief pause before fan-out
+    setPiled(false) // new hand fans out
+  }
+
   // Start the game once, from the setup handed in by the menu.
   useEffect(() => {
     if (started.current) return
@@ -128,6 +136,7 @@ export default function GameContainer({
       <GameScreen
         state={state}
         titleOf={titleById}
+        piled={piled}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
         onPause={() => session.provider.pause()}
         onReplay={() =>
@@ -135,7 +144,7 @@ export default function GameContainer({
         }
       />
       {state.phase === 'revealed' && (
-        <RevealOverlay state={state} onNext={next} />
+        <RevealOverlay state={state} onNext={nextWithTransition} />
       )}
     </>
   )
