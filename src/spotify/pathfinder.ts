@@ -73,14 +73,39 @@ export function buildGetTrackUrl(args: {
   )
 }
 
+/** Read title, primary artists, and the release year from a getTrack response.
+ * Title + artist feed the iTunes original-year cross-check (see itunesYear.ts). */
+export function parseTrackMeta(json: unknown): {
+  year: number | null
+  title: string | null
+  artist: string | null
+} {
+  const tu = (
+    json as {
+      data?: {
+        trackUnion?: {
+          name?: string
+          artists?: { items?: { profile?: { name?: string } }[] }
+          albumOfTrack?: { date?: { year?: number } }
+        }
+      }
+    }
+  )?.data?.trackUnion
+  const year = tu?.albumOfTrack?.date?.year
+  const artist = (tu?.artists?.items ?? [])
+    .map((a) => a?.profile?.name)
+    .filter(Boolean)
+    .join(', ')
+  return {
+    year: typeof year === 'number' ? year : null,
+    title: typeof tu?.name === 'string' ? tu.name : null,
+    artist: artist || null,
+  }
+}
+
 /** Read the release year from a getTrack response, or null. */
 export function parseTrackYear(json: unknown): number | null {
-  const year = (
-    json as {
-      data?: { trackUnion?: { albumOfTrack?: { date?: { year?: number } } } }
-    }
-  )?.data?.trackUnion?.albumOfTrack?.date?.year
-  return typeof year === 'number' ? year : null
+  return parseTrackMeta(json).year
 }
 
 /** Pick an album-cover URL near 300px (good for a card), or null. Shared by the
