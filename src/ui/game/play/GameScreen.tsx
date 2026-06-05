@@ -12,6 +12,7 @@ export default function GameScreen({
   onPause,
   onReplay,
   titleOf,
+  artistOf,
   imageOf,
   piled = false,
   interactive = true,
@@ -21,6 +22,7 @@ export default function GameScreen({
   onPause: () => void
   onReplay: () => void
   titleOf?: (id: string) => string | undefined
+  artistOf?: (id: string) => string | undefined
   imageOf?: (id: string) => string | null | undefined
   piled?: boolean
   interactive?: boolean
@@ -38,6 +40,7 @@ export default function GameScreen({
         timeline={currentPlayer(state).timeline}
         onPlace={onPlace}
         titleOf={titleOf}
+        artistOf={artistOf}
         imageOf={imageOf}
         piled={piled}
         interactive={interactive}

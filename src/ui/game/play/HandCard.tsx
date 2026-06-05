@@ -5,11 +5,13 @@ export default function HandCard({
   id,
   year,
   title,
+  artist,
   image,
 }: {
   id: string
   year: number
   title?: string
+  artist?: string
   image?: string | null
 }) {
   const art = image
@@ -24,7 +26,8 @@ export default function HandCard({
       <span className="hc-year">{year}</span>
       <div className="hc-art" style={art} />
       {title && <div className="hc-title">{title}</div>}
-      <div className="brand">Hitster</div>
+      {artist && <div className="hc-artist">{artist}</div>}
+      <div className="brand">HITSTER</div>
     </div>
   )
 }

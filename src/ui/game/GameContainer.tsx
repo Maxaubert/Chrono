@@ -32,12 +32,16 @@ export default function GameContainer({
   const [nextName, setNextName] = useState('')
 
   const trackInfo = useMemo(() => {
-    const m = new Map<string, { title: string; image: string | null }>()
+    const m = new Map<
+      string,
+      { title: string; artist: string; image: string | null }
+    >()
     for (const t of setup.tracks)
-      m.set(t.id, { title: t.title, image: t.image })
+      m.set(t.id, { title: t.title, artist: t.artist, image: t.image })
     return m
   }, [setup.tracks])
   const titleOf = (id: string) => trackInfo.get(id)?.title
+  const artistOf = (id: string) => trackInfo.get(id)?.artist
   const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
 
   function play(uri: string) {
@@ -157,6 +161,7 @@ export default function GameContainer({
       <GameScreen
         state={state}
         titleOf={titleOf}
+        artistOf={artistOf}
         imageOf={imageOf}
         piled={piled}
         interactive={!ending && !switching}

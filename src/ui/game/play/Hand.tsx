@@ -56,6 +56,7 @@ export default function Hand({
   timeline,
   onPlace,
   titleOf,
+  artistOf,
   imageOf,
   piled = false,
   interactive = true,
@@ -63,6 +64,7 @@ export default function Hand({
   timeline: Card[]
   onPlace: (slotIndex: number) => void
   titleOf?: (id: string) => string | undefined
+  artistOf?: (id: string) => string | undefined
   imageOf?: (id: string) => string | null | undefined
   piled?: boolean
   interactive?: boolean
@@ -163,6 +165,7 @@ export default function Hand({
                   id={it.card.id}
                   year={it.card.year}
                   title={titleOf?.(it.card.id)}
+                  artist={artistOf?.(it.card.id)}
                   image={imageOf?.(it.card.id)}
                 />
               </button>
