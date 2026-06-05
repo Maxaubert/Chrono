@@ -28,8 +28,8 @@ test('choosing History from the picker reskins the menu live', async () => {
 
   await userEvent.click(screen.getByTestId('game-option-history'))
 
-  // Reskinned to History: title shows, PLAY disabled (placeholder), picker closed.
+  // Reskinned to History: title shows, PLAY enabled (it's playable), picker closed.
   expect(screen.getAllByText('History').length).toBeGreaterThan(0)
-  expect(screen.getByTestId('menu-play')).toBeDisabled()
+  expect(screen.getByTestId('menu-play')).toBeEnabled()
   expect(screen.queryByTestId('game-picker')).not.toBeInTheDocument()
 })

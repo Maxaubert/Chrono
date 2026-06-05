@@ -5,10 +5,12 @@ import MenuScreen from './menu/MenuScreen'
 import GameContainer from './game/GameContainer'
 import { useSpotifySession } from './game/useSpotifySession'
 import { makeHitsterPlay } from './game/hitster/play'
+import { makeHistoryPlay } from './game/history/play'
 import { clearResumeSetup, peekResumeSetup } from './game/resumeSetup'
 import type { GameSetupResult } from './game/play/adapter'
 import ScreenTransition from './transition/ScreenTransition'
 import { ThemeProvider } from './theme/ThemeProvider'
+import { useActiveGame } from './theme/activeGameContext'
 
 export default function App() {
   const params = new URLSearchParams(window.location.search)
@@ -33,11 +35,16 @@ function GameRoot() {
     () => new URLSearchParams(window.location.search).get('guest') === '1',
   )
   const session = useSpotifySession(guest)
+  const { game } = useActiveGame()
   // useSpotifySession returns a fresh object each render; the adapter only needs
-  // to be rebuilt when the provider identity changes (mock/guest), so key on
-  // those rather than the whole session object.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const play = useMemo(() => makeHitsterPlay(session), [session.mock, guest])
+  // to be rebuilt when the provider identity changes (mock/guest) or the active
+  // game switches, so key on those rather than the whole session object.
+  const play = useMemo(
+    () =>
+      game.id === 'history' ? makeHistoryPlay() : makeHitsterPlay(session),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [game.id, session.mock, guest],
+  )
   const [screen, setScreen] = useState<'menu' | 'game'>('menu')
   // Returning from the Spotify auth redirect: reopen setup where the host left
   // off, instead of the menu the fresh page load would otherwise show. The flag
@@ -69,7 +76,10 @@ function GameRoot() {
       ) : (
         setup && (
           <>
-            {session.error && <p className="reveal-err">{session.error}</p>}
+            {/* Spotify errors are Hitster-only; History never touches the session. */}
+            {game.id !== 'history' && session.error && (
+              <p className="reveal-err">{session.error}</p>
+            )}
             <GameContainer play={play} setupResult={setup} />
           </>
         )
