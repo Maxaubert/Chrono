@@ -72,6 +72,7 @@ export default function SpikeHarness() {
         title: 'Mock Song',
         artist: 'Mock Artist',
         year: 1999,
+        image: null,
       },
       {
         id: 'MOCK2',
@@ -79,6 +80,7 @@ export default function SpikeHarness() {
         title: 'Second Mock',
         artist: 'Mock Artist',
         year: 2008,
+        image: null,
       },
     ]
     Promise.all(
@@ -282,7 +284,8 @@ export default function SpikeHarness() {
           </div>
           {revealed && (
             <p className="mt-3 text-sm" data-testid="reveal">
-              {nowPlaying.title}, {nowPlaying.artist} ({revealYear ?? 'unknown'})
+              {nowPlaying.title}, {nowPlaying.artist} ({revealYear ?? 'unknown'}
+              )
             </p>
           )}
         </section>

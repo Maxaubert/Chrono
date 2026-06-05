@@ -1,5 +1,6 @@
 // src/spotify/client.ts
 import type { SpotifyTrack } from './types'
+import { pickCoverUrl } from './pathfinder'
 
 const API = 'https://api.spotify.com/v1'
 
@@ -23,7 +24,10 @@ interface RawItem {
     uri: string
     name: string
     artists: { name: string }[]
-    album: { release_date: string }
+    album: {
+      release_date: string
+      images?: { url?: string; width?: number | null }[]
+    }
   } | null
 }
 
@@ -36,6 +40,7 @@ export function mapTrack(item: RawItem): SpotifyTrack | null {
     title: t.name,
     artist: t.artists.map((a) => a.name).join(', '),
     year: parseYear(t.album?.release_date ?? ''),
+    image: pickCoverUrl(t.album?.images),
   }
 }
 

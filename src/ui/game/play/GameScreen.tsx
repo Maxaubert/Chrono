@@ -10,16 +10,24 @@ export default function GameScreen({
   state,
   onPlace,
   onPause,
+  onResume,
   onReplay,
+  playing = true,
   titleOf,
+  artistOf,
+  imageOf,
   piled = false,
   interactive = true,
 }: {
   state: GameState
   onPlace: (slotIndex: number) => void
   onPause: () => void
+  onResume: () => void
   onReplay: () => void
+  playing?: boolean
   titleOf?: (id: string) => string | undefined
+  artistOf?: (id: string) => string | undefined
+  imageOf?: (id: string) => string | null | undefined
   piled?: boolean
   interactive?: boolean
 }) {
@@ -31,11 +39,18 @@ export default function GameScreen({
         currentIndex={state.currentPlayerIndex}
         target={state.config.targetCards}
       />
-      <MysteryCard onPause={onPause} onReplay={onReplay} />
+      <MysteryCard
+        onPause={onPause}
+        onResume={onResume}
+        onReplay={onReplay}
+        isPlaying={playing}
+      />
       <Hand
         timeline={currentPlayer(state).timeline}
         onPlace={onPlace}
         titleOf={titleOf}
+        artistOf={artistOf}
+        imageOf={imageOf}
         piled={piled}
         interactive={interactive}
       />

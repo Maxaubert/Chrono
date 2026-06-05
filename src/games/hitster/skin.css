@@ -331,6 +331,12 @@
     0 6px 18px -6px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
+/* real album cover fills the art square */
+.skin-hitster .h-card .art-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .skin-hitster .h-card .art-disc {
   position: absolute;
   right: -44px;
@@ -405,10 +411,12 @@
   right: 0;
   bottom: 13px;
   text-align: center;
-  font-size: 10px;
-  letter-spacing: 5px;
+  font-family: var(--title-font, inherit);
+  font-size: 14px;
+  letter-spacing: 4px;
   font-weight: 900;
+  text-transform: uppercase;
   color: var(--accent2);
-  opacity: 0.7;
-  transform: skewX(-7deg);
+  opacity: 0.85;
+  transform: skewX(-7deg); /* match the slanted wordmark look */
 }

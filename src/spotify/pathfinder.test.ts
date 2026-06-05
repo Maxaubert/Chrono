@@ -38,7 +38,9 @@ describe('buildGetTrackUrl', () => {
     expect(JSON.parse(url.searchParams.get('variables')!)).toEqual({
       uri: 'spotify:track:T1',
     })
-    expect(JSON.parse(url.searchParams.get('extensions')!).persistedQuery.sha256Hash).toBe(HASH)
+    expect(
+      JSON.parse(url.searchParams.get('extensions')!).persistedQuery.sha256Hash,
+    ).toBe(HASH)
   })
 })
 
@@ -58,14 +60,21 @@ describe('parseTrackYear', () => {
 
 describe('extractAnonToken', () => {
   it('extracts the anonymous token', () => {
-    expect(extractAnonToken('x"accessToken":"BQ_TOKEN_123"y')).toBe('BQ_TOKEN_123')
+    expect(extractAnonToken('x"accessToken":"BQ_TOKEN_123"y')).toBe(
+      'BQ_TOKEN_123',
+    )
   })
 })
 
 describe('buildFetchPlaylistUrl', () => {
   it('encodes operation, variables and the hash', () => {
     const url = new URL(
-      buildFetchPlaylistUrl({ playlistId: 'PL', offset: 100, limit: 100, hash: HASH }),
+      buildFetchPlaylistUrl({
+        playlistId: 'PL',
+        offset: 100,
+        limit: 100,
+        hash: HASH,
+      }),
     )
     expect(url.origin + url.pathname).toBe(
       'https://api-partner.spotify.com/pathfinder/v1/query',
@@ -97,6 +106,15 @@ describe('parsePathfinderPage', () => {
                     uri: 'spotify:track:T1',
                     name: 'Carry You Home',
                     artists: { items: [{ profile: { name: 'James Blunt' } }] },
+                    albumOfTrack: {
+                      coverArt: {
+                        sources: [
+                          { url: 'https://i/64', width: 64 },
+                          { url: 'https://i/300', width: 300 },
+                          { url: 'https://i/640', width: 640 },
+                        ],
+                      },
+                    },
                   },
                 },
               },
@@ -123,8 +141,22 @@ describe('parsePathfinderPage', () => {
     expect(parsePathfinderPage(json)).toEqual({
       total: 512,
       tracks: [
-        { id: 'T1', uri: 'spotify:track:T1', title: 'Carry You Home', artist: 'James Blunt', year: null },
-        { id: 'T2', uri: 'spotify:track:T2', title: 'Duet', artist: 'A, B', year: null },
+        {
+          id: 'T1',
+          uri: 'spotify:track:T1',
+          title: 'Carry You Home',
+          artist: 'James Blunt',
+          year: null,
+          image: 'https://i/300',
+        },
+        {
+          id: 'T2',
+          uri: 'spotify:track:T2',
+          title: 'Duet',
+          artist: 'A, B',
+          year: null,
+          image: null,
+        },
       ],
     })
   })

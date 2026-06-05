@@ -6,6 +6,17 @@ import { SAMPLE_DECK, type Song } from './deck'
  */
 
 function AlbumArt({ song }: { song: Song }) {
+  // Real album cover when available; the gradient + disc + bars are the fallback.
+  if (song.img) {
+    return (
+      <div
+        className="art art-cover"
+        style={{ backgroundImage: `url(${song.img})` }}
+      >
+        <span className="art-sheen" />
+      </div>
+    )
+  }
   const bg = `linear-gradient(150deg, ${song.g1}, ${song.g2})`
   return (
     <div className="art" style={{ background: bg }}>
@@ -38,11 +49,7 @@ export function FanCard({ index }: { index: number }) {
         <span className="artist">{song.artist}</span>
       </div>
 
-      <div className="brand">Hitster</div>
-      <span className="idx br">
-        {song.year}
-        <i>&#9834;</i>
-      </span>
+      <div className="brand">HITSTER</div>
     </div>
   )
 }

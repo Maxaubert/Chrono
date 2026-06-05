@@ -34,6 +34,7 @@ const MOCK_TRACKS: SpotifyTrack[] = Array.from({ length: 8 }, (_, i) => ({
   title: `Mock Song ${i}`,
   artist: 'Mock Artist',
   year: 1950 + i,
+  image: null,
 }))
 const MOCK_YEAR: Record<string, number> = Object.fromEntries(
   MOCK_TRACKS.map((t) => [t.id, t.year as number]),

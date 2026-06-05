@@ -30,15 +30,24 @@ export default function GameContainer({
   const [ending, setEnding] = useState(false) // post-OK turn-end sequence
   const [switching, setSwitching] = useState(false)
   const [nextName, setNextName] = useState('')
+  const [playing, setPlaying] = useState(true) // mystery track play/pause
 
-  const titleById = useMemo(() => {
-    const m = new Map<string, string>()
-    for (const t of setup.tracks) m.set(t.id, t.title)
-    return (id: string) => m.get(id)
+  const trackInfo = useMemo(() => {
+    const m = new Map<
+      string,
+      { title: string; artist: string; image: string | null }
+    >()
+    for (const t of setup.tracks)
+      m.set(t.id, { title: t.title, artist: t.artist, image: t.image })
+    return m
   }, [setup.tracks])
+  const titleOf = (id: string) => trackInfo.get(id)?.title
+  const artistOf = (id: string) => trackInfo.get(id)?.artist
+  const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
+    setPlaying(true)
   }
 
   async function drawNext() {
@@ -153,17 +162,31 @@ export default function GameContainer({
       )}
       <GameScreen
         state={state}
-        titleOf={titleById}
+        titleOf={titleOf}
+        artistOf={artistOf}
+        imageOf={imageOf}
         piled={piled}
         interactive={!ending && !switching}
+        playing={playing}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
-        onPause={() => session.provider.pause()}
+        onPause={() => {
+          session.provider.pause().catch(() => {})
+          setPlaying(false)
+        }}
+        onResume={() => {
+          session.provider.resume().catch((e) => setError(String(e)))
+          setPlaying(true)
+        }}
         onReplay={() =>
           state.drawn && play(`spotify:track:${state.drawn.card.id}`)
         }
       />
       {state.phase === 'revealed' && !ending && (
-        <RevealOverlay state={state} onNext={beginEndTurn} />
+        <RevealOverlay
+          state={state}
+          image={state.drawn ? imageOf(state.drawn.card.id) : undefined}
+          onNext={beginEndTurn}
+        />
       )}
       {switching && (
         <TurnSwitch
