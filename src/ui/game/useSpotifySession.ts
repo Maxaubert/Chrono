@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { MockProvider, type AudioProvider } from '@/audio'
+import { GuestProvider, MockProvider, type AudioProvider } from '@/audio'
 import {
   buildAuthorizeUrl,
   clearTokens,
@@ -42,6 +42,8 @@ const MOCK_YEAR: Record<string, number> = Object.fromEntries(
 
 export interface SpotifySession {
   mock: boolean
+  /** Guest mode: no login, playback handed to players' own Spotify via QR. */
+  guest: boolean
   loggedIn: boolean
   connected: boolean
   error: string | null
@@ -54,16 +56,21 @@ export interface SpotifySession {
   fetchYear: (trackId: string) => Promise<number | null>
 }
 
-export function useSpotifySession(): SpotifySession {
-  const mock = new URLSearchParams(window.location.search).get('mock') === '1'
+export function useSpotifySession(guestArg = false): SpotifySession {
+  const params = new URLSearchParams(window.location.search)
+  const mock = params.get('mock') === '1'
+  // Guest mode is chosen in the UI; ?guest=1 forces it (used by the E2E flow).
+  const guest = guestArg || params.get('guest') === '1'
   const provider = useMemo<AudioProvider>(
     () =>
-      mock
-        ? new MockProvider()
-        : new SpotifyProvider({
-            getAccessToken: () => loadTokens()?.accessToken ?? null,
-          }),
-    [mock],
+      guest
+        ? new GuestProvider()
+        : mock
+          ? new MockProvider()
+          : new SpotifyProvider({
+              getAccessToken: () => loadTokens()?.accessToken ?? null,
+            }),
+    [mock, guest],
   )
   const [loggedIn, setLoggedIn] = useState(mock || hasValidToken())
   const [connected, setConnected] = useState(mock)
@@ -71,7 +78,7 @@ export function useSpotifySession(): SpotifySession {
 
   // Handle the OAuth callback once on mount.
   useEffect(() => {
-    if (mock || window.location.pathname !== '/callback') return
+    if (mock || guest || window.location.pathname !== '/callback') return
     const code = new URLSearchParams(window.location.search).get('code')
     const verifier = takeVerifier()
     if (!code || !verifier) return
@@ -83,7 +90,7 @@ export function useSpotifySession(): SpotifySession {
         setLoggedIn(true)
       })
       .catch((e) => setError(String(e)))
-  }, [mock])
+  }, [mock, guest])
 
   async function login() {
     try {
@@ -138,11 +145,12 @@ export function useSpotifySession(): SpotifySession {
 
   // Connect the playback device automatically once logged in (no button needed).
   useEffect(() => {
-    if (mock || !loggedIn || connected || autoConnectStarted.current) return
+    if (mock || guest || !loggedIn || connected || autoConnectStarted.current)
+      return
     autoConnectStarted.current = true
     void connect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mock, loggedIn, connected])
+  }, [mock, guest, loggedIn, connected])
 
   async function importPlaylistId(id: string): Promise<SpotifyTrack[]> {
     if (mock) return MOCK_TRACKS
@@ -164,6 +172,7 @@ export function useSpotifySession(): SpotifySession {
 
   return {
     mock,
+    guest,
     loggedIn,
     connected,
     error,
