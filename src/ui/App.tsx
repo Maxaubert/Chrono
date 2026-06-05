@@ -1,10 +1,11 @@
 // src/ui/App.tsx
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SpikeHarness from './SpikeHarness'
 import MenuScreen from './menu/MenuScreen'
 import GameContainer from './game/GameContainer'
 import SetupScreen, { type SetupResult } from './game/SetupScreen'
 import { useSpotifySession } from './game/useSpotifySession'
+import { clearResumeSetup, peekResumeSetup } from './game/resumeSetup'
 import ScreenTransition from './transition/ScreenTransition'
 import { ThemeProvider } from './theme/ThemeProvider'
 
@@ -26,9 +27,16 @@ export default function App() {
 function GameRoot() {
   const session = useSpotifySession()
   const [screen, setScreen] = useState<'menu' | 'game'>('menu')
-  const [setupOpen, setSetupOpen] = useState(false)
+  // Returning from the Spotify auth redirect: reopen setup where the host left
+  // off, instead of the menu the fresh page load would otherwise show. The flag
+  // is read in the initializer and cleared once in the effect below.
+  const [setupOpen, setSetupOpen] = useState(peekResumeSetup)
   const [transitioning, setTransitioning] = useState(false)
   const [setup, setSetup] = useState<SetupResult | null>(null)
+
+  useEffect(() => {
+    clearResumeSetup()
+  }, [])
 
   return (
     <>
