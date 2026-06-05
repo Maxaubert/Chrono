@@ -32,11 +32,21 @@ describe('createRateLimiter', () => {
 })
 
 describe('clientIp', () => {
-  it('reads the first x-forwarded-for address', () => {
-    expect(clientIp({ 'x-forwarded-for': '1.2.3.4, 5.6.7.8' })).toBe('1.2.3.4')
-    expect(clientIp({ 'x-forwarded-for': ['9.9.9.9', '8.8.8.8'] })).toBe(
-      '9.9.9.9',
+  it('uses the RIGHTMOST x-forwarded-for entry (proxy-appended, not client-spoofed)', () => {
+    // A client prepends a fake IP; the trusted proxy appends the real one last.
+    expect(clientIp({ 'x-forwarded-for': '6.6.6.6, 5.6.7.8' })).toBe('5.6.7.8')
+    expect(clientIp({ 'x-forwarded-for': ['6.6.6.6', '8.8.8.8'] })).toBe(
+      '8.8.8.8',
     )
+  })
+
+  it("prefers Vercel's unspoofable header over a spoofed x-forwarded-for", () => {
+    expect(
+      clientIp({
+        'x-vercel-forwarded-for': '203.0.113.9',
+        'x-forwarded-for': 'spoof, spoof2',
+      }),
+    ).toBe('203.0.113.9')
   })
 
   it('falls back to x-real-ip, then the provided fallback', () => {

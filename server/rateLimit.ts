@@ -43,13 +43,30 @@ export function createRateLimiter(opts: {
 
 type Headers = Record<string, string | string[] | undefined>
 
-/** Best-effort client IP from proxy headers (Vercel sets x-forwarded-for). */
+/**
+ * Client IP for rate-limit keying, resistant to spoofing. A client can put any
+ * value at the FRONT of `x-forwarded-for`, so trusting the leftmost entry would
+ * let an attacker mint a fresh bucket per request and bypass the limiter.
+ * Precedence:
+ *   1. `x-vercel-forwarded-for` — injected by Vercel's edge, clients can't override.
+ *   2. the RIGHTMOST `x-forwarded-for` entry — appended by the proxy closest to us.
+ *   3. `x-real-ip`, then the caller-supplied fallback (dev socket address).
+ */
 export function clientIp(headers: Headers, fallback = 'unknown'): string {
-  const pick = (v: string | string[] | undefined) =>
+  const first = (v: string | string[] | undefined) =>
     (Array.isArray(v) ? v[0] : v)?.split(',')[0].trim()
-  return (
-    pick(headers['x-forwarded-for']) ?? pick(headers['x-real-ip']) ?? fallback
-  )
+
+  const vercel = first(headers['x-vercel-forwarded-for'])
+  if (vercel) return vercel
+
+  const xff = headers['x-forwarded-for']
+  const parts = (Array.isArray(xff) ? xff.join(',') : (xff ?? ''))
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  if (parts.length) return parts[parts.length - 1]
+
+  return first(headers['x-real-ip']) ?? fallback
 }
 
 /** Shared policy for the scrape endpoints: 40 requests / minute per IP -- well
