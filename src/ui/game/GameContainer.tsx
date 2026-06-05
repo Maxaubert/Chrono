@@ -26,6 +26,8 @@ export default function GameContainer({
   const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [piled, setPiled] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const [playEpoch, setPlayEpoch] = useState(0)
 
   const titleById = useMemo(() => {
     const m = new Map<string, string>()
@@ -35,6 +37,8 @@ export default function GameContainer({
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
+    setIsPlaying(true)
+    setPlayEpoch((e) => e + 1) // restart the visualizer playback clock
   }
 
   async function drawNext() {
@@ -137,8 +141,14 @@ export default function GameContainer({
         state={state}
         titleOf={titleById}
         piled={piled}
+        isPlaying={isPlaying}
+        playEpoch={playEpoch}
+        analysisEnabled={!session.mock && session.loggedIn}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
-        onPause={() => session.provider.pause()}
+        onPause={() => {
+          session.provider.pause()
+          setIsPlaying(false)
+        }}
         onReplay={() =>
           state.drawn && play(`spotify:track:${state.drawn.card.id}`)
         }
