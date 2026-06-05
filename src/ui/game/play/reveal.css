@@ -72,3 +72,15 @@
 .reveal-next:hover {
   box-shadow: 0 0 26px -4px var(--accent);
 }
+.reveal-err {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #5a1020;
+  color: #ffd7df;
+  font-size: 13px;
+}

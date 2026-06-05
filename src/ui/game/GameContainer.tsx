@@ -1,14 +1,14 @@
 // src/ui/game/GameContainer.tsx
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { isWon, startGame, type Card } from '@/core'
 import type { SpotifyTrack } from '@/spotify'
 import { buildDeck, takeNextDrawn } from './deck'
 import { useGame } from './useGame'
 import type { SpotifySession } from './useSpotifySession'
 import type { SetupResult } from './SetupScreen'
-import TurnScreen from './TurnScreen'
-import RevealPanel from './RevealPanel'
-import WinScreen from './WinScreen'
+import GameScreen from './play/GameScreen'
+import RevealOverlay from './play/RevealOverlay'
+import WinScreen from './play/WinScreen'
 
 /**
  * Runs an in-progress game. The setup (players, target, tracks) is collected in
@@ -25,6 +25,12 @@ export default function GameContainer({
   const remaining = useRef<SpotifyTrack[]>([])
   const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
+
+  const titleById = useMemo(() => {
+    const m = new Map<string, string>()
+    for (const t of setup.tracks) m.set(t.id, t.title)
+    return (id: string) => m.get(id)
+  }, [setup.tracks])
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
@@ -115,24 +121,22 @@ export default function GameContainer({
     )
 
   return (
-    <div>
+    <>
       {(error || session.error) && (
-        <p className="mx-auto mt-4 max-w-2xl rounded bg-red-100 p-2 text-center text-sm text-red-800">
-          {error ?? session.error}
-        </p>
+        <p className="reveal-err">{error ?? session.error}</p>
       )}
-      {state.phase === 'listening' ? (
-        <TurnScreen
-          state={state}
-          onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
-          onPause={() => session.provider.pause()}
-          onReplay={() =>
-            state.drawn && play(`spotify:track:${state.drawn.card.id}`)
-          }
-        />
-      ) : (
-        <RevealPanel state={state} onNext={next} />
+      <GameScreen
+        state={state}
+        titleOf={titleById}
+        onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
+        onPause={() => session.provider.pause()}
+        onReplay={() =>
+          state.drawn && play(`spotify:track:${state.drawn.card.id}`)
+        }
+      />
+      {state.phase === 'revealed' && (
+        <RevealOverlay state={state} onNext={next} />
       )}
-    </div>
+    </>
   )
 }
