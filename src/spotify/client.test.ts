@@ -35,7 +35,13 @@ describe('fetchPlaylistTracks', () => {
             uri: 'spotify:track:T1',
             name: 'Song One',
             artists: [{ name: 'Artist A' }],
-            album: { release_date: '1980-01-01' },
+            album: {
+              release_date: '1980-01-01',
+              images: [
+                { url: 'https://img/640', width: 640 },
+                { url: 'https://img/300', width: 300 },
+              ],
+            },
           },
         },
       ],
@@ -73,6 +79,7 @@ describe('fetchPlaylistTracks', () => {
         title: 'Song One',
         artist: 'Artist A',
         year: 1980,
+        image: 'https://img/300',
       },
       {
         id: 'T2',
@@ -80,6 +87,7 @@ describe('fetchPlaylistTracks', () => {
         title: 'Song Two',
         artist: 'Artist B',
         year: 1991,
+        image: null,
       },
     ])
     // first call hits the playlist endpoint with a bearer token

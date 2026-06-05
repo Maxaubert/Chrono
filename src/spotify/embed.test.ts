@@ -19,6 +19,7 @@ const FIXTURE = `<!doctype html><html><body><script id="__NEXT_DATA__" type="app
                   uri: 'spotify:track:AAA111',
                   title: 'Song A',
                   subtitle: 'Artist A',
+                  imageUrl: 'https://cover/a.jpg',
                   entityType: 'track',
                 },
                 {
@@ -51,6 +52,7 @@ describe('parseEmbedTracks', () => {
         title: 'Song A',
         artist: 'Artist A',
         year: null,
+        image: 'https://cover/a.jpg',
       },
       {
         id: 'BBB222',
@@ -58,6 +60,7 @@ describe('parseEmbedTracks', () => {
         title: 'Song B',
         artist: 'Artist B, Artist C',
         year: null,
+        image: null,
       },
     ])
   })
@@ -142,6 +145,7 @@ describe('fetchAllPlaylistTracks', () => {
         title: 'Name X1',
         artist: 'Artist X1',
         year: 1984,
+        image: null,
       },
       {
         id: 'X2',
@@ -149,6 +153,7 @@ describe('fetchAllPlaylistTracks', () => {
         title: 'Name X2',
         artist: 'Artist X2',
         year: 2001,
+        image: null,
       },
     ])
     expect(result.total).toBe(2)

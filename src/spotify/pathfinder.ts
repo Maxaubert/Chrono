@@ -81,9 +81,24 @@ export function buildGetTrackUrl(args: {
 /** Read the release year from a getTrack response, or null. */
 export function parseTrackYear(json: unknown): number | null {
   const year = (
-    json as { data?: { trackUnion?: { albumOfTrack?: { date?: { year?: number } } } } }
+    json as {
+      data?: { trackUnion?: { albumOfTrack?: { date?: { year?: number } } } }
+    }
   )?.data?.trackUnion?.albumOfTrack?.date?.year
   return typeof year === 'number' ? year : null
+}
+
+/** Pick an album-cover URL near 300px (good for a card), or null. Shared by the
+ *  pathfinder and Web-API track mappers, whose image lists have the same shape. */
+export function pickCoverUrl(
+  sources: { url?: string; width?: number | null }[] | undefined,
+): string | null {
+  const withUrl = (sources ?? []).filter((s) => s.url)
+  if (!withUrl.length) return null
+  const sorted = [...withUrl].sort((a, b) => (a.width ?? 0) - (b.width ?? 0))
+  const pick =
+    sorted.find((s) => (s.width ?? 0) >= 280) ?? sorted[sorted.length - 1]
+  return pick.url ?? null
 }
 
 interface PathfinderItem {
@@ -92,6 +107,9 @@ interface PathfinderItem {
       uri?: string
       name?: string
       artists?: { items?: { profile?: { name?: string } }[] }
+      albumOfTrack?: {
+        coverArt?: { sources?: { url?: string; width?: number | null }[] }
+      }
     }
   }
 }
@@ -126,6 +144,7 @@ export function parsePathfinderPage(json: unknown): {
       title: d.name ?? '',
       artist,
       year: null, // fetchPlaylist does not include release year
+      image: pickCoverUrl(d.albumOfTrack?.coverArt?.sources),
     })
   }
   return { total, tracks }

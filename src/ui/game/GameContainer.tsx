@@ -31,11 +31,14 @@ export default function GameContainer({
   const [switching, setSwitching] = useState(false)
   const [nextName, setNextName] = useState('')
 
-  const titleById = useMemo(() => {
-    const m = new Map<string, string>()
-    for (const t of setup.tracks) m.set(t.id, t.title)
-    return (id: string) => m.get(id)
+  const trackInfo = useMemo(() => {
+    const m = new Map<string, { title: string; image: string | null }>()
+    for (const t of setup.tracks)
+      m.set(t.id, { title: t.title, image: t.image })
+    return m
   }, [setup.tracks])
+  const titleOf = (id: string) => trackInfo.get(id)?.title
+  const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
@@ -153,7 +156,8 @@ export default function GameContainer({
       )}
       <GameScreen
         state={state}
-        titleOf={titleById}
+        titleOf={titleOf}
+        imageOf={imageOf}
         piled={piled}
         interactive={!ending && !switching}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
@@ -163,7 +167,11 @@ export default function GameContainer({
         }
       />
       {state.phase === 'revealed' && !ending && (
-        <RevealOverlay state={state} onNext={beginEndTurn} />
+        <RevealOverlay
+          state={state}
+          image={state.drawn ? imageOf(state.drawn.card.id) : undefined}
+          onNext={beginEndTurn}
+        />
       )}
       {switching && (
         <TurnSwitch

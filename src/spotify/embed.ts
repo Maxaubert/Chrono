@@ -1,4 +1,5 @@
 import { parseYear } from './client'
+import { pickCoverUrl } from './pathfinder'
 import type { SpotifyTrack } from './types'
 
 /**
@@ -52,6 +53,7 @@ export function parseEmbedTracks(html: string): SpotifyTrack[] {
       title: typeof t.title === 'string' ? t.title : '',
       artist: typeof t.subtitle === 'string' ? t.subtitle : '',
       year: null,
+      image: typeof t.imageUrl === 'string' ? t.imageUrl : null,
     })
   }
   return out
@@ -95,7 +97,10 @@ interface ApiTracksPage {
       uri: string
       name: string
       artists: { name: string }[]
-      album: { release_date: string }
+      album: {
+        release_date: string
+        images?: { url?: string; width?: number | null }[]
+      }
     } | null
   }[]
 }
@@ -109,6 +114,7 @@ function mapApiItem(item: ApiTracksPage['items'][number]): SpotifyTrack | null {
     title: t.name,
     artist: t.artists.map((a) => a.name).join(', '),
     year: parseYear(t.album?.release_date ?? ''),
+    image: pickCoverUrl(t.album?.images),
   }
 }
 

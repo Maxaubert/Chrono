@@ -8,6 +8,7 @@ const track = (id: string): SpotifyTrack => ({
   title: `t-${id}`,
   artist: `a-${id}`,
   year: null,
+  image: null,
 })
 
 describe('buildDeck', () => {
