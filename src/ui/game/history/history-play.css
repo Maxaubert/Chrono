@@ -45,3 +45,48 @@
   color: color-mix(in srgb, #fff 88%, var(--accent2));
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
 }
+
+/* In-game backdrop: a warm museum ambiance instead of Hitster's audio
+ * equalizer (History is silent, so the dancing bars make no sense). */
+.skin-history .game-screen .game-bg {
+  background:
+    radial-gradient(
+      120% 80% at 50% 12%,
+      rgba(205, 163, 73, 0.1),
+      transparent 56%
+    ),
+    radial-gradient(
+      130% 95% at 50% 120%,
+      rgba(40, 34, 18, 0.5),
+      transparent 60%
+    ),
+    #0d0f0a;
+}
+.skin-history .game-screen .game-bg-glow {
+  background: radial-gradient(
+    ellipse,
+    rgba(205, 163, 73, 0.12),
+    transparent 66%
+  );
+}
+/* silence the audio equalizer for the silent History game */
+.skin-history .game-screen .bg-eq-wrap {
+  display: none;
+}
+/* faint warm paper grain over the backdrop */
+.skin-history .game-screen .game-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(205, 163, 73, 0.5) 0.5px, transparent 0.6px),
+    radial-gradient(rgba(138, 154, 107, 0.4) 0.5px, transparent 0.6px);
+  background-size:
+    7px 7px,
+    11px 11px;
+  background-position:
+    0 0,
+    3px 4px;
+}
