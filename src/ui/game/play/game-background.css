@@ -1,0 +1,95 @@
+/* Dark, sleek game backdrop with a soft "sharp" glow waveform. Decorative. */
+.game-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  --eq-edge: rgba(150, 124, 240, 0.85);
+  --eq-core: rgba(150, 210, 255, 0.92);
+  --eq-blur: 3px;
+  --eq-blur-back: 9px;
+  background:
+    radial-gradient(
+      120% 80% at 50% 14%,
+      rgba(64, 54, 104, 0.16),
+      transparent 56%
+    ),
+    radial-gradient(
+      130% 95% at 50% 118%,
+      rgba(38, 34, 70, 0.24),
+      transparent 56%
+    ),
+    #060509;
+}
+.game-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 300px 80px rgba(0, 0, 0, 0.62);
+}
+.game-bg-glow {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 640px;
+  height: 440px;
+  margin: -220px 0 0 -320px;
+  background: radial-gradient(
+    ellipse,
+    rgba(116, 96, 188, 0.16),
+    transparent 66%
+  );
+  filter: blur(12px);
+}
+.bg-eq-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 44%;
+  height: 26%;
+}
+.bg-eq {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 0.5%;
+}
+.bg-eq-bar {
+  flex: 1;
+  height: 100%;
+  transform-origin: center;
+  transform: scaleY(var(--lo));
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--eq-edge) 40%,
+    var(--eq-core) 50%,
+    var(--eq-edge) 60%,
+    transparent 100%
+  );
+  animation: bgEqBar 1s ease-in-out infinite alternate;
+}
+@keyframes bgEqBar {
+  from {
+    transform: scaleY(var(--lo));
+  }
+  to {
+    transform: scaleY(var(--hi));
+  }
+}
+.bg-eq-front {
+  filter: blur(var(--eq-blur));
+  opacity: 0.62;
+}
+.bg-eq-back {
+  filter: blur(var(--eq-blur-back));
+  opacity: 0.34;
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-bg * {
+    animation: none !important;
+  }
+}
