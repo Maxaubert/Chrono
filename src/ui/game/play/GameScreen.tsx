@@ -13,6 +13,7 @@ export default function GameScreen({
   onReplay,
   titleOf,
   piled = false,
+  interactive = true,
 }: {
   state: GameState
   onPlace: (slotIndex: number) => void
@@ -20,6 +21,7 @@ export default function GameScreen({
   onReplay: () => void
   titleOf?: (id: string) => string | undefined
   piled?: boolean
+  interactive?: boolean
 }) {
   return (
     <div className="game-screen">
@@ -35,6 +37,7 @@ export default function GameScreen({
         onPlace={onPlace}
         titleOf={titleOf}
         piled={piled}
+        interactive={interactive}
       />
     </div>
   )

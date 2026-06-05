@@ -57,15 +57,19 @@ export default function Hand({
   onPlace,
   titleOf,
   piled = false,
+  interactive = true,
 }: {
   timeline: Card[]
   onPlace: (slotIndex: number) => void
   titleOf?: (id: string) => string | undefined
   piled?: boolean
+  interactive?: boolean
 }) {
   // Which card is picked up (null = none). place()/cancel reset it; the turn
   // only advances after a placement, so it is never stale across a hand change.
-  const [picked, setPicked] = useState<number | null>(null)
+  const [pickedState, setPicked] = useState<number | null>(null)
+  // ignore any pick while the hand is non-interactive (turn ending / switching)
+  const picked = interactive ? pickedState : null
 
   // Build the left-to-right sequence; when a card is picked, insert a placement
   // slot on each side.
@@ -150,6 +154,7 @@ export default function Hand({
                 className="hand-pick"
                 data-testid={`hand-card-${it.cardIdx}`}
                 aria-label={`Card ${it.card.year}`}
+                disabled={!interactive}
                 onClick={() => pick(it.cardIdx)}
               >
                 <HandCard

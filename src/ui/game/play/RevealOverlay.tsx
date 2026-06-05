@@ -1,4 +1,5 @@
 import type { GameState } from '@/core'
+import { cardGradient } from './cardArt'
 import './reveal.css'
 
 export default function RevealOverlay({
@@ -10,23 +11,32 @@ export default function RevealOverlay({
 }) {
   if (!state.drawn || !state.lastOutcome) return null
   const { title, subtitle, year } = state.drawn.reveal
+  const id = state.drawn.card.id
   const correct = state.lastOutcome.correct
   return (
     <div className="reveal-scrim">
-      <section data-testid="reveal" className="reveal-card">
-        <div className="reveal-year">{year}</div>
-        <div className="reveal-title">
-          {title}
-          {subtitle ? `, ${subtitle}` : ''}
+      <section
+        data-testid="reveal"
+        className={`reveal-card ${correct ? 'ok' : 'no'}`}
+      >
+        {/* the mystery track, now revealed */}
+        <div className="reveal-the-card">
+          <span className="reveal-c-year">{year}</span>
+          <div
+            className="reveal-c-art"
+            style={{ background: cardGradient(id) }}
+          />
+          <div className="reveal-c-title">{title}</div>
+          {subtitle && <div className="reveal-c-sub">{subtitle}</div>}
         </div>
         <p
           data-testid="outcome"
           className={`reveal-outcome ${correct ? 'ok' : 'no'}`}
         >
-          {correct ? 'Correct, card kept.' : 'Wrong, card discarded.'}
+          {correct ? 'Correct. Card kept.' : 'Wrong. Card discarded.'}
         </p>
         <button data-testid="next" className="reveal-next" onClick={onNext}>
-          <span>NEXT</span>
+          <span>OK</span>
           <span className="reveal-k">&#9654;</span>
         </button>
       </section>

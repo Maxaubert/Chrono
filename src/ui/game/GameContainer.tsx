@@ -8,6 +8,7 @@ import type { SpotifySession } from './useSpotifySession'
 import type { SetupResult } from './SetupScreen'
 import GameScreen from './play/GameScreen'
 import RevealOverlay from './play/RevealOverlay'
+import TurnSwitch from './play/TurnSwitch'
 import WinScreen from './play/WinScreen'
 
 /**
@@ -26,6 +27,9 @@ export default function GameContainer({
   const started = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [piled, setPiled] = useState(false)
+  const [ending, setEnding] = useState(false) // post-OK turn-end sequence
+  const [switching, setSwitching] = useState(false)
+  const [nextName, setNextName] = useState('')
 
   const titleById = useMemo(() => {
     const m = new Map<string, string>()
@@ -71,26 +75,40 @@ export default function GameContainer({
     }
   }
 
-  async function next() {
+  // The reveal's OK button starts the turn-end choreography:
+  // show the placed card in the deck -> pile -> "next player" cover (swap behind
+  // it) -> deal the next player's hand. If the turn won, go to the win screen.
+  function beginEndTurn() {
     if (!state) return
-    // If this turn just won the game, stop the music and end here, do not draw
-    // or play another song.
-    const player = state.players[state.currentPlayerIndex]
-    if (player.timeline.length >= state.config.targetCards) {
-      session.provider.stop().catch(() => {})
-      dispatch({ type: 'advance', nextDrawn: null })
+    const cur = state
+    const player = cur.players[cur.currentPlayerIndex]
+    const won = player.timeline.length >= cur.config.targetCards
+    setEnding(true) // hides the reveal; the hand shows the placed card
+    if (won) {
+      window.setTimeout(() => {
+        session.provider.stop().catch(() => {})
+        dispatch({ type: 'advance', nextDrawn: null }) // -> won -> WinScreen
+        setEnding(false)
+      }, 1100)
       return
     }
+    window.setTimeout(() => {
+      const nextIdx = (cur.currentPlayerIndex + 1) % cur.players.length
+      setNextName(cur.players[nextIdx].name)
+      setPiled(true) // collapse the hand into a pile
+      window.setTimeout(() => setSwitching(true), 600) // then cover for the swap
+    }, 1100)
+  }
+
+  async function switchCovered() {
     const nextDrawn = await drawNext()
     dispatch({ type: 'advance', nextDrawn })
     if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
   }
-
-  async function nextWithTransition() {
-    setPiled(true) // collapse the current hand (behind the scrim)
-    await next() // dismiss the scrim; new hand renders already piled
-    await new Promise((r) => setTimeout(r, 420)) // brief pause before fan-out
-    setPiled(false) // new hand fans out
+  function switchDone() {
+    setSwitching(false)
+    setPiled(false) // deal: the next player's pile spreads into their hand
+    setEnding(false)
   }
 
   // Start the game once, from the setup handed in by the menu.
@@ -137,14 +155,22 @@ export default function GameContainer({
         state={state}
         titleOf={titleById}
         piled={piled}
+        interactive={!ending && !switching}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
         onPause={() => session.provider.pause()}
         onReplay={() =>
           state.drawn && play(`spotify:track:${state.drawn.card.id}`)
         }
       />
-      {state.phase === 'revealed' && (
-        <RevealOverlay state={state} onNext={nextWithTransition} />
+      {state.phase === 'revealed' && !ending && (
+        <RevealOverlay state={state} onNext={beginEndTurn} />
+      )}
+      {switching && (
+        <TurnSwitch
+          name={nextName}
+          onCovered={() => void switchCovered()}
+          onDone={switchDone}
+        />
       )}
     </>
   )
