@@ -1,0 +1,74 @@
+/* src/ui/game/play/reveal.css */
+.reveal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 3, 10, 0.62);
+  backdrop-filter: blur(5px);
+}
+.reveal-card {
+  width: min(420px, 92vw);
+  padding: 26px;
+  text-align: center;
+  color: #e8e2ff;
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.85);
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+.reveal-year {
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 0 26px var(--glow);
+  line-height: 1;
+}
+.reveal-title {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.reveal-outcome {
+  margin-top: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.reveal-outcome.ok {
+  color: #61e3a7;
+}
+.reveal-outcome.no {
+  color: #ff6b8a;
+}
+.reveal-next {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px 24px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  clip-path: polygon(
+    11px 0,
+    100% 0,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    0 100%,
+    0 11px
+  );
+}
+.reveal-next:hover {
+  box-shadow: 0 0 26px -4px var(--accent);
+}
