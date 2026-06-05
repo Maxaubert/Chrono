@@ -46,13 +46,13 @@ export const SAMPLE_DECK: Song[] = [
     ),
   },
   {
-    year: '2009',
-    title: 'Uprising',
-    artist: 'Muse',
-    g1: '#3a7d12',
-    g2: '#8fe04a',
+    year: '1973',
+    title: 'Money',
+    artist: 'Pink Floyd',
+    g1: '#1b1b1b',
+    g2: '#3a2a4a',
     img: COVER(
-      'Music124/v4/e2/8d/41/e28d412b-da8b-6f0b-227a-faa9a453e612/825646092666.jpg',
+      'Music211/v4/49/86/18/49861852-877b-0992-fa27-58b25fa032b5/196589805232.jpg',
     ),
   },
 ]

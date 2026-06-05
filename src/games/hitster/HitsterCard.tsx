@@ -50,10 +50,6 @@ export function FanCard({ index }: { index: number }) {
       </div>
 
       <div className="brand">HITSTER</div>
-      <span className="idx br">
-        {song.year}
-        <i>&#9834;</i>
-      </span>
     </div>
   )
 }
