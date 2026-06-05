@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { GuestProvider, MockProvider, type AudioProvider } from '@/audio'
+import {
+  ItunesPreviewProvider,
+  MockProvider,
+  type AudioProvider,
+} from '@/audio'
 import {
   buildAuthorizeUrl,
   clearTokens,
@@ -64,7 +68,7 @@ export function useSpotifySession(guestArg = false): SpotifySession {
   const provider = useMemo<AudioProvider>(
     () =>
       guest
-        ? new GuestProvider()
+        ? new ItunesPreviewProvider()
         : mock
           ? new MockProvider()
           : new SpotifyProvider({

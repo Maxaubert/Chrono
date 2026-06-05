@@ -5,9 +5,13 @@
  * player. Tests use the MockProvider.
  */
 
-/** A provider-specific reference to a playable track (e.g. a Spotify track URI). */
+/** A provider-specific reference to a playable track (e.g. a Spotify track URI).
+ * `artist`/`title` are optional search hints used by sources that look a track up
+ * by metadata (the iTunes preview provider); URI-based providers ignore them. */
 export interface AudioTrackRef {
   uri: string
+  artist?: string
+  title?: string
 }
 
 export interface AudioProvider {

@@ -62,15 +62,22 @@ export default function GameContainer({
   const artistOf = (id: string) => trackInfo.get(id)?.artist
   const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
 
-  function play(uri: string) {
+  function play(cardId: string) {
     // Optimistically show the playing state, but undo it if the provider
     // rejects (device gone, 404) so the card never shows a spinning disc /
-    // pause icon while nothing is actually playing.
+    // pause icon while nothing is actually playing. artist/title are search
+    // hints for the iTunes guest provider; URI-based providers ignore them.
     setPlaying(true)
-    session.provider.play({ uri }).catch((e) => {
-      setError(String(e))
-      setPlaying(false)
-    })
+    session.provider
+      .play({
+        uri: `spotify:track:${cardId}`,
+        artist: artistOf(cardId),
+        title: titleOf(cardId),
+      })
+      .catch((e) => {
+        setError(String(e))
+        setPlaying(false)
+      })
   }
 
   async function drawNext() {
@@ -101,7 +108,7 @@ export default function GameContainer({
           first,
         ),
       })
-      play(`spotify:track:${first.card.id}`)
+      play(first.card.id)
     } catch (e) {
       setError(String(e))
     }
@@ -135,7 +142,7 @@ export default function GameContainer({
   async function switchCovered() {
     const nextDrawn = await drawNext()
     dispatch({ type: 'advance', nextDrawn })
-    if (nextDrawn) play(`spotify:track:${nextDrawn.card.id}`)
+    if (nextDrawn) play(nextDrawn.card.id)
   }
   function switchDone() {
     setSwitching(false)
@@ -191,7 +198,6 @@ export default function GameContainer({
         piled={piled}
         interactive={!ending && !switching}
         playing={playing}
-        qr={session.guest}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
         onPause={() => {
           session.provider.pause().catch(() => {})
@@ -201,9 +207,7 @@ export default function GameContainer({
           session.provider.resume().catch((e) => setError(String(e)))
           setPlaying(true)
         }}
-        onReplay={() =>
-          state.drawn && play(`spotify:track:${state.drawn.card.id}`)
-        }
+        onReplay={() => state.drawn && play(state.drawn.card.id)}
       />
       {state.phase === 'revealed' && !ending && (
         <RevealOverlay
