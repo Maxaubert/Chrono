@@ -1,11 +1,12 @@
 // src/ui/App.tsx
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import SpikeHarness from './SpikeHarness'
 import MenuScreen from './menu/MenuScreen'
 import GameContainer from './game/GameContainer'
-import SetupScreen, { type SetupResult } from './game/SetupScreen'
 import { useSpotifySession } from './game/useSpotifySession'
+import { makeHitsterPlay } from './game/hitster/play'
 import { clearResumeSetup, peekResumeSetup } from './game/resumeSetup'
+import type { GameSetupResult } from './game/play/adapter'
 import ScreenTransition from './transition/ScreenTransition'
 import { ThemeProvider } from './theme/ThemeProvider'
 
@@ -22,22 +23,28 @@ export default function App() {
 /**
  * The main flow: menu with a Setup popup, then the game. PLAY opens the Setup
  * popup over the menu; START hands back the setup and runs the wipe transition
- * into the actual game.
+ * into the actual game. The active game's `play` adapter supplies setup, deck,
+ * mystery, and audio.
  */
 function GameRoot() {
-  // Guest mode (no Spotify login, QR playback). Chosen from the setup gate, or
-  // forced via ?guest=1 (used by the E2E flow).
+  // Guest mode (no Spotify login, in-page preview clips). Chosen from the setup
+  // gate, or forced via ?guest=1 (used by the E2E flow).
   const [guest, setGuest] = useState(
     () => new URLSearchParams(window.location.search).get('guest') === '1',
   )
   const session = useSpotifySession(guest)
+  // useSpotifySession returns a fresh object each render; the adapter only needs
+  // to be rebuilt when the provider identity changes (mock/guest), so key on
+  // those rather than the whole session object.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const play = useMemo(() => makeHitsterPlay(session), [session.mock, guest])
   const [screen, setScreen] = useState<'menu' | 'game'>('menu')
   // Returning from the Spotify auth redirect: reopen setup where the host left
   // off, instead of the menu the fresh page load would otherwise show. The flag
   // is read in the initializer and cleared once in the effect below.
   const [setupOpen, setSetupOpen] = useState(peekResumeSetup)
   const [transitioning, setTransitioning] = useState(false)
-  const [setup, setSetup] = useState<SetupResult | null>(null)
+  const [setup, setSetup] = useState<GameSetupResult | null>(null)
 
   useEffect(() => {
     clearResumeSetup()
@@ -49,8 +56,7 @@ function GameRoot() {
         <>
           <MenuScreen onPlay={() => setSetupOpen(true)} />
           {setupOpen && (
-            <SetupScreen
-              session={session}
+            <play.Setup
               onClose={() => setSetupOpen(false)}
               onGuest={() => setGuest(true)}
               onStart={(result) => {
@@ -61,7 +67,12 @@ function GameRoot() {
           )}
         </>
       ) : (
-        setup && <GameContainer session={session} setup={setup} />
+        setup && (
+          <>
+            {session.error && <p className="reveal-err">{session.error}</p>}
+            <GameContainer play={play} setupResult={setup} />
+          </>
+        )
       )}
 
       {transitioning && (

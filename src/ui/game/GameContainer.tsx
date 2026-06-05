@@ -1,31 +1,35 @@
 // src/ui/game/GameContainer.tsx
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { isWon, startGame, type Card } from '@/core'
-import type { SpotifyTrack } from '@/spotify'
-import { buildDeck, takeNextDrawn } from './deck'
+import { useEffect, useRef, useState } from 'react'
+import { isWon, startGame, type Card, type DrawnCard } from '@/core'
 import { useGame } from './useGame'
-import type { SpotifySession } from './useSpotifySession'
-import type { SetupResult } from './SetupScreen'
+import type { DeckHandle, GamePlay, GameSetupResult } from './play/adapter'
 import GameScreen from './play/GameScreen'
 import RevealOverlay from './play/RevealOverlay'
 import TurnSwitch from './play/TurnSwitch'
 import WinScreen from './play/WinScreen'
 
 /**
- * Runs an in-progress game. The setup (players, target, tracks) is collected in
- * the menu's Setup popup and handed in; the game starts on mount.
+ * Runs an in-progress game. The setup (players, target) is collected in the
+ * menu's Setup popup and handed in; the game starts on mount. All game-specific
+ * sourcing (deck, audio, card content) flows through the GamePlay adapter.
  */
 export default function GameContainer({
-  session,
-  setup,
+  play,
+  setupResult,
 }: {
-  session: SpotifySession
-  setup: SetupResult
+  play: GamePlay
+  setupResult: GameSetupResult
 }) {
   const [state, dispatch] = useGame()
-  const remaining = useRef<SpotifyTrack[]>([])
+  const deck = useRef<DeckHandle | null>(null)
   const started = useRef(false)
   const timers = useRef<number[]>([])
+
+  // Card id -> reveal content, recorded on each draw so a card's image/title/
+  // artist survive after it is placed and `state.drawn` moves to the next card.
+  const imageById = useRef(new Map<string, string | undefined>())
+  const titleById = useRef(new Map<string, string | undefined>())
+  const artistById = useRef(new Map<string, string | undefined>())
 
   // setTimeout that registers its id so every pending choreography timer can be
   // cleared on unmount (e.g. a future "quit to menu"), instead of firing against
@@ -47,58 +51,49 @@ export default function GameContainer({
   const [ending, setEnding] = useState(false) // post-OK turn-end sequence
   const [switching, setSwitching] = useState(false)
   const [nextName, setNextName] = useState('')
-  const [playing, setPlaying] = useState(true) // mystery track play/pause
+  const [playing, setPlaying] = useState(true) // mystery play/pause
 
-  const trackInfo = useMemo(() => {
-    const m = new Map<
-      string,
-      { title: string; artist: string; image: string | null }
-    >()
-    for (const t of setup.tracks)
-      m.set(t.id, { title: t.title, artist: t.artist, image: t.image })
-    return m
-  }, [setup.tracks])
-  const titleOf = (id: string) => trackInfo.get(id)?.title
-  const artistOf = (id: string) => trackInfo.get(id)?.artist
-  const imageOf = (id: string) => trackInfo.get(id)?.image ?? undefined
+  const imageOf = (id: string) => imageById.current.get(id)
+  const titleOf = (id: string) => titleById.current.get(id)
+  const artistOf = (id: string) => artistById.current.get(id)
 
-  function play(cardId: string) {
-    // Optimistically show the playing state, but undo it if the provider
-    // rejects (device gone, 404) so the card never shows a spinning disc /
-    // pause icon while nothing is actually playing. artist/title are search
-    // hints for the iTunes guest provider; URI-based providers ignore them.
+  // Record a drawn card's reveal content so its metadata survives placement.
+  function record(drawn: DrawnCard | null) {
+    if (!drawn) return
+    imageById.current.set(drawn.card.id, play.revealImage?.(drawn))
+    titleById.current.set(drawn.card.id, drawn.reveal.title)
+    artistById.current.set(drawn.card.id, drawn.reveal.subtitle)
+  }
+
+  // Optimistically show the playing state, but undo it if the provider rejects
+  // (device gone, 404) so the card never shows a spinning disc / pause icon
+  // while nothing is actually playing.
+  function startAudio(drawn: DrawnCard) {
     setPlaying(true)
-    session.provider
-      .play({
-        uri: `spotify:track:${cardId}`,
-        artist: artistOf(cardId),
-        title: titleOf(cardId),
-      })
-      .catch((e) => {
-        setError(String(e))
-        setPlaying(false)
-      })
+    Promise.resolve(play.audio?.onDraw(drawn)).catch((e) => {
+      setError(String(e))
+      setPlaying(false)
+    })
   }
 
   async function drawNext() {
-    const result = await takeNextDrawn(remaining.current, session.fetchYear)
-    remaining.current = result.remaining
-    return result.drawn
+    const drawn = deck.current ? await deck.current.next() : null
+    record(drawn)
+    return drawn
   }
 
-  async function start(s: SetupResult) {
+  async function start(s: GameSetupResult) {
     setError(null)
     try {
-      remaining.current = buildDeck(s.tracks, Math.random)
+      deck.current = await play.initDeck(s, Math.random)
       const anchors: Card[] = []
       for (let i = 0; i < s.names.length; i++) {
         const drawn = await drawNext()
-        if (!drawn)
-          throw new Error('Not enough playable songs in the playlist.')
+        if (!drawn) throw new Error('Not enough cards to start.')
         anchors.push(drawn.card)
       }
       const first = await drawNext()
-      if (!first) throw new Error('Not enough playable songs in the playlist.')
+      if (!first) throw new Error('Not enough cards to start.')
       dispatch({
         type: 'start',
         state: startGame(
@@ -108,7 +103,7 @@ export default function GameContainer({
           first,
         ),
       })
-      play(first.card.id)
+      startAudio(first)
     } catch (e) {
       setError(String(e))
     }
@@ -125,7 +120,7 @@ export default function GameContainer({
     setEnding(true) // hides the reveal; the hand shows the placed card
     if (won) {
       schedule(() => {
-        session.provider.stop().catch(() => {})
+        Promise.resolve(play.audio?.onStop()).catch(() => {})
         dispatch({ type: 'advance', nextDrawn: null }) // -> won -> WinScreen
         setEnding(false)
       }, 1100)
@@ -142,7 +137,7 @@ export default function GameContainer({
   async function switchCovered() {
     const nextDrawn = await drawNext()
     dispatch({ type: 'advance', nextDrawn })
-    if (nextDrawn) play(nextDrawn.card.id)
+    if (nextDrawn) startAudio(nextDrawn)
   }
   function switchDone() {
     setSwitching(false)
@@ -154,7 +149,7 @@ export default function GameContainer({
   useEffect(() => {
     if (started.current) return
     started.current = true
-    start(setup)
+    start(setupResult)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -187,11 +182,10 @@ export default function GameContainer({
 
   return (
     <>
-      {(error || session.error) && (
-        <p className="reveal-err">{error ?? session.error}</p>
-      )}
+      {error && <p className="reveal-err">{error}</p>}
       <GameScreen
         state={state}
+        Mystery={play.Mystery}
         titleOf={titleOf}
         artistOf={artistOf}
         imageOf={imageOf}
@@ -200,19 +194,29 @@ export default function GameContainer({
         playing={playing}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
         onPause={() => {
-          session.provider.pause().catch(() => {})
+          Promise.resolve(play.audio?.onPause()).catch(() => {})
           setPlaying(false)
         }}
         onResume={() => {
-          session.provider.resume().catch((e) => setError(String(e)))
+          Promise.resolve(play.audio?.onResume()).catch((e) =>
+            setError(String(e)),
+          )
           setPlaying(true)
         }}
-        onReplay={() => state.drawn && play(state.drawn.card.id)}
+        onReplay={() => {
+          if (state.drawn) {
+            Promise.resolve(play.audio?.onReplay(state.drawn)).catch((e) => {
+              setError(String(e))
+              setPlaying(false)
+            })
+            setPlaying(true)
+          }
+        }}
       />
       {state.phase === 'revealed' && !ending && (
         <RevealOverlay
           state={state}
-          image={state.drawn ? imageOf(state.drawn.card.id) : undefined}
+          image={state.drawn ? play.revealImage?.(state.drawn) : undefined}
           onNext={beginEndTurn}
         />
       )}

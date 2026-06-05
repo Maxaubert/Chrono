@@ -1,13 +1,15 @@
+import type { ComponentType } from 'react'
 import type { GameState } from '@/core'
 import { currentPlayer } from '@/core'
 import GameBackground from './GameBackground'
 import Overview from './Overview'
-import MysteryCard from './MysteryCard'
 import Hand from './Hand'
+import type { MysteryProps } from './adapter'
 import './game-screen.css'
 
 export default function GameScreen({
   state,
+  Mystery,
   onPlace,
   onPause,
   onResume,
@@ -20,6 +22,7 @@ export default function GameScreen({
   interactive = true,
 }: {
   state: GameState
+  Mystery: ComponentType<MysteryProps>
   onPlace: (slotIndex: number) => void
   onPause: () => void
   onResume: () => void
@@ -39,11 +42,12 @@ export default function GameScreen({
         currentIndex={state.currentPlayerIndex}
         target={state.config.targetCards}
       />
-      <MysteryCard
+      <Mystery
+        drawn={state.drawn}
+        isPlaying={playing}
         onPause={onPause}
         onResume={onResume}
         onReplay={onReplay}
-        isPlaying={playing}
       />
       <Hand
         timeline={currentPlayer(state).timeline}
