@@ -3,23 +3,12 @@ import {
   buildFetchPlaylistUrl,
   buildGetTrackUrl,
   extractAnonToken,
-  extractFetchPlaylistHash,
   extractOperationHash,
   parsePathfinderPage,
   parseTrackYear,
 } from './pathfinder'
 
 const HASH = 'a65e12194ed5fc443a1cdebed5fabe33ca5b07b987185d63c72483867ad13cb4'
-
-describe('extractFetchPlaylistHash', () => {
-  it('extracts the hash from a web-player bundle snippet', () => {
-    const js = `...new tM.l("fetchPlaylist","query","${HASH}",null),po=new tM.l("fetchPlaylistMetadata","query","deadbeef",null)...`
-    expect(extractFetchPlaylistHash(js)).toBe(HASH)
-  })
-  it('returns null when not present', () => {
-    expect(extractFetchPlaylistHash('no operations here')).toBeNull()
-  })
-})
 
 describe('extractOperationHash', () => {
   it('extracts any named operation hash', () => {
