@@ -9,7 +9,7 @@ import { SAMPLE_EVENTS } from './events'
 export function FanCard({ index }: { index: number }) {
   const ev = SAMPLE_EVENTS[index % SAMPLE_EVENTS.length]
   return (
-    <div className="h-card front hist">
+    <div className="h-card hist">
       <div className="hist-art">
         <img src={ev.img} alt={ev.title} loading="lazy" />
         <span className="hist-duo" />

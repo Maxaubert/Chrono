@@ -35,8 +35,7 @@ function AlbumArt({ song }: { song: Song }) {
 export function FanCard({ index }: { index: number }) {
   const song = SAMPLE_DECK[index % SAMPLE_DECK.length]
   return (
-    <div className="h-card front">
-      <span className="foil" />
+    <div className="h-card">
       <span className="idx tl">
         {song.year}
         <i>&#9834;</i>

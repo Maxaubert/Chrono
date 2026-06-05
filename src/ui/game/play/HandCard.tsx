@@ -22,7 +22,7 @@ export default function HandCard({
       }
     : { background: cardGradient(id) }
   return (
-    <div className="h-card front handcard">
+    <div className="h-card handcard">
       <span className="hc-year">{year}</span>
       <div className="hc-art" style={art} />
       {title && <div className="hc-title">{title}</div>}
