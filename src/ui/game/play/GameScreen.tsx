@@ -13,6 +13,7 @@ export default function GameScreen({
   onResume,
   onReplay,
   playing = true,
+  qr = false,
   titleOf,
   artistOf,
   imageOf,
@@ -25,6 +26,8 @@ export default function GameScreen({
   onResume: () => void
   onReplay: () => void
   playing?: boolean
+  /** Guest mode: the mystery card shows a QR instead of in-app playback. */
+  qr?: boolean
   titleOf?: (id: string) => string | undefined
   artistOf?: (id: string) => string | undefined
   imageOf?: (id: string) => string | null | undefined
@@ -44,6 +47,8 @@ export default function GameScreen({
         onResume={onResume}
         onReplay={onReplay}
         isPlaying={playing}
+        qr={qr}
+        trackId={state.drawn?.card.id}
       />
       <Hand
         timeline={currentPlayer(state).timeline}

@@ -22,6 +22,24 @@ test('while playing, the controls are replay + pause', async () => {
   expect(onResume).not.toHaveBeenCalled()
 })
 
+test('in QR mode, shows a scan-to-play QR and no transport controls', async () => {
+  render(
+    <MysteryCard
+      qr
+      trackId="3n3Ppam7vgaVa1iaRUc9Lp"
+      onReplay={vi.fn()}
+      onPause={vi.fn()}
+      onResume={vi.fn()}
+    />,
+  )
+  // the QR image resolves asynchronously from the track's open.spotify.com link
+  expect(await screen.findByAltText(/scan to play/i)).toBeInTheDocument()
+  expect(screen.getByText(/scan to play/i)).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'Replay' })).toBeNull()
+  expect(screen.queryByRole('button', { name: 'Pause' })).toBeNull()
+  expect(screen.queryByRole('button', { name: 'Play' })).toBeNull()
+})
+
 test('while paused, the toggle becomes Play and resumes', async () => {
   const onPause = vi.fn()
   const onResume = vi.fn()

@@ -19,3 +19,11 @@ export function decodeTrackToken(text: string): string | null {
 export function trackIdToUri(trackId: string): AudioTrackRef {
   return { uri: `spotify:track:${trackId}` }
 }
+
+/**
+ * A universal Spotify link for a track. Encoded in the guest-mode QR: scanning it
+ * opens the native Spotify app (mobile) or the web player (desktop) on this track.
+ */
+export function trackIdToOpenUrl(trackId: string): string {
+  return `https://open.spotify.com/track/${trackId}`
+}

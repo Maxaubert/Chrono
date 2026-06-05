@@ -25,7 +25,12 @@ export default function App() {
  * into the actual game.
  */
 function GameRoot() {
-  const session = useSpotifySession()
+  // Guest mode (no Spotify login, QR playback). Chosen from the setup gate, or
+  // forced via ?guest=1 (used by the E2E flow).
+  const [guest, setGuest] = useState(
+    () => new URLSearchParams(window.location.search).get('guest') === '1',
+  )
+  const session = useSpotifySession(guest)
   const [screen, setScreen] = useState<'menu' | 'game'>('menu')
   // Returning from the Spotify auth redirect: reopen setup where the host left
   // off, instead of the menu the fresh page load would otherwise show. The flag
@@ -47,6 +52,7 @@ function GameRoot() {
             <SetupScreen
               session={session}
               onClose={() => setSetupOpen(false)}
+              onGuest={() => setGuest(true)}
               onStart={(result) => {
                 setSetup(result)
                 setTransitioning(true)

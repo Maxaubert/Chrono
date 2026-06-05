@@ -1,4 +1,9 @@
-export { encodeTrackToken, decodeTrackToken, trackIdToUri } from './token'
+export {
+  encodeTrackToken,
+  decodeTrackToken,
+  trackIdToUri,
+  trackIdToOpenUrl,
+} from './token'
 export { renderQrDataUrl } from './qr-image'
 export type { QrScanner } from './scanner'
 export { CameraQrScanner } from './scanner'

@@ -157,6 +157,34 @@
   opacity: 0.75;
 }
 
+/* ---- Guest QR variant ------------------------------------------------- */
+.game-screen .mystery-qr {
+  align-items: center;
+  justify-content: center;
+}
+.game-screen .myst-qr-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 188px;
+  height: 188px;
+  margin: -106px 0 0 -94px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 6px;
+  box-shadow: 0 0 30px -6px var(--glow);
+  image-rendering: pixelated;
+  z-index: 2;
+}
+.game-screen .myst-qr-fallback {
+  max-width: 240px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--accent2);
+  word-break: break-all;
+  text-align: center;
+}
+
 /* ---- Prismatic sheen (mystery card only) ------------------------------ */
 /* Reuses the menuSheenSweep / menuSheenDrift keyframes defined in skin.css */
 

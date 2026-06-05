@@ -43,10 +43,13 @@ export default function SetupScreen({
   session,
   onStart,
   onClose,
+  onGuest,
 }: {
   session: SpotifySession
   onStart: (result: SetupResult) => void
   onClose?: () => void
+  /** Enter guest mode (no login, QR playback) from the login gate. */
+  onGuest?: () => void
 }) {
   const { game } = useActiveGame()
   const [step, setStep] = useState<'players' | 'playlist' | 'review'>('players')
@@ -137,9 +140,13 @@ export default function SetupScreen({
 
   const namesReady = names.every((n) => n.trim().length > 0)
   const combined = dedupeTracks(selected.flatMap((s) => s.tracks))
-  const ready =
-    session.loggedIn && session.connected && combined.length > 0 && namesReady
-  const needLogin = !session.mock && !session.loggedIn
+  // Guest mode needs no Spotify connection; it only needs names + a playlist.
+  const connectionReady =
+    session.guest || (session.loggedIn && session.connected)
+  const ready = connectionReady && combined.length > 0 && namesReady
+  const needLogin = !session.mock && !session.guest && !session.loggedIn
+  // Guest and mock both lack a "your playlists" list (no login); paste-only.
+  const pasteOnly = session.mock || session.guest
 
   const errorBanner = (err || session.error) && (
     <div className="su-error">{err ?? session.error}</div>
@@ -197,6 +204,15 @@ export default function SetupScreen({
             >
               LOG IN WITH SPOTIFY
             </button>
+            {onGuest && (
+              <button
+                className="su-guest-link"
+                data-testid="play-guest"
+                onClick={onGuest}
+              >
+                or play as guest &ndash; paste a playlist, scan to play
+              </button>
+            )}
           </div>
         </main>
       </>
@@ -209,7 +225,7 @@ export default function SetupScreen({
           game.theme.tagline,
           <>
             <span className="su-dot" /> LOCAL &middot; PASS &amp; PLAY
-            {!session.mock && (
+            {!pasteOnly && (
               <button className="su-foot-logout" onClick={session.logout}>
                 Log out
               </button>
@@ -318,9 +334,11 @@ export default function SetupScreen({
           {errorBanner}
 
           <section className="su-section">
-            <div className="su-label">Your Playlists</div>
+            <div className="su-label">
+              {pasteOnly ? 'Add a Playlist' : 'Your Playlists'}
+            </div>
 
-            {!session.mock && (
+            {!pasteOnly && (
               <input
                 className="su-search"
                 data-testid="playlist-search"
@@ -330,7 +348,7 @@ export default function SetupScreen({
               />
             )}
 
-            {!session.mock && (
+            {!pasteOnly && (
               <div className="su-pl-list">
                 {filtered.length === 0 && (
                   <div className="su-pl-empty">
@@ -374,7 +392,11 @@ export default function SetupScreen({
               {!session.mock && (
                 <input
                   className="su-input"
-                  placeholder="Or paste a Spotify playlist link"
+                  placeholder={
+                    pasteOnly
+                      ? 'Paste a public Spotify playlist link'
+                      : 'Or paste a Spotify playlist link'
+                  }
                   value={playlist}
                   onChange={(e) => setPlaylist(e.target.value)}
                 />

@@ -35,3 +35,17 @@ test('returning from Spotify auth reopens the setup wizard, not the menu', async
   // ...and the one-shot flag is consumed so a later reload shows the menu.
   expect(sessionStorage.getItem('chrono.resumeSetup')).toBeNull()
 })
+
+test('the login gate offers guest play, which skips login into the wizard', async () => {
+  render(<App />)
+  await userEvent.click(screen.getByTestId('menu-play'))
+  // Not logged in -> gate, which also offers a guest path.
+  expect(await screen.findByTestId('spotify-login')).toBeInTheDocument()
+  const guest = screen.getByTestId('play-guest')
+
+  await userEvent.click(guest)
+
+  // Guest mode: no more login gate, straight into the players step.
+  expect(await screen.findByTestId('setup-next')).toBeInTheDocument()
+  expect(screen.queryByTestId('spotify-login')).toBeNull()
+})

@@ -191,6 +191,7 @@ export default function GameContainer({
         piled={piled}
         interactive={!ending && !switching}
         playing={playing}
+        qr={session.guest}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
         onPause={() => {
           session.provider.pause().catch(() => {})
