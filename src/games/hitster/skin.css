@@ -418,4 +418,5 @@
   text-transform: uppercase;
   color: var(--accent2);
   opacity: 0.85;
+  transform: skewX(-7deg); /* match the slanted wordmark look */
 }
