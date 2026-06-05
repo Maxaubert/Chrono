@@ -1,0 +1,8 @@
+/* src/ui/game/play/game-screen.css */
+.game-screen {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg, #060509);
+}
