@@ -5,6 +5,7 @@ import {
   extractAnonToken,
   extractOperationHash,
   parsePathfinderPage,
+  parseTrackMeta,
   parseTrackYear,
 } from './pathfinder'
 
@@ -44,6 +45,34 @@ describe('parseTrackYear', () => {
   it('returns null when absent', () => {
     expect(parseTrackYear({ data: { trackUnion: {} } })).toBeNull()
     expect(parseTrackYear({})).toBeNull()
+  })
+})
+
+describe('parseTrackMeta', () => {
+  it('reads title, primary artists, and year from a getTrack response', () => {
+    expect(
+      parseTrackMeta({
+        data: {
+          trackUnion: {
+            name: 'Bohemian Rhapsody',
+            artists: { items: [{ profile: { name: 'Queen' } }] },
+            albumOfTrack: { date: { year: 2018 } },
+          },
+        },
+      }),
+    ).toEqual({ year: 2018, title: 'Bohemian Rhapsody', artist: 'Queen' })
+  })
+  it('tolerates missing fields', () => {
+    expect(parseTrackMeta({ data: { trackUnion: {} } })).toEqual({
+      year: null,
+      title: null,
+      artist: null,
+    })
+    expect(parseTrackMeta({})).toEqual({
+      year: null,
+      title: null,
+      artist: null,
+    })
   })
 })
 

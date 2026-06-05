@@ -5,8 +5,13 @@ import {
   extractAnonToken,
   extractOperationHash,
   parsePathfinderPage,
-  parseTrackYear,
+  parseTrackMeta,
 } from '../src/spotify/pathfinder'
+import {
+  earliestItunesYear,
+  reconcileYear,
+  type ItunesSong,
+} from '../src/spotify/itunesYear'
 
 /**
  * Framework-agnostic "backend" that reads a full public playlist via Spotify's
@@ -146,7 +151,32 @@ export async function scrapeAllTracks(
   return { tracks: tracks.slice(0, MAX_TRACKS), total }
 }
 
-/** Look up a single track's release year (the playlist query omits it). */
+/** Best-effort original release year from iTunes for an artist + title, or null.
+ * Recovers the year when Spotify reports a reissue/remaster; any failure (miss,
+ * rate-limit, network) returns null so the caller falls back to the Spotify year. */
+async function itunesOriginalYear(
+  artist: string | null,
+  title: string,
+): Promise<number | null> {
+  const term = [artist?.split(',')[0], title].filter(Boolean).join(' ').trim()
+  if (!term) return null
+  try {
+    const res = await fetch(
+      `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=15`,
+    )
+    if (!res.ok) return null
+    const data = (await res.json()) as { results?: ItunesSong[] }
+    return earliestItunesYear(data.results ?? [], {
+      artist: artist ?? '',
+      title,
+    })
+  } catch {
+    return null
+  }
+}
+
+/** A single track's original release year. Spotify's date is often a reissue /
+ * remaster year, so it is reconciled against the earliest matching iTunes year. */
 export async function getTrackYear(trackId: string): Promise<number | null> {
   if (!isSpotifyId(trackId)) throw new Error('invalid track id')
   const token = await getAnonToken('track', trackId)
@@ -154,12 +184,23 @@ export async function getTrackYear(trackId: string): Promise<number | null> {
     fetch(buildGetTrackUrl({ trackId, hash }), {
       headers: pathfinderHeaders(token),
     })
-  let json: unknown = null
+  let meta: ReturnType<typeof parseTrackMeta> = {
+    year: null,
+    title: null,
+    artist: null,
+  }
   for (const force of [false, true]) {
     const hash = await loadHash('getTrack', force)
     const res = await request(hash)
-    json = res.ok ? await res.json().catch(() => null) : null
-    if ((json as { data?: { trackUnion?: unknown } })?.data?.trackUnion) break
+    const json = res.ok ? await res.json().catch(() => null) : null
+    const m = parseTrackMeta(json)
+    if (m.year != null || m.title) {
+      meta = m
+      break
+    }
   }
-  return parseTrackYear(json)
+  const itunes = meta.title
+    ? await itunesOriginalYear(meta.artist, meta.title)
+    : null
+  return reconcileYear(meta.year, itunes)
 }
