@@ -4,6 +4,7 @@ import {
   scrapeAllTracks,
   getTrackYear,
 } from './server/spotifyScraper'
+import { apiRateLimit, clientIp } from './server/rateLimit'
 
 /**
  * Dev-server adapter over server/spotifyScraper.ts: serves /api/playlist-tracks
@@ -20,8 +21,16 @@ export function spotifyScraperPlugin(): Plugin {
         const isTracks = url.startsWith('/api/playlist-tracks')
         const isYear = url.startsWith('/api/track-year')
         if (!isTracks && !isYear) return next()
-        const id = new URL(url, 'http://localhost').searchParams.get('id')
         res.setHeader('content-type', 'application/json')
+        const ip = clientIp(req.headers, req.socket?.remoteAddress)
+        const rl = apiRateLimit(ip)
+        if (!rl.ok) {
+          res.statusCode = 429
+          res.setHeader('Retry-After', Math.ceil(rl.retryAfterMs / 1000))
+          res.end(JSON.stringify({ error: 'rate limited' }))
+          return
+        }
+        const id = new URL(url, 'http://localhost').searchParams.get('id')
         if (!isSpotifyId(id)) {
           res.statusCode = 400
           res.end(JSON.stringify({ error: 'bad id' }))
