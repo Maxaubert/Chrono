@@ -30,6 +30,7 @@ export default function GameContainer({
   const [ending, setEnding] = useState(false) // post-OK turn-end sequence
   const [switching, setSwitching] = useState(false)
   const [nextName, setNextName] = useState('')
+  const [playing, setPlaying] = useState(true) // mystery track play/pause
 
   const trackInfo = useMemo(() => {
     const m = new Map<
@@ -46,6 +47,7 @@ export default function GameContainer({
 
   function play(uri: string) {
     session.provider.play({ uri }).catch((e) => setError(String(e)))
+    setPlaying(true)
   }
 
   async function drawNext() {
@@ -165,8 +167,16 @@ export default function GameContainer({
         imageOf={imageOf}
         piled={piled}
         interactive={!ending && !switching}
+        playing={playing}
         onPlace={(slot) => dispatch({ type: 'place', slotIndex: slot })}
-        onPause={() => session.provider.pause()}
+        onPause={() => {
+          session.provider.pause().catch(() => {})
+          setPlaying(false)
+        }}
+        onResume={() => {
+          session.provider.resume().catch((e) => setError(String(e)))
+          setPlaying(true)
+        }}
         onReplay={() =>
           state.drawn && play(`spotify:track:${state.drawn.card.id}`)
         }

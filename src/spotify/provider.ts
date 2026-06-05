@@ -63,6 +63,11 @@ export class SpotifyProvider implements AudioProvider {
     await this.put('/me/player/pause')
   }
 
+  /** Resume current playback (no uris = continue from the paused position). */
+  async resume(): Promise<void> {
+    await this.put('/me/player/play')
+  }
+
   async stop(): Promise<void> {
     await this.put('/me/player/pause')
   }

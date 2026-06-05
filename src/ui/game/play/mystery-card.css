@@ -207,6 +207,12 @@
   animation: menuSheenDrift 18s ease-in-out infinite;
 }
 
+/* freeze the spinning disc + equalizer while playback is paused */
+.mystery.paused .myst-disc,
+.mystery.paused .myst-eq i {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .skin-hitster .h-card.mystery::before,
   .skin-hitster .h-card.mystery::after {

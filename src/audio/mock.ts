@@ -7,7 +7,7 @@ import type { AudioProvider, AudioTrackRef } from './types'
 export class MockProvider implements AudioProvider {
   readonly id = 'mock'
   readonly calls: Array<{
-    method: 'play' | 'pause' | 'stop'
+    method: 'play' | 'pause' | 'resume' | 'stop'
     track?: AudioTrackRef
   }> = []
 
@@ -17,6 +17,10 @@ export class MockProvider implements AudioProvider {
 
   async pause(): Promise<void> {
     this.calls.push({ method: 'pause' })
+  }
+
+  async resume(): Promise<void> {
+    this.calls.push({ method: 'resume' })
   }
 
   async stop(): Promise<void> {

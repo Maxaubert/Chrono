@@ -15,5 +15,7 @@ export interface AudioProvider {
   /** Start (or restart) playback of the given track. Identity stays hidden. */
   play(track: AudioTrackRef): Promise<void>
   pause(): Promise<void>
+  /** Resume the current track from where it was paused. */
+  resume(): Promise<void>
   stop(): Promise<void>
 }
