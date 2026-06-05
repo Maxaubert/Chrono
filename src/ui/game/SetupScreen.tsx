@@ -2,6 +2,7 @@
 import { useState, type ReactNode } from 'react'
 import { parsePlaylistId, type MyPlaylist, type SpotifyTrack } from '@/spotify'
 import { useActiveGame } from '../theme/activeGameContext'
+import { markResumeSetup } from './resumeSetup'
 import type { SpotifySession } from './useSpotifySession'
 import './setup.css'
 
@@ -188,7 +189,11 @@ export default function SetupScreen({
             <button
               className="su-login su-login-big"
               data-testid="spotify-login"
-              onClick={session.login}
+              onClick={() => {
+                // Remember to reopen setup after the full-page auth redirect.
+                markResumeSetup()
+                session.login()
+              }}
             >
               LOG IN WITH SPOTIFY
             </button>
