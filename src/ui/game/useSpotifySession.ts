@@ -125,7 +125,9 @@ export function useSpotifySession(guestArg = false): SpotifySession {
   async function connect() {
     if (mock) return setConnected(true)
     // Retry transient connect failures; a stale/expired token surfaces as an
-    // auth error, so clear it and send the user back to a fresh login.
+    // auth error, so clear it and send the user back to a fresh login. Permanent
+    // failures (not Premium, no DRM support, etc.) are surfaced immediately
+    // rather than retried, so the host is not left staring at a greyed button.
     for (let attempt = 0; attempt < 4; attempt++) {
       try {
         await (provider as SpotifyProvider).connect()
@@ -133,15 +135,25 @@ export function useSpotifySession(guestArg = false): SpotifySession {
         setError(null)
         return
       } catch (e) {
-        if (/auth/i.test(String(e))) {
-          setError(String(e))
+        const msg = String(e)
+        if (/auth/i.test(msg)) {
+          setError(msg)
           logout()
+          return
+        }
+        // Not transient -> stop retrying and tell the host why.
+        if (
+          /premium|initiali|playback|never became ready|failed to connect/i.test(
+            msg,
+          )
+        ) {
+          setError(msg)
           return
         }
         if (attempt < 3) {
           await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)))
         } else {
-          setError(String(e))
+          setError(msg)
         }
       }
     }
