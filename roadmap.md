@@ -56,3 +56,56 @@ their own timeline on their own device.
 
 Reuse the pure core; Capacitor wrap or React Native; swap audio to the native
 Spotify SDK (the Web Playback SDK is browser-only).
+
+## Ideas (backlog)
+
+Unplanned, unprioritised game concepts. The engine is really an "order a card on
+a numeric scale" engine: year is just one axis, so anything with a sortable
+number is a candidate. These are ideas, not commitments.
+
+### History as an umbrella (swappable fact packs)
+
+History need not be one game. The same module can ship themed packs the host
+picks from:
+
+- World events, Leaders & rulers, Wars & battles, Inventions & tech,
+  Space & science, Sports moments, Disasters, Art & architecture.
+- Era or difficulty packs (Ancient world, 20th century, etc.).
+
+### Other true-timeline games (year axis)
+
+Same "place by year" mechanic, different deck and reveal art:
+
+- **Cinema** — films by release year (posters).
+- **Video games** — release year (box art).
+- **Tech & gadgets** — devices by release year.
+- **Internet & memes** — when it went viral (sleeper hit; very shareable).
+- **Brands & logos** — founding / logo year.
+- **Books** — publication year.
+
+### Scale mode (non-time axis, "bigger / smaller")
+
+Same engine, the axis is any quantity instead of a year:
+
+- **Bigger country** — population or area.
+- **Taller / longer** — mountains, buildings, rivers.
+- **Price is right** — products by price.
+- **More famous** — followers, searches.
+- **Box office / streams** — gross, streams, views.
+- **Animal kingdom** — speed, weight, lifespan, size.
+- **Too hot** — Scoville scale.
+- **Calorie count** — foods by calories.
+
+### Wildcards
+
+- **What came first** — two-card duels (lightweight variant).
+- **Periodic table** — by atomic number.
+- **Deep time** — dinosaurs / geologic eras.
+- **Slang** — word-usage year.
+- **Custom packs** — host-built decks.
+
+### Suggested next builds
+
+1. History-as-packs (extends what already exists).
+2. Movies or Memes (new year-axis deck, high appeal).
+3. One Scale game (e.g. Bigger country or More famous) to prove the non-time axis.
