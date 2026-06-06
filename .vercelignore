@@ -1,0 +1,11 @@
+# Keep Vercel uploads small: it builds from source on its own servers, so none
+# of this needs to be sent. .worktrees (a second checkout + its node_modules) and
+# the gitignored 229 MB public/bg/space.mp4 are what blew past the 100 MB limit.
+.git
+node_modules
+.worktrees
+dist
+.vercel
+public/bg
+*.mp4
+*.mov

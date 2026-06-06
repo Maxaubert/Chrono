@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getTrackYear, isSpotifyId } from '../server/spotifyScraper'
-import { apiRateLimit, clientIp } from '../server/rateLimit'
+import { getTrackYear, isSpotifyId } from '../server/spotifyScraper.js'
+import { apiRateLimit, clientIp } from '../server/rateLimit.js'
 
 /** GET /api/track-year?id=<trackId> -> { year }. The production equivalent of the
  * Vite dev plugin's middleware (same shared scraper core). */

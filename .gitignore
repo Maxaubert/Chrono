@@ -42,3 +42,4 @@ test-results
 
 # Large local mockup assets (videos), do not commit
 public/bg/
+.vercel

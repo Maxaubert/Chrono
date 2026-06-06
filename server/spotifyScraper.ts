@@ -1,4 +1,4 @@
-import type { SpotifyTrack } from '../src/spotify/types'
+import type { SpotifyTrack } from '../src/spotify/types.js'
 import {
   buildFetchPlaylistUrl,
   buildGetTrackUrl,
@@ -6,12 +6,12 @@ import {
   extractOperationHash,
   parsePathfinderPage,
   parseTrackMeta,
-} from '../src/spotify/pathfinder'
+} from '../src/spotify/pathfinder.js'
 import {
   earliestItunesYear,
   reconcileYear,
   type ItunesSong,
-} from '../src/spotify/itunesYear'
+} from '../src/spotify/itunesYear.js'
 
 /**
  * Framework-agnostic "backend" that reads a full public playlist via Spotify's
