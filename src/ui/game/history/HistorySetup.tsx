@@ -62,16 +62,12 @@ export default function HistorySetup({ onStart, onClose }: GameSetupProps) {
             <div className="hs-blurb">{game.theme.tagline}</div>
           </div>
 
-          {/* a quiet stack of aged index cards, softly fanned — the museum
-              counterpoint to Hitster's neon card fan */}
+          {/* three plain cards, softly fanned — the museum counterpoint to
+              Hitster's card fan */}
           <div className="hs-stack" aria-hidden="true">
             <div className="hs-leaf hs-leaf-3" />
             <div className="hs-leaf hs-leaf-2" />
-            <div className="hs-leaf hs-leaf-1">
-              <span className="hs-leaf-rule" />
-              <span className="hs-leaf-rule" />
-              <span className="hs-leaf-year">MDCCLXXXIX</span>
-            </div>
+            <div className="hs-leaf hs-leaf-1" />
           </div>
 
           <div className="hs-foot">
