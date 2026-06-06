@@ -14,6 +14,8 @@ export {
   clearTokens,
   saveVerifier,
   takeVerifier,
+  peekVerifier,
+  clearVerifier,
 } from './auth'
 export {
   parsePlaylistId,

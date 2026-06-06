@@ -24,6 +24,10 @@ export default function GameContainer({
   const deck = useRef<DeckHandle | null>(null)
   const started = useRef(false)
   const timers = useRef<number[]>([])
+  // Guards the reveal "OK" against a double-tap: setEnding is async, so without
+  // a synchronous flag a fast double-click would schedule the turn-end twice
+  // (double draw/advance -> skipped player, burned card).
+  const endingStarted = useRef(false)
 
   // Card id -> reveal content, recorded on each draw so a card's image/title/
   // artist survive after it is placed and `state.drawn` moves to the next card.
@@ -113,7 +117,8 @@ export default function GameContainer({
   // show the placed card in the deck -> pile -> "next player" cover (swap behind
   // it) -> deal the next player's hand. If the turn won, go to the win screen.
   function beginEndTurn() {
-    if (!state) return
+    if (!state || endingStarted.current) return
+    endingStarted.current = true
     const cur = state
     const player = cur.players[cur.currentPlayerIndex]
     const won = player.timeline.length >= cur.config.targetCards
@@ -143,6 +148,7 @@ export default function GameContainer({
     setSwitching(false)
     setPiled(false) // deal: the next player's pile spreads into their hand
     setEnding(false)
+    endingStarted.current = false // ready for the next turn's reveal
   }
 
   // Start the game once, from the setup handed in by the menu.

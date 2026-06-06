@@ -20,7 +20,8 @@ import {
   saveTokens,
   saveVerifier,
   SpotifyProvider,
-  takeVerifier,
+  peekVerifier,
+  clearVerifier,
   type SpotifyTrack,
 } from '@/spotify'
 
@@ -29,6 +30,11 @@ function hasValidToken(): boolean {
   const tokens = loadTokens()
   return !!tokens && !isExpired(tokens)
 }
+
+// Module-scoped so the OAuth code/verifier are exchanged exactly once per page
+// load, even if the hook remounts on the /callback page (a per-instance ref does
+// not survive a remount). Reset on a fresh login() or an exchange failure.
+let oauthExchangeStarted = false
 
 // A tiny fixed deck for ?mock=1 (no real Spotify). Years strictly increase in
 // draw order so placing at the rightmost gap is always correct (E2E relies on this).
@@ -80,20 +86,32 @@ export function useSpotifySession(guestArg = false): SpotifySession {
   const [connected, setConnected] = useState(mock)
   const [error, setError] = useState<string | null>(null)
 
-  // Handle the OAuth callback once on mount.
+  // Handle the OAuth callback once. The authorization code and the PKCE verifier
+  // are both single-use, so a double-processed callback (a remount, a StrictMode
+  // double-invoke, a stray re-render) must not exchange twice -- otherwise the
+  // first run consumes them, the second fails, and login silently does nothing
+  // (the "log in twice" bug). Guard with a ref, peek the verifier without
+  // consuming it, and only clear it once the token is saved.
   useEffect(() => {
     if (mock || guest || window.location.pathname !== '/callback') return
+    if (oauthExchangeStarted) return
     const code = new URLSearchParams(window.location.search).get('code')
-    const verifier = takeVerifier()
+    const verifier = peekVerifier()
     if (!code || !verifier) return
+    oauthExchangeStarted = true
     const { clientId, redirectUri } = getSpotifyConfig()
     exchangeCodeForTokens({ code, verifier, clientId, redirectUri })
       .then((tokens) => {
+        clearVerifier()
         saveTokens(tokens)
         window.history.replaceState({}, '', '/')
         setLoggedIn(true)
       })
-      .catch((e) => setError(String(e)))
+      .catch((e) => {
+        // Keep the verifier so an honest retry is possible; surface the error.
+        oauthExchangeStarted = false
+        setError(String(e))
+      })
   }, [mock, guest])
 
   async function login() {
