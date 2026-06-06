@@ -36,14 +36,23 @@ function GameRoot() {
   )
   const session = useSpotifySession(guest)
   const { game } = useActiveGame()
-  // useSpotifySession returns a fresh object each render; the adapter only needs
-  // to be rebuilt when the provider identity changes (mock/guest) or the active
-  // game switches, so key on those rather than the whole session object.
+  // useSpotifySession returns a fresh object each render; rebuild the adapter
+  // when the active game, the provider identity (mock/guest), OR the reactive
+  // session state the setup screen reads (loggedIn/connected/error) changes --
+  // otherwise the Hitster Setup captures a stale session and never sees the
+  // playback device connect, leaving START greyed out forever.
   const play = useMemo(
     () =>
       game.id === 'history' ? makeHistoryPlay() : makeHitsterPlay(session),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [game.id, session.mock, guest],
+    [
+      game.id,
+      session.mock,
+      guest,
+      session.loggedIn,
+      session.connected,
+      session.error,
+    ],
   )
   const [screen, setScreen] = useState<'menu' | 'game'>('menu')
   // Returning from the Spotify auth redirect: reopen setup where the host left
