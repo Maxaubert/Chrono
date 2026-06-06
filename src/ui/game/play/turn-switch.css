@@ -77,3 +77,28 @@
     animation-duration: 0.01ms !important;
   }
 }
+
+/* ---------- History: warm museum styling (Hitster keeps the default) ---------- */
+.skin-history .tswitch::before {
+  background: radial-gradient(120% 90% at 50% 42%, #14180f, #080905 78%);
+}
+.skin-history .tswitch-kicker {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  font-weight: 700;
+  color: var(--accent2);
+}
+/* the name already uses --title-font (serif) + --accent (gold); drop the
+   edgy uppercase / heavy / wide tracking for an elegant serif name. */
+.skin-history .tswitch-name {
+  letter-spacing: 1px;
+  text-transform: none;
+  font-weight: 700;
+}
+.skin-history .tswitch-sub {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  letter-spacing: 0.2em;
+  color: color-mix(in srgb, var(--accent2) 80%, #fff);
+}
