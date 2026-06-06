@@ -126,3 +126,14 @@ export function takeVerifier(): string | null {
   if (v) sessionStorage.removeItem(VERIFIER_KEY)
   return v
 }
+
+/** Read the verifier WITHOUT consuming it. The OAuth callback peeks (so a
+ * double-processed callback or a retry still sees it) and clears it only after
+ * the token exchange succeeds (see clearVerifier). */
+export function peekVerifier(): string | null {
+  return sessionStorage.getItem(VERIFIER_KEY)
+}
+
+export function clearVerifier(): void {
+  sessionStorage.removeItem(VERIFIER_KEY)
+}
