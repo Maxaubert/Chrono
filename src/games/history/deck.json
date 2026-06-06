@@ -11,7 +11,11 @@
       "era": "Ancient Egypt",
       "place": "Egypt",
       "description": "King Narmer unites Upper and Lower Egypt under the first pharaoh.",
-      "scene": "the first pharaoh uniting Upper and Lower Egypt, a king in the double crown receiving tribute beside the Nile, ancient Egyptian temple and hieroglyphs"
+      "scene": "the first pharaoh uniting Upper and Lower Egypt, a king in the double crown receiving tribute beside the Nile, ancient Egyptian temple and hieroglyphs",
+      "tags": [
+        "empire",
+        "leader"
+      ]
     },
     {
       "n": 2,
@@ -22,7 +26,10 @@
       "era": "Ancient Egypt",
       "place": "Giza",
       "description": "Egyptians complete the Great Pyramid of Giza for Pharaoh Khufu.",
-      "scene": "the building of the Great Pyramid of Giza, thousands of laborers hauling massive limestone blocks up ramps under a blazing sun, the pyramid rising over the desert"
+      "scene": "the building of the Great Pyramid of Giza, thousands of laborers hauling massive limestone blocks up ramps under a blazing sun, the pyramid rising over the desert",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 3,
@@ -33,7 +40,11 @@
       "era": "Mesopotamia",
       "place": "Babylon",
       "description": "King Hammurabi of Babylon carves his famous law code into stone.",
-      "scene": "a Babylonian king receiving laws from a sun god, the tall black stone stele of Hammurabi inscribed with cuneiform in a Mesopotamian temple"
+      "scene": "a Babylonian king receiving laws from a sun god, the tall black stone stele of Hammurabi inscribed with cuneiform in a Mesopotamian temple",
+      "tags": [
+        "empire",
+        "leader"
+      ]
     },
     {
       "n": 4,
@@ -44,7 +55,10 @@
       "era": "Bronze Age",
       "place": "Syria",
       "description": "Egypt and the Hittites fight the Battle of Kadesh, the largest chariot battle in history.",
-      "scene": "the Battle of Kadesh, Egyptian and Hittite war chariots clashing in a vast dusty plain, a pharaoh firing arrows from his golden chariot"
+      "scene": "the Battle of Kadesh, Egyptian and Hittite war chariots clashing in a vast dusty plain, a pharaoh firing arrows from his golden chariot",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 5,
@@ -55,7 +69,8 @@
       "era": "Ancient Greece",
       "place": "Olympia",
       "description": "The first Olympic Games are held at Olympia in ancient Greece.",
-      "scene": "the first ancient Olympic Games, nude Greek athletes racing and wrestling before a crowd at Olympia, a temple and olive wreaths"
+      "scene": "the first ancient Olympic Games, nude Greek athletes racing and wrestling before a crowd at Olympia, a temple and olive wreaths",
+      "tags": []
     },
     {
       "n": 6,
@@ -66,7 +81,10 @@
       "era": "Ancient Rome",
       "place": "Rome",
       "description": "Romulus founds the city of Rome.",
-      "scene": "the legendary founding of Rome, the twins Romulus and Remus suckled by a she-wolf, a founder marking out city walls on a hill with the Tiber below"
+      "scene": "the legendary founding of Rome, the twins Romulus and Remus suckled by a she-wolf, a founder marking out city walls on a hill with the Tiber below",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 7,
@@ -77,7 +95,10 @@
       "era": "Ancient India",
       "place": "Nepal",
       "description": "Siddhartha Gautama, the Buddha, is born in northern India.",
-      "scene": "the enlightenment of the Buddha, a serene prince meditating beneath a great bodhi fig tree, soft golden light, ancient India"
+      "scene": "the enlightenment of the Buddha, a serene prince meditating beneath a great bodhi fig tree, soft golden light, ancient India",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 8,
@@ -88,7 +109,10 @@
       "era": "Ancient China",
       "place": "China",
       "description": "The philosopher Confucius is born in China.",
-      "scene": "the Chinese philosopher Confucius teaching disciples in a garden of ancient China, scholar robes, scrolls, calm wise sage"
+      "scene": "the Chinese philosopher Confucius teaching disciples in a garden of ancient China, scholar robes, scrolls, calm wise sage",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 9,
@@ -100,7 +124,10 @@
       "era": "Roman Republic",
       "place": "Rome",
       "description": "Romans overthrow their last king and found the Roman Republic.",
-      "scene": "the founding of the Roman Republic, Roman senators and patricians swearing an oath over a sword in the forum, the tyrant king driven out"
+      "scene": "the founding of the Roman Republic, Roman senators and patricians swearing an oath over a sword in the forum, the tyrant king driven out",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 10,
@@ -111,7 +138,10 @@
       "era": "Ancient Greece",
       "place": "Greece",
       "description": "Athens defeats the invading Persians at the Battle of Marathon.",
-      "scene": "the Battle of Marathon, Greek hoplites in bronze armor and crested helmets charging the Persian army on a coastal plain, shields and spears"
+      "scene": "the Battle of Marathon, Greek hoplites in bronze armor and crested helmets charging the Persian army on a coastal plain, shields and spears",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 11,
@@ -122,7 +152,10 @@
       "era": "Ancient Greece",
       "place": "Greece",
       "description": "King Leonidas and 300 Spartans make their last stand against Persia at Thermopylae.",
-      "scene": "the last stand at Thermopylae, three hundred Spartan warriors with red cloaks and round shields holding a narrow mountain pass against a vast Persian army"
+      "scene": "the last stand at Thermopylae, three hundred Spartan warriors with red cloaks and round shields holding a narrow mountain pass against a vast Persian army",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 12,
@@ -133,7 +166,10 @@
       "era": "Ancient Greece",
       "place": "Athens",
       "description": "Athens begins building the Parthenon on the Acropolis.",
-      "scene": "the construction of the Parthenon on the Acropolis, Greek workers raising marble columns of a great temple above Athens, sculptors at work"
+      "scene": "the construction of the Parthenon on the Acropolis, Greek workers raising marble columns of a great temple above Athens, sculptors at work",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 13,
@@ -144,7 +180,10 @@
       "era": "Ancient Greece",
       "place": "Athens",
       "description": "The philosopher Socrates is executed in Athens, made to drink hemlock.",
-      "scene": "the death of Socrates, the philosopher calmly reaching for a cup of hemlock surrounded by grieving disciples in an Athenian prison cell, in the style of Jacques-Louis David"
+      "scene": "the death of Socrates, the philosopher calmly reaching for a cup of hemlock surrounded by grieving disciples in an Athenian prison cell, in the style of Jacques-Louis David",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 14,
@@ -155,7 +194,11 @@
       "era": "Hellenistic",
       "place": "Macedon",
       "description": "Alexander the Great becomes king of Macedon.",
-      "scene": "Alexander the Great as a young king on his rearing warhorse Bucephalus, leading the Macedonian army, banners and spears, classical antiquity"
+      "scene": "Alexander the Great as a young king on his rearing warhorse Bucephalus, leading the Macedonian army, banners and spears, classical antiquity",
+      "tags": [
+        "leader",
+        "war"
+      ]
     },
     {
       "n": 15,
@@ -166,7 +209,12 @@
       "era": "Ancient China",
       "place": "China",
       "description": "Qin Shi Huang unifies China as its first emperor.",
-      "scene": "Qin Shi Huang the first emperor of China enthroned in imperial robes, ranks of terracotta soldiers and the beginnings of the Great Wall behind him"
+      "scene": "Qin Shi Huang the first emperor of China enthroned in imperial robes, ranks of terracotta soldiers and the beginnings of the Great Wall behind him",
+      "tags": [
+        "empire",
+        "leader",
+        "war"
+      ]
     },
     {
       "n": 16,
@@ -177,7 +225,10 @@
       "era": "Roman Republic",
       "place": "The Alps",
       "description": "Hannibal crosses the Alps with war elephants to attack Rome.",
-      "scene": "Hannibal leading his army and war elephants across the snowy Alps, soldiers struggling through mountain passes in a blizzard, dramatic peaks"
+      "scene": "Hannibal leading his army and war elephants across the snowy Alps, soldiers struggling through mountain passes in a blizzard, dramatic peaks",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 17,
@@ -189,7 +240,11 @@
       "era": "Roman Republic",
       "place": "Rome",
       "description": "Roman senators assassinate Julius Caesar on the Ides of March.",
-      "scene": "the assassination of Julius Caesar in the Roman Senate, toga-clad senators with daggers surrounding the falling Caesar at the base of a marble statue"
+      "scene": "the assassination of Julius Caesar in the Roman Senate, toga-clad senators with daggers surrounding the falling Caesar at the base of a marble statue",
+      "tags": [
+        "leader",
+        "war"
+      ]
     },
     {
       "n": 18,
@@ -200,7 +255,10 @@
       "era": "Roman Empire",
       "place": "Bethlehem",
       "description": "Jesus of Nazareth is born in Bethlehem.",
-      "scene": "the nativity, a newborn child in a humble stable with his mother, shepherds and wise men kneeling, a bright star above, warm candlelight"
+      "scene": "the nativity, a newborn child in a humble stable with his mother, shepherds and wise men kneeling, a bright star above, warm candlelight",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 19,
@@ -211,7 +269,10 @@
       "era": "Roman Empire",
       "place": "Jerusalem",
       "description": "Jesus of Nazareth is crucified in Jerusalem.",
-      "scene": "the crucifixion on a hill outside Jerusalem, three crosses against a dark stormy sky, mourners gathered below, dramatic shafts of light"
+      "scene": "the crucifixion on a hill outside Jerusalem, three crosses against a dark stormy sky, mourners gathered below, dramatic shafts of light",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 20,
@@ -223,7 +284,10 @@
       "era": "Roman Empire",
       "place": "Pompeii",
       "description": "Mount Vesuvius erupts and buries Pompeii and Herculaneum.",
-      "scene": "the eruption of Mount Vesuvius destroying Pompeii, a towering black ash cloud and falling fire over Roman columns, citizens fleeing, red glow"
+      "scene": "the eruption of Mount Vesuvius destroying Pompeii, a towering black ash cloud and falling fire over Roman columns, citizens fleeing, red glow",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 21,
@@ -234,7 +298,11 @@
       "era": "Roman Empire",
       "place": "Britain",
       "description": "Rome begins building Hadrian’s Wall across northern Britain.",
-      "scene": "the building of Hadrian's Wall across the misty hills of northern Britain, Roman legionaries and laborers raising a long stone wall under grey skies"
+      "scene": "the building of Hadrian's Wall across the misty hills of northern Britain, Roman legionaries and laborers raising a long stone wall under grey skies",
+      "tags": [
+        "empire",
+        "tech-science"
+      ]
     },
     {
       "n": 22,
@@ -245,7 +313,12 @@
       "era": "Roman Empire",
       "place": "Rome",
       "description": "Constantine wins the Battle of the Milvian Bridge and embraces Christianity.",
-      "scene": "the Battle of the Milvian Bridge, Emperor Constantine on horseback beneath a glowing cross in the sky, Roman cavalry charging across a river bridge"
+      "scene": "the Battle of the Milvian Bridge, Emperor Constantine on horseback beneath a glowing cross in the sky, Roman cavalry charging across a river bridge",
+      "tags": [
+        "war",
+        "faith",
+        "leader"
+      ]
     },
     {
       "n": 23,
@@ -256,7 +329,11 @@
       "era": "Late Antiquity",
       "place": "Rome",
       "description": "The Visigoths under Alaric sack the city of Rome.",
-      "scene": "the Visigoths sacking Rome, fur-clad barbarian warriors looting and burning marble buildings, fleeing citizens, columns ablaze at dusk"
+      "scene": "the Visigoths sacking Rome, fur-clad barbarian warriors looting and burning marble buildings, fleeing citizens, columns ablaze at dusk",
+      "tags": [
+        "war",
+        "empire"
+      ]
     },
     {
       "n": 24,
@@ -268,7 +345,10 @@
       "era": "Late Antiquity",
       "place": "Rome",
       "description": "Odoacer deposes the last Western Roman emperor; the Western Empire falls.",
-      "scene": "the fall of the Western Roman Empire, a young boy-emperor surrendering his golden crown to a fur-clad Germanic chieftain in a decaying Roman hall"
+      "scene": "the fall of the Western Roman Empire, a young boy-emperor surrendering his golden crown to a fur-clad Germanic chieftain in a decaying Roman hall",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 25,
@@ -279,7 +359,10 @@
       "era": "Early Islam",
       "place": "Arabia",
       "description": "Muhammad flees Mecca for Medina, beginning the Islamic calendar.",
-      "scene": "the Hijra, the prophet Muhammad and his companion traveling by camel across the Arabian desert at night toward Medina, palm trees and stars"
+      "scene": "the Hijra, the prophet Muhammad and his companion traveling by camel across the Arabian desert at night toward Medina, palm trees and stars",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 26,
@@ -290,7 +373,11 @@
       "era": "Middle Ages",
       "place": "Rome",
       "description": "The pope crowns Charlemagne the first Holy Roman Emperor.",
-      "scene": "the coronation of Charlemagne, the pope placing a golden crown on the kneeling Frankish king in a great cathedral, candlelight and rich robes"
+      "scene": "the coronation of Charlemagne, the pope placing a golden crown on the kneeling Frankish king in a great cathedral, candlelight and rich robes",
+      "tags": [
+        "leader",
+        "empire"
+      ]
     },
     {
       "n": 27,
@@ -301,7 +388,8 @@
       "era": "Medieval Japan",
       "place": "Japan",
       "description": "Murasaki Shikibu writes The Tale of Genji in Japan, often called the first novel.",
-      "scene": "a Japanese noblewoman of the Heian court writing The Tale of Genji with brush and ink on scrolls, silk kimono, a refined palace garden, autumn maples"
+      "scene": "a Japanese noblewoman of the Heian court writing The Tale of Genji with brush and ink on scrolls, silk kimono, a refined palace garden, autumn maples",
+      "tags": []
     },
     {
       "n": 28,
@@ -313,7 +401,11 @@
       "era": "Middle Ages",
       "place": "England",
       "description": "William the Conqueror defeats King Harold at the Battle of Hastings.",
-      "scene": "the Battle of Hastings, William the Conqueror on horseback leading Norman knights with lances against the Anglo-Saxon shield wall, banners and arrows"
+      "scene": "the Battle of Hastings, William the Conqueror on horseback leading Norman knights with lances against the Anglo-Saxon shield wall, banners and arrows",
+      "tags": [
+        "war",
+        "leader"
+      ]
     },
     {
       "n": 29,
@@ -324,7 +416,11 @@
       "era": "Middle Ages",
       "place": "Europe",
       "description": "Pope Urban II launches the First Crusade to retake Jerusalem.",
-      "scene": "Pope Urban II preaching the First Crusade to a crowd of armored knights and nobles, banners with red crosses, a medieval council outdoors"
+      "scene": "Pope Urban II preaching the First Crusade to a crowd of armored knights and nobles, banners with red crosses, a medieval council outdoors",
+      "tags": [
+        "war",
+        "faith"
+      ]
     },
     {
       "n": 30,
@@ -335,7 +431,12 @@
       "era": "Mongol Empire",
       "place": "Mongolia",
       "description": "Genghis Khan unites the Mongol tribes and founds his empire.",
-      "scene": "Genghis Khan proclaimed great khan of the Mongols on the steppe, a fierce nomad leader on horseback before mounted warriors and felt tents, banners"
+      "scene": "Genghis Khan proclaimed great khan of the Mongols on the steppe, a fierce nomad leader on horseback before mounted warriors and felt tents, banners",
+      "tags": [
+        "leader",
+        "war",
+        "empire"
+      ]
     },
     {
       "n": 31,
@@ -346,7 +447,8 @@
       "era": "Middle Ages",
       "place": "England",
       "description": "English barons force King John to seal the Magna Carta.",
-      "scene": "the sealing of Magna Carta, an English king reluctantly affixing his seal to a charter surrounded by armored barons in a meadow at Runnymede"
+      "scene": "the sealing of Magna Carta, an English king reluctantly affixing his seal to a charter surrounded by armored barons in a meadow at Runnymede",
+      "tags": []
     },
     {
       "n": 32,
@@ -357,7 +459,10 @@
       "era": "Middle Ages",
       "place": "Asia",
       "description": "Marco Polo sets out from Venice on his journey to China.",
-      "scene": "Marco Polo and merchants traveling a camel caravan along the Silk Road toward the East, mountains and deserts, distant Chinese palaces"
+      "scene": "Marco Polo and merchants traveling a camel caravan along the Silk Road toward the East, mountains and deserts, distant Chinese palaces",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 33,
@@ -368,7 +473,10 @@
       "era": "Mesoamerica",
       "place": "Mexico",
       "description": "The Aztecs found their capital, Tenochtitlan, on a lake island.",
-      "scene": "the founding of Tenochtitlan, an eagle perched on a cactus over a lake island, Aztecs building a great temple city of canals and pyramids"
+      "scene": "the founding of Tenochtitlan, an eagle perched on a cactus over a lake island, Aztecs building a great temple city of canals and pyramids",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 34,
@@ -379,7 +487,10 @@
       "era": "Middle Ages",
       "place": "Europe",
       "description": "The Black Death reaches Europe, killing a third of its people.",
-      "scene": "the Black Death in a medieval town, plague doctors in beaked masks and cloaked figures among the dying, carts of bodies, grey desolate streets"
+      "scene": "the Black Death in a medieval town, plague doctors in beaked masks and cloaked figures among the dying, carts of bodies, grey desolate streets",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 35,
@@ -390,7 +501,10 @@
       "era": "Imperial China",
       "place": "China",
       "description": "The Ming dynasty is founded as the Mongols are driven from China.",
-      "scene": "the founding of the Ming dynasty, a new Chinese emperor enthroned in a golden palace, imperial dragon robes, courtiers bowing, red and gold"
+      "scene": "the founding of the Ming dynasty, a new Chinese emperor enthroned in a golden palace, imperial dragon robes, courtiers bowing, red and gold",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 36,
@@ -401,7 +515,11 @@
       "era": "Middle Ages",
       "place": "France",
       "description": "Joan of Arc is burned at the stake in France.",
-      "scene": "Joan of Arc burning at the stake, a young woman in armor tied to a post amid flames and smoke, soldiers and a crowd in a medieval square"
+      "scene": "Joan of Arc burning at the stake, a young woman in armor tied to a post amid flames and smoke, soldiers and a crowd in a medieval square",
+      "tags": [
+        "war",
+        "faith"
+      ]
     },
     {
       "n": 37,
@@ -412,7 +530,11 @@
       "era": "Late Medieval",
       "place": "Constantinople",
       "description": "The Ottomans capture Constantinople, ending the Byzantine Empire.",
-      "scene": "the fall of Constantinople, Ottoman soldiers storming the great walls under giant cannon fire, a sultan on horseback entering the city, the Hagia Sophia"
+      "scene": "the fall of Constantinople, Ottoman soldiers storming the great walls under giant cannon fire, a sultan on horseback entering the city, the Hagia Sophia",
+      "tags": [
+        "war",
+        "empire"
+      ]
     },
     {
       "n": 38,
@@ -424,7 +546,10 @@
       "era": "Renaissance",
       "place": "Mainz",
       "description": "Gutenberg prints the Bible using his movable-type printing press.",
-      "scene": "Johannes Gutenberg in his workshop examining the first printed Bible page beside his great wooden printing press, candlelight, ink and movable type"
+      "scene": "Johannes Gutenberg in his workshop examining the first printed Bible page beside his great wooden printing press, candlelight, ink and movable type",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 39,
@@ -435,7 +560,10 @@
       "era": "Age of Exploration",
       "place": "Atlantic",
       "description": "Christopher Columbus reaches the Americas.",
-      "scene": "Columbus landing in the Americas, an explorer in Renaissance dress planting a flag on a tropical shore, sailing ships at anchor, curious natives watching"
+      "scene": "Columbus landing in the Americas, an explorer in Renaissance dress planting a flag on a tropical shore, sailing ships at anchor, curious natives watching",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 40,
@@ -446,7 +574,10 @@
       "era": "Age of Exploration",
       "place": "India",
       "description": "Vasco da Gama reaches India by sea around Africa.",
-      "scene": "Vasco da Gama arriving by sailing ship at the coast of India, Portuguese sailors meeting Indian traders, spice market, palm-lined harbor"
+      "scene": "Vasco da Gama arriving by sailing ship at the coast of India, Portuguese sailors meeting Indian traders, spice market, palm-lined harbor",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 41,
@@ -457,7 +588,8 @@
       "era": "Renaissance",
       "place": "Florence",
       "description": "Leonardo da Vinci begins painting the Mona Lisa.",
-      "scene": "Leonardo da Vinci in his Renaissance studio painting the Mona Lisa, an artist at an easel before a seated smiling woman, soft window light, Florence"
+      "scene": "Leonardo da Vinci in his Renaissance studio painting the Mona Lisa, an artist at an easel before a seated smiling woman, soft window light, Florence",
+      "tags": []
     },
     {
       "n": 42,
@@ -468,7 +600,10 @@
       "era": "Reformation",
       "place": "Germany",
       "description": "Martin Luther posts his 95 Theses, sparking the Reformation.",
-      "scene": "Martin Luther nailing his 95 Theses to the wooden door of a German church, a monk with hammer and paper, townsfolk gathering, autumn light"
+      "scene": "Martin Luther nailing his 95 Theses to the wooden door of a German church, a monk with hammer and paper, townsfolk gathering, autumn light",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 43,
@@ -479,7 +614,12 @@
       "era": "Age of Exploration",
       "place": "Mexico",
       "description": "Hernán Cortés and the Spanish conquer the Aztec Empire.",
-      "scene": "the fall of the Aztec Empire, Spanish conquistadors in steel armor with horses and cannon storming a great Aztec temple city, smoke over the lake"
+      "scene": "the fall of the Aztec Empire, Spanish conquistadors in steel armor with horses and cannon storming a great Aztec temple city, smoke over the lake",
+      "tags": [
+        "war",
+        "empire",
+        "exploration"
+      ]
     },
     {
       "n": 44,
@@ -490,7 +630,12 @@
       "era": "Early Modern",
       "place": "India",
       "description": "Babur wins at Panipat and founds the Mughal Empire in India.",
-      "scene": "Babur founding the Mughal Empire, a victorious emperor on a war elephant after the Battle of Panipat, cannon and cavalry, Indian palace banners"
+      "scene": "Babur founding the Mughal Empire, a victorious emperor on a war elephant after the Battle of Panipat, cannon and cavalry, Indian palace banners",
+      "tags": [
+        "empire",
+        "leader",
+        "war"
+      ]
     },
     {
       "n": 45,
@@ -501,7 +646,10 @@
       "era": "Scientific Revolution",
       "place": "Poland",
       "description": "Copernicus publishes his theory that the Earth orbits the Sun.",
-      "scene": "Copernicus the astronomer studying the heavens, an old scholar with compass and celestial globe showing the sun at the center of the planets, candlelit study"
+      "scene": "Copernicus the astronomer studying the heavens, an old scholar with compass and celestial globe showing the sun at the center of the planets, candlelit study",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 46,
@@ -512,7 +660,8 @@
       "era": "Renaissance",
       "place": "England",
       "description": "William Shakespeare is born in England.",
-      "scene": "William Shakespeare writing by candlelight with a quill, an Elizabethan playwright at a wooden desk with manuscripts, a globe theatre beyond the window"
+      "scene": "William Shakespeare writing by candlelight with a quill, an Elizabethan playwright at a wooden desk with manuscripts, a globe theatre beyond the window",
+      "tags": []
     },
     {
       "n": 47,
@@ -523,7 +672,10 @@
       "era": "Early Modern",
       "place": "England",
       "description": "England defeats the Spanish Armada.",
-      "scene": "the defeat of the Spanish Armada, great galleons burning and scattering in a stormy sea, English fireships among them, dramatic clouds and waves"
+      "scene": "the defeat of the Spanish Armada, great galleons burning and scattering in a stormy sea, English fireships among them, dramatic clouds and waves",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 48,
@@ -534,7 +686,10 @@
       "era": "Colonial",
       "place": "Virginia",
       "description": "English settlers found Jamestown, their first colony in America.",
-      "scene": "the founding of Jamestown, English colonists in early 1600s dress building a wooden palisade fort in a wooded river clearing, ships on the water"
+      "scene": "the founding of Jamestown, English colonists in early 1600s dress building a wooden palisade fort in a wooded river clearing, ships on the water",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 49,
@@ -545,7 +700,10 @@
       "era": "Scientific Revolution",
       "place": "Italy",
       "description": "Galileo discovers Jupiter’s moons with his telescope.",
-      "scene": "Galileo observing the night sky through his telescope from a rooftop, an astronomer pointing a long brass telescope at the moon and Jupiter, stars"
+      "scene": "Galileo observing the night sky through his telescope from a rooftop, an astronomer pointing a long brass telescope at the moon and Jupiter, stars",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 50,
@@ -556,7 +714,10 @@
       "era": "Colonial",
       "place": "Massachusetts",
       "description": "The Pilgrims land at Plymouth from the Mayflower.",
-      "scene": "the Pilgrims landing from the Mayflower at Plymouth, settlers in dark 1600s dress stepping onto a rocky winter shore, a sailing ship offshore, grey sky"
+      "scene": "the Pilgrims landing from the Mayflower at Plymouth, settlers in dark 1600s dress stepping onto a rocky winter shore, a sailing ship offshore, grey sky",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 51,
@@ -567,7 +728,8 @@
       "era": "Early Modern",
       "place": "India",
       "description": "Shah Jahan begins building the Taj Mahal for his late wife.",
-      "scene": "the building of the Taj Mahal, the gleaming white marble domed mausoleum rising by a river as thousands of laborers and elephants work, Mughal India"
+      "scene": "the building of the Taj Mahal, the gleaming white marble domed mausoleum rising by a river as thousands of laborers and elephants work, Mughal India",
+      "tags": []
     },
     {
       "n": 52,
@@ -578,7 +740,10 @@
       "era": "Imperial China",
       "place": "China",
       "description": "The Manchu Qing dynasty seizes power in China.",
-      "scene": "the founding of the Qing dynasty, Manchu cavalry entering the gates of Beijing, a new emperor in dragon robes, banners over the Forbidden City"
+      "scene": "the founding of the Qing dynasty, Manchu cavalry entering the gates of Beijing, a new emperor in dragon robes, banners over the Forbidden City",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 53,
@@ -589,7 +754,10 @@
       "era": "Early Modern",
       "place": "Europe",
       "description": "The Peace of Westphalia ends the Thirty Years’ War.",
-      "scene": "the signing of the Peace of Westphalia, richly dressed diplomats and nobles gathered around a table in a grand hall ratifying a treaty, 17th century"
+      "scene": "the signing of the Peace of Westphalia, richly dressed diplomats and nobles gathered around a table in a grand hall ratifying a treaty, 17th century",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 54,
@@ -600,7 +768,10 @@
       "era": "Scientific Revolution",
       "place": "England",
       "description": "Isaac Newton publishes his laws of motion and gravity.",
-      "scene": "Isaac Newton in his study with the Principia, a scholar pondering gravity beneath an apple tree, prism and telescope, candlelight and manuscripts"
+      "scene": "Isaac Newton in his study with the Principia, a scholar pondering gravity beneath an apple tree, prism and telescope, candlelight and manuscripts",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 55,
@@ -611,7 +782,10 @@
       "era": "Enlightenment",
       "place": "Lisbon",
       "description": "A massive earthquake, fire and tsunami destroy Lisbon.",
-      "scene": "the Great Lisbon earthquake, a baroque city collapsing in dust and flames as a tidal wave floods the harbor, people fleeing through ruined streets"
+      "scene": "the Great Lisbon earthquake, a baroque city collapsing in dust and flames as a tidal wave floods the harbor, people fleeing through ruined streets",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 56,
@@ -622,7 +796,10 @@
       "era": "Age of Revolution",
       "place": "Philadelphia",
       "description": "The American colonies declare independence from Britain.",
-      "scene": "the signing of the American Declaration of Independence, founders in 18th century dress gathered in a hall presenting a document, quill and flag"
+      "scene": "the signing of the American Declaration of Independence, founders in 18th century dress gathered in a hall presenting a document, quill and flag",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 57,
@@ -634,7 +811,10 @@
       "era": "Age of Revolution",
       "place": "Paris",
       "description": "Revolutionaries storm the Bastille, igniting the French Revolution.",
-      "scene": "the storming of the Bastille, a revolutionary crowd with muskets, pikes and tricolor cockades attacking the great stone fortress prison, cannon smoke over Paris"
+      "scene": "the storming of the Bastille, a revolutionary crowd with muskets, pikes and tricolor cockades attacking the great stone fortress prison, cannon smoke over Paris",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 58,
@@ -645,7 +825,10 @@
       "era": "Age of Revolution",
       "place": "Haiti",
       "description": "Enslaved Haitians rise up against French rule, beginning their revolution.",
-      "scene": "the Haitian Revolution, formerly enslaved rebels with torches and weapons rising against colonial soldiers on a burning Caribbean sugar plantation at night"
+      "scene": "the Haitian Revolution, formerly enslaved rebels with torches and weapons rising against colonial soldiers on a burning Caribbean sugar plantation at night",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 59,
@@ -656,7 +839,10 @@
       "era": "Napoleonic",
       "place": "Paris",
       "description": "Napoleon crowns himself Emperor of France.",
-      "scene": "the coronation of Napoleon, the general crowning himself emperor in golden laurel and ermine robe before the pope in a cathedral, in the style of Jacques-Louis David"
+      "scene": "the coronation of Napoleon, the general crowning himself emperor in golden laurel and ermine robe before the pope in a cathedral, in the style of Jacques-Louis David",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 60,
@@ -667,7 +853,11 @@
       "era": "Napoleonic",
       "place": "Belgium",
       "description": "Napoleon is defeated for good at the Battle of Waterloo.",
-      "scene": "the Battle of Waterloo, Napoleonic infantry squares and cavalry charging through smoke on a muddy battlefield, cannon fire, fallen soldiers, grey sky"
+      "scene": "the Battle of Waterloo, Napoleonic infantry squares and cavalry charging through smoke on a muddy battlefield, cannon fire, fallen soldiers, grey sky",
+      "tags": [
+        "war",
+        "leader"
+      ]
     },
     {
       "n": 61,
@@ -678,7 +868,10 @@
       "era": "Industrial Age",
       "place": "England",
       "description": "The world’s first public steam railway opens in England.",
-      "scene": "the first public steam railway, an early Stephenson locomotive billowing smoke pulling open carriages of cheering crowds past English countryside"
+      "scene": "the first public steam railway, an early Stephenson locomotive billowing smoke pulling open carriages of cheering crowds past English countryside",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 62,
@@ -689,7 +882,10 @@
       "era": "Victorian",
       "place": "England",
       "description": "Queen Victoria takes the British throne.",
-      "scene": "the young Queen Victoria ascending the throne, a youthful queen in coronation robes and crown receiving homage in a grand palace hall, Victorian splendor"
+      "scene": "the young Queen Victoria ascending the throne, a youthful queen in coronation robes and crown receiving homage in a grand palace hall, Victorian splendor",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 63,
@@ -700,7 +896,10 @@
       "era": "Industrial Age",
       "place": "Europe",
       "description": "Marx and Engels publish The Communist Manifesto amid Europe’s revolutions.",
-      "scene": "the revolutions of 1848, workers and revolutionaries raising a red flag on a barricade in a European city street, smoke and cobblestones, pamphlets"
+      "scene": "the revolutions of 1848, workers and revolutionaries raising a red flag on a barricade in a European city street, smoke and cobblestones, pamphlets",
+      "tags": [
+        "faith"
+      ]
     },
     {
       "n": 64,
@@ -711,7 +910,10 @@
       "era": "Victorian",
       "place": "England",
       "description": "Charles Darwin publishes On the Origin of Species.",
-      "scene": "Charles Darwin the naturalist studying finches and specimens in his study, an old scholar with notebooks, a sailing ship and Galapagos creatures, Victorian"
+      "scene": "Charles Darwin the naturalist studying finches and specimens in his study, an old scholar with notebooks, a sailing ship and Galapagos creatures, Victorian",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 65,
@@ -722,7 +924,10 @@
       "era": "Industrial Age",
       "place": "United States",
       "description": "The American Civil War breaks out over slavery.",
-      "scene": "the American Civil War, ranks of Union and Confederate soldiers with rifles and cannon clashing through smoke on a battlefield, regimental flags"
+      "scene": "the American Civil War, ranks of Union and Confederate soldiers with rifles and cannon clashing through smoke on a battlefield, regimental flags",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 66,
@@ -733,7 +938,10 @@
       "era": "Industrial Age",
       "place": "Washington",
       "description": "President Abraham Lincoln is assassinated.",
-      "scene": "the assassination of Abraham Lincoln in a theater box, an assassin firing a pistol behind the seated president and his wife, gas-lit theatre, 1860s"
+      "scene": "the assassination of Abraham Lincoln in a theater box, an assassin firing a pistol behind the seated president and his wife, gas-lit theatre, 1860s",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 67,
@@ -744,7 +952,10 @@
       "era": "Industrial Age",
       "place": "Egypt",
       "description": "The Suez Canal opens, linking the Mediterranean and Red seas.",
-      "scene": "the opening of the Suez Canal, a procession of steamships sailing through a new desert canal lined with cheering crowds and flags, Egypt 1869"
+      "scene": "the opening of the Suez Canal, a procession of steamships sailing through a new desert canal lined with cheering crowds and flags, Egypt 1869",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 68,
@@ -755,7 +966,10 @@
       "era": "Industrial Age",
       "place": "United States",
       "description": "Alexander Graham Bell patents the telephone.",
-      "scene": "Alexander Graham Bell speaking into the first telephone, an inventor at a wooden apparatus with wires in a Victorian laboratory, excitement, gaslight"
+      "scene": "Alexander Graham Bell speaking into the first telephone, an inventor at a wooden apparatus with wires in a Victorian laboratory, excitement, gaslight",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 69,
@@ -766,7 +980,10 @@
       "era": "Industrial Age",
       "place": "United States",
       "description": "Thomas Edison invents a practical electric light bulb.",
-      "scene": "Edison and the electric light bulb, an inventor holding aloft a glowing glass bulb in a dim laboratory full of wires and apparatus, warm glow on faces"
+      "scene": "Edison and the electric light bulb, an inventor holding aloft a glowing glass bulb in a dim laboratory full of wires and apparatus, warm glow on faces",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 70,
@@ -777,7 +994,10 @@
       "era": "Industrial Age",
       "place": "Germany",
       "description": "Karl Benz builds the first practical automobile.",
-      "scene": "Karl Benz with the first automobile, a man driving an early three-wheeled motor carriage down a cobbled German street as onlookers stare, 1880s"
+      "scene": "Karl Benz with the first automobile, a man driving an early three-wheeled motor carriage down a cobbled German street as onlookers stare, 1880s",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 71,
@@ -788,7 +1008,10 @@
       "era": "Belle Epoque",
       "place": "Paris",
       "description": "The Eiffel Tower is completed in Paris.",
-      "scene": "the completion of the Eiffel Tower, the great iron lattice tower rising over Paris with crowds at a world fair below, balloons and flags, golden light"
+      "scene": "the completion of the Eiffel Tower, the great iron lattice tower rising over Paris with crowds at a world fair below, balloons and flags, golden light",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 72,
@@ -799,7 +1022,10 @@
       "era": "Belle Epoque",
       "place": "Paris",
       "description": "The Lumière brothers hold the first public film screening.",
-      "scene": "the first public film screening by the Lumiere brothers, a small audience in a dim Paris cafe watching a flickering black and white moving image projected on a wall"
+      "scene": "the first public film screening by the Lumiere brothers, a small audience in a dim Paris cafe watching a flickering black and white moving image projected on a wall",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 73,
@@ -810,7 +1036,10 @@
       "era": "Modern Age",
       "place": "Atlantic",
       "description": "Marconi sends the first radio signal across the Atlantic.",
-      "scene": "Marconi receiving the first transatlantic radio signal, an inventor with headphones and apparatus and a kite antenna on a windswept cliff above the ocean, 1901"
+      "scene": "Marconi receiving the first transatlantic radio signal, an inventor with headphones and apparatus and a kite antenna on a windswept cliff above the ocean, 1901",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 74,
@@ -822,7 +1051,11 @@
       "era": "Modern Age",
       "place": "Kitty Hawk",
       "description": "The Wright brothers make the first powered airplane flight at Kitty Hawk.",
-      "scene": "the Wright brothers' first powered airplane flight at Kitty Hawk, a fragile wooden biplane lifting off windswept sand dunes, one brother running alongside"
+      "scene": "the Wright brothers' first powered airplane flight at Kitty Hawk, a fragile wooden biplane lifting off windswept sand dunes, one brother running alongside",
+      "tags": [
+        "tech-science",
+        "exploration"
+      ]
     },
     {
       "n": 75,
@@ -833,7 +1066,10 @@
       "era": "Modern Age",
       "place": "Switzerland",
       "description": "Albert Einstein publishes his theory of special relativity.",
-      "scene": "Einstein in his miracle year, a young thoughtful clerk at a desk covered in equations about light and time, a clock and beams of light, soft study"
+      "scene": "Einstein in his miracle year, a young thoughtful clerk at a desk covered in equations about light and time, a clock and beams of light, soft study",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 76,
@@ -844,7 +1080,10 @@
       "era": "Modern Age",
       "place": "Atlantic",
       "description": "The Titanic sinks after hitting an iceberg on its maiden voyage.",
-      "scene": "the sinking of the Titanic, a great ocean liner tilting and going down by the bow in a starlit icy sea, lifeboats and an iceberg, lights blazing"
+      "scene": "the sinking of the Titanic, a great ocean liner tilting and going down by the bow in a starlit icy sea, lifeboats and an iceberg, lights blazing",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 77,
@@ -855,7 +1094,10 @@
       "era": "World Wars",
       "place": "Europe",
       "description": "World War I breaks out across Europe.",
-      "scene": "the outbreak of World War One, soldiers in a muddy trench under barbed wire and shellfire, going over the top through smoke, grey desolate battlefield"
+      "scene": "the outbreak of World War One, soldiers in a muddy trench under barbed wire and shellfire, going over the top through smoke, grey desolate battlefield",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 78,
@@ -866,7 +1108,10 @@
       "era": "World Wars",
       "place": "Russia",
       "description": "The Bolsheviks seize power in the Russian Revolution.",
-      "scene": "the Russian Revolution, red-flag-waving workers and soldiers storming a palace in a snowy Petrograd square, rifles and banners, a fallen imperial eagle"
+      "scene": "the Russian Revolution, red-flag-waving workers and soldiers storming a palace in a snowy Petrograd square, rifles and banners, a fallen imperial eagle",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 79,
@@ -877,7 +1122,10 @@
       "era": "Modern Age",
       "place": "Egypt",
       "description": "Howard Carter discovers the tomb of Tutankhamun in Egypt.",
-      "scene": "the discovery of Tutankhamun's tomb, an archaeologist by candlelight peering into a tomb chamber full of glittering golden treasure and a sarcophagus, Egypt"
+      "scene": "the discovery of Tutankhamun's tomb, an archaeologist by candlelight peering into a tomb chamber full of glittering golden treasure and a sarcophagus, Egypt",
+      "tags": [
+        "exploration"
+      ]
     },
     {
       "n": 80,
@@ -888,7 +1136,11 @@
       "era": "Modern Age",
       "place": "Atlantic",
       "description": "Charles Lindbergh flies solo across the Atlantic.",
-      "scene": "Charles Lindbergh's solo transatlantic flight, a small silver monoplane flying alone over a vast moonlit ocean, then a cheering crowd at an airfield, 1920s"
+      "scene": "Charles Lindbergh's solo transatlantic flight, a small silver monoplane flying alone over a vast moonlit ocean, then a cheering crowd at an airfield, 1920s",
+      "tags": [
+        "exploration",
+        "tech-science"
+      ]
     },
     {
       "n": 81,
@@ -899,7 +1151,10 @@
       "era": "Modern Age",
       "place": "England",
       "description": "Alexander Fleming discovers penicillin.",
-      "scene": "Alexander Fleming discovering penicillin, a scientist in a lab coat examining a petri dish of mould under lamplight in a cluttered laboratory, 1920s"
+      "scene": "Alexander Fleming discovering penicillin, a scientist in a lab coat examining a petri dish of mould under lamplight in a cluttered laboratory, 1920s",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 82,
@@ -910,7 +1165,10 @@
       "era": "Interwar",
       "place": "New York",
       "description": "The Wall Street Crash triggers the Great Depression.",
-      "scene": "the Wall Street Crash of 1929, panicked crowds of men in suits and hats outside a stock exchange, newspaper headlines, despair, a grey city canyon"
+      "scene": "the Wall Street Crash of 1929, panicked crowds of men in suits and hats outside a stock exchange, newspaper headlines, despair, a grey city canyon",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 83,
@@ -921,7 +1179,10 @@
       "era": "Interwar",
       "place": "Germany",
       "description": "Adolf Hitler becomes Chancellor of Germany.",
-      "scene": "1933 Germany, a torchlit nighttime political rally with ranks of uniformed men and banners marching past a balcony, ominous searchlights, dark crowds"
+      "scene": "1933 Germany, a torchlit nighttime political rally with ranks of uniformed men and banners marching past a balcony, ominous searchlights, dark crowds",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 84,
@@ -932,7 +1193,10 @@
       "era": "World Wars",
       "place": "Europe",
       "description": "Nazi Germany invades Poland, starting World War II.",
-      "scene": "the outbreak of World War Two, columns of tanks and dive bombers advancing across a war-torn landscape, soldiers and refugees, smoke on the horizon"
+      "scene": "the outbreak of World War Two, columns of tanks and dive bombers advancing across a war-torn landscape, soldiers and refugees, smoke on the horizon",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 85,
@@ -943,7 +1207,10 @@
       "era": "World Wars",
       "place": "Japan",
       "description": "World War II ends after atomic bombs hit Hiroshima and Nagasaki.",
-      "scene": "the end of World War Two, a towering mushroom cloud rising over a ruined city, and soldiers and crowds celebrating victory with flags, 1945"
+      "scene": "the end of World War Two, a towering mushroom cloud rising over a ruined city, and soldiers and crowds celebrating victory with flags, 1945",
+      "tags": [
+        "war"
+      ]
     },
     {
       "n": 86,
@@ -954,7 +1221,11 @@
       "era": "Postwar",
       "place": "India",
       "description": "India wins independence from Britain and is partitioned.",
-      "scene": "Indian independence, jubilant crowds raising the new tricolor flag, a frail spinning-wheel leader honored, midnight celebration in 1947 Delhi"
+      "scene": "Indian independence, jubilant crowds raising the new tricolor flag, a frail spinning-wheel leader honored, midnight celebration in 1947 Delhi",
+      "tags": [
+        "empire",
+        "leader"
+      ]
     },
     {
       "n": 87,
@@ -965,7 +1236,11 @@
       "era": "Cold War",
       "place": "China",
       "description": "Mao Zedong proclaims the People’s Republic of China.",
-      "scene": "the founding of the People's Republic of China, a leader proclaiming the republic from a great red gate above a vast crowd with red flags, 1949 Beijing"
+      "scene": "the founding of the People's Republic of China, a leader proclaiming the republic from a great red gate above a vast crowd with red flags, 1949 Beijing",
+      "tags": [
+        "empire",
+        "leader"
+      ]
     },
     {
       "n": 88,
@@ -976,7 +1251,10 @@
       "era": "Cold War",
       "place": "England",
       "description": "Watson and Crick discover the double-helix structure of DNA.",
-      "scene": "the discovery of the DNA double helix, two scientists beside a tall metal molecular model of a twisting double helix in a 1950s laboratory, excitement"
+      "scene": "the discovery of the DNA double helix, two scientists beside a tall metal molecular model of a twisting double helix in a 1950s laboratory, excitement",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 89,
@@ -987,7 +1265,11 @@
       "era": "Space Age",
       "place": "Soviet Union",
       "description": "The Soviet Union launches Sputnik, the first satellite.",
-      "scene": "the launch of Sputnik, a rocket roaring into a night sky and a small silver sphere with antennas orbiting the earth among the stars, 1957"
+      "scene": "the launch of Sputnik, a rocket roaring into a night sky and a small silver sphere with antennas orbiting the earth among the stars, 1957",
+      "tags": [
+        "tech-science",
+        "exploration"
+      ]
     },
     {
       "n": 90,
@@ -998,7 +1280,11 @@
       "era": "Space Age",
       "place": "Soviet Union",
       "description": "Yuri Gagarin becomes the first human in space.",
-      "scene": "Yuri Gagarin first human in space, a smiling cosmonaut in a helmet inside a capsule orbiting the blue curve of the earth, a rocket trail below, 1961"
+      "scene": "Yuri Gagarin first human in space, a smiling cosmonaut in a helmet inside a capsule orbiting the blue curve of the earth, a rocket trail below, 1961",
+      "tags": [
+        "exploration",
+        "tech-science"
+      ]
     },
     {
       "n": 91,
@@ -1009,7 +1295,10 @@
       "era": "Cold War",
       "place": "Dallas",
       "description": "President John F. Kennedy is assassinated in Dallas.",
-      "scene": "the JFK assassination, a presidential open-top motorcade through a 1960s city plaza, crowds and a grassy hill, sudden shock, dark sedans and flags"
+      "scene": "the JFK assassination, a presidential open-top motorcade through a 1960s city plaza, crowds and a grassy hill, sudden shock, dark sedans and flags",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 92,
@@ -1021,7 +1310,11 @@
       "era": "Space Age",
       "place": "The Moon",
       "description": "Apollo 11 lands the first humans on the Moon.",
-      "scene": "the Apollo 11 moon landing, an astronaut in a white spacesuit planting a flag on the grey lunar surface, the lunar module nearby and blue Earth in the black sky"
+      "scene": "the Apollo 11 moon landing, an astronaut in a white spacesuit planting a flag on the grey lunar surface, the lunar module nearby and blue Earth in the black sky",
+      "tags": [
+        "exploration",
+        "tech-science"
+      ]
     },
     {
       "n": 93,
@@ -1032,7 +1325,10 @@
       "era": "Information Age",
       "place": "California",
       "description": "Steve Jobs and Steve Wozniak found Apple.",
-      "scene": "the founding of Apple, two young men assembling an early personal computer at a workbench in a 1970s suburban garage, circuit boards and tools, warm light"
+      "scene": "the founding of Apple, two young men assembling an early personal computer at a workbench in a 1970s suburban garage, circuit boards and tools, warm light",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 94,
@@ -1043,7 +1339,10 @@
       "era": "Cold War",
       "place": "Ukraine",
       "description": "The Chernobyl nuclear reactor explodes in Soviet Ukraine.",
-      "scene": "the Chernobyl disaster, a burning nuclear power plant reactor at night glowing under a sinister sky, an abandoned town with a ferris wheel, eerie green light"
+      "scene": "the Chernobyl disaster, a burning nuclear power plant reactor at night glowing under a sinister sky, an abandoned town with a ferris wheel, eerie green light",
+      "tags": [
+        "disaster"
+      ]
     },
     {
       "n": 95,
@@ -1055,7 +1354,10 @@
       "era": "Cold War",
       "place": "Berlin",
       "description": "The Berlin Wall falls, reuniting East and West.",
-      "scene": "the fall of the Berlin Wall, jubilant crowds atop the graffiti-covered concrete wall before the Brandenburg Gate, people with hammers and flags under floodlights at night"
+      "scene": "the fall of the Berlin Wall, jubilant crowds atop the graffiti-covered concrete wall before the Brandenburg Gate, people with hammers and flags under floodlights at night",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 96,
@@ -1066,7 +1368,10 @@
       "era": "Information Age",
       "place": "Switzerland",
       "description": "Tim Berners-Lee invents the World Wide Web.",
-      "scene": "the invention of the World Wide Web, a scientist at a computer terminal in a 1990 office, glowing screen with linked pages and a global network of light, cables"
+      "scene": "the invention of the World Wide Web, a scientist at a computer terminal in a 1990 office, glowing screen with linked pages and a global network of light, cables",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 97,
@@ -1077,7 +1382,10 @@
       "era": "Modern Age",
       "place": "Russia",
       "description": "The Soviet Union dissolves, ending the Cold War.",
-      "scene": "the dissolution of the Soviet Union, a red hammer-and-sickle flag being lowered over a snowy Kremlin at dusk, crowds in a Moscow square, 1991"
+      "scene": "the dissolution of the Soviet Union, a red hammer-and-sickle flag being lowered over a snowy Kremlin at dusk, crowds in a Moscow square, 1991",
+      "tags": [
+        "empire"
+      ]
     },
     {
       "n": 98,
@@ -1088,7 +1396,10 @@
       "era": "Modern Age",
       "place": "South Africa",
       "description": "Nelson Mandela is elected president as apartheid ends in South Africa.",
-      "scene": "Nelson Mandela elected president, a dignified leader raising a fist before a vast jubilant rainbow crowd voting, South African flags, sunrise, 1994"
+      "scene": "Nelson Mandela elected president, a dignified leader raising a fist before a vast jubilant rainbow crowd voting, South African flags, sunrise, 1994",
+      "tags": [
+        "leader"
+      ]
     },
     {
       "n": 99,
@@ -1099,7 +1410,10 @@
       "era": "Information Age",
       "place": "Scotland",
       "description": "Scientists clone Dolly the sheep, the first cloned mammal.",
-      "scene": "Dolly the cloned sheep, a sheep standing in a laboratory pen as scientists in white coats observe, microscopes and beakers, a 1990s lab, soft light"
+      "scene": "Dolly the cloned sheep, a sheep standing in a laboratory pen as scientists in white coats observe, microscopes and beakers, a 1990s lab, soft light",
+      "tags": [
+        "tech-science"
+      ]
     },
     {
       "n": 100,
@@ -1110,7 +1424,20 @@
       "era": "21st Century",
       "place": "New York",
       "description": "Al-Qaeda hijackers destroy the World Trade Center towers in New York.",
-      "scene": "the September 11 attacks, two great smoking skyscraper towers against a clear blue morning sky over a city skyline, plumes of smoke and ash, somber"
+      "scene": "the September 11 attacks, two great smoking skyscraper towers against a clear blue morning sky over a city skyline, plumes of smoke and ash, somber",
+      "tags": [
+        "disaster",
+        "war"
+      ]
     }
+  ],
+  "tags": [
+    "tech-science",
+    "leader",
+    "war",
+    "empire",
+    "faith",
+    "exploration",
+    "disaster"
   ]
 }
