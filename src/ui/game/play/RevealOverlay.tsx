@@ -28,12 +28,16 @@ export default function RevealOverlay({
         data-testid="reveal"
         className={`reveal-card ${correct ? 'ok' : 'no'}`}
       >
-        {/* the mystery track, now revealed */}
+        {/* the mystery card flies in, then its back melts away to reveal the
+            answer beneath (FIFA pack-opening style). */}
         <div className="reveal-the-card">
           <span className="reveal-c-year">{year}</span>
           <div className="reveal-c-art" style={art} />
           <div className="reveal-c-title">{title}</div>
           {subtitle && <div className="reveal-c-sub">{subtitle}</div>}
+          {/* the melting mystery cover (styled per game) + its glowing edge */}
+          <div className="reveal-back" aria-hidden="true" />
+          <span className="reveal-shine" aria-hidden="true" />
         </div>
         <p
           data-testid="outcome"

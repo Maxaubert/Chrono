@@ -5,38 +5,33 @@
   z-index: 20;
   display: grid;
   place-items: center;
-  background: rgba(4, 3, 10, 0.62);
-  backdrop-filter: blur(5px);
+  background: rgba(4, 3, 10, 0.66);
+  backdrop-filter: blur(7px);
 }
+/* a transparent centred column so the flying card is the focus */
 .reveal-card {
   width: min(420px, 92vw);
   padding: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   color: #e8e2ff;
-  background: var(--panel);
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.85);
-  clip-path: polygon(
-    14px 0,
-    100% 0,
-    100% calc(100% - 14px),
-    calc(100% - 14px) 100%,
-    0 100%,
-    0 14px
-  );
 }
-/* the revealed song, shown as a card */
+/* the revealed card; flies in, then its back melts away to reveal it */
 .reveal-the-card {
   position: relative;
   width: 188px;
   margin: 0 auto;
   padding: 12px;
   border-radius: 14px;
+  overflow: hidden;
   background: linear-gradient(160deg, #160e26, #0c0814);
   border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
   box-shadow:
     0 18px 40px -16px rgba(0, 0, 0, 0.8),
     0 0 26px -10px var(--glow);
+  animation: revealPop 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
 }
 .reveal-c-year {
   position: absolute;
@@ -112,4 +107,146 @@
   background: #5a1020;
   color: #ffd7df;
   font-size: 13px;
+}
+
+/* ---------- melt-down reveal (FIFA pack-opening) ---------- */
+/* the card pops to the centre */
+@keyframes revealPop {
+  0% {
+    transform: scale(0.62);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* the mystery cover over the answer; melts top-to-bottom. Default = Hitster. */
+.reveal-back {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(154, 107, 255, 0.22),
+      transparent 60%
+    ),
+    linear-gradient(160deg, #160e26, #0c0814);
+  animation: revealMelt 0.7s ease-in 0.42s both;
+}
+.reveal-back::after {
+  content: '?';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font:
+    900 64px 'Segoe UI',
+    system-ui,
+    sans-serif;
+  color: var(--accent);
+  opacity: 0.85;
+}
+@keyframes revealMelt {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+
+/* glowing edge that rides down with the melt */
+.reveal-shine {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  height: 16px;
+  z-index: 4;
+  border-radius: 8px;
+  filter: blur(2px);
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 70%, #fff),
+    #fff,
+    color-mix(in srgb, var(--accent) 70%, #fff),
+    transparent
+  );
+  animation: revealShine 0.7s ease-in 0.42s both;
+}
+@keyframes revealShine {
+  0% {
+    top: -8px;
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* outcome + OK appear once the reveal lands. The OK fades opacity only (no
+   movement) so it stays click-stable for the E2E. */
+.reveal-outcome {
+  animation: revealUp 0.3s ease-out 1.05s both;
+}
+.reveal-next {
+  animation: revealFade 0.3s ease-out 1.05s both;
+}
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes revealFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* History recolours the melting cover gold, no "?" */
+.skin-history .reveal-back {
+  background:
+    radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(205, 163, 73, 0.22),
+      transparent 60%
+    ),
+    #161a12;
+}
+.skin-history .reveal-back::after {
+  content: '';
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-the-card,
+  .reveal-outcome,
+  .reveal-next {
+    animation: none;
+  }
+  .reveal-back,
+  .reveal-shine {
+    display: none;
+  }
 }
