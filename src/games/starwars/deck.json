@@ -1,105 +1,1005 @@
 {
-  "$comment": "Chrono Star Wars deck. In-universe events on the BBY/ABY axis (year 0 = Battle of Yavin). 'year' is the signed numeric sort key (BBY negative, ABY non-negative); 'yearLabel' is shown on reveal and timeline. 'description' is the guess clue and never states the BBY/ABY value. Typographic cards: no images.",
+  "$comment": "Chrono Star Wars deck. 100 in-universe events on the BBY/ABY axis (year 0 = Battle of Yavin). 'year' is the signed numeric sort key; 'yearLabel' is shown on reveal; 'description' is the guess clue. Card art lives at /starwars/cards/<slug>.jpg.",
   "cards": [
     {
       "n": 1,
+      "slug": "founding-of-the-republic",
+      "year": -25000,
+      "yearLabel": "25,000 BBY",
+      "title": "Founding of the Republic",
+      "era": "Old Republic",
+      "place": "Coruscant",
+      "description": "A thousand worlds unite into a single galactic republic."
+    },
+    {
+      "n": 2,
+      "slug": "dawn-of-the-jedi",
+      "year": -5000,
+      "yearLabel": "5,000 BBY",
+      "title": "Dawn of the Jedi",
+      "era": "Dawn of the Jedi",
+      "place": "Tython",
+      "description": "The first Force monks found an order of light on a mystic world."
+    },
+    {
+      "n": 3,
+      "slug": "great-hyperspace-war",
+      "year": -3500,
+      "yearLabel": "3,500 BBY",
+      "title": "The Great Hyperspace War",
+      "era": "Old Republic",
+      "place": "Korriban",
+      "description": "Ancient Sith lords wage war on the Republic with dark sorcery."
+    },
+    {
+      "n": 4,
+      "slug": "battle-of-ruusan",
+      "year": -1000,
+      "yearLabel": "1,000 BBY",
+      "title": "Battle of Ruusan",
+      "era": "Old Republic",
+      "place": "Ruusan",
+      "description": "A final clash all but destroys the ancient Sith and the Republic is reborn."
+    },
+    {
+      "n": 5,
       "slug": "great-hyperspace-disaster",
       "year": -232,
       "yearLabel": "232 BBY",
       "title": "The Great Hyperspace Disaster",
       "era": "The High Republic",
-      "place": "Hetzal system",
-      "description": "A catastrophic hyperspace accident scatters deadly wreckage across a system at the height of the High Republic, and the Jedi race to save it."
+      "place": "Hetzal",
+      "description": "A hyperspace catastrophe scatters deadly wreckage across a system."
     },
     {
-      "n": 2,
+      "n": 6,
+      "slug": "republic-fair",
+      "year": -231.5,
+      "yearLabel": "231 BBY",
+      "title": "The Republic Fair",
+      "era": "The High Republic",
+      "place": "Valo",
+      "description": "Raiders turn a festival of unity into a massacre."
+    },
+    {
+      "n": 7,
+      "slug": "starlight-beacon",
+      "year": -231,
+      "yearLabel": "231 BBY",
+      "title": "Starlight Beacon",
+      "era": "The High Republic",
+      "place": "Outer Rim",
+      "description": "The Jedi dedicate a gleaming station as a beacon of hope on the frontier."
+    },
+    {
+      "n": 8,
+      "slug": "drengir-outbreak",
+      "year": -230.5,
+      "yearLabel": "230 BBY",
+      "title": "The Drengir Outbreak",
+      "era": "The High Republic",
+      "place": "Sedri Minor",
+      "description": "Carnivorous plant creatures erupt across the frontier."
+    },
+    {
+      "n": 9,
+      "slug": "nihil-strike",
+      "year": -230,
+      "yearLabel": "230 BBY",
+      "title": "The Nihil Strike",
+      "era": "The High Republic",
+      "place": "Kur Nebula",
+      "description": "Marauder raiders ambush the Republic deep in a glowing nebula."
+    },
+    {
+      "n": 10,
+      "slug": "fall-of-starlight",
+      "year": -229,
+      "yearLabel": "229 BBY",
+      "title": "Fall of Starlight Beacon",
+      "era": "The High Republic",
+      "place": "Eiram",
+      "description": "Sabotage sends the great Jedi station falling from the sky in flames."
+    },
+    {
+      "n": 11,
+      "slug": "boonta-eve-podrace",
+      "year": -32.2,
+      "yearLabel": "32 BBY",
+      "title": "The Boonta Eve Podrace",
+      "era": "Fall of the Republic",
+      "place": "Tatooine",
+      "description": "A slave boy wins a deadly podrace and earns his freedom."
+    },
+    {
+      "n": 12,
       "slug": "invasion-of-naboo",
       "year": -32,
       "yearLabel": "32 BBY",
       "title": "Invasion of Naboo",
       "era": "Fall of the Republic",
       "place": "Naboo",
-      "description": "The Trade Federation blockades and occupies a peaceful world, drawing a young slave boy from Tatooine into the fate of the galaxy."
+      "description": "The Trade Federation blockades and occupies a peaceful green world."
     },
     {
-      "n": 3,
+      "n": 13,
+      "slug": "duel-of-the-fates",
+      "year": -31.9,
+      "yearLabel": "32 BBY",
+      "title": "Duel of the Fates",
+      "era": "Fall of the Republic",
+      "place": "Naboo",
+      "description": "Two Jedi battle a horned Sith with a double-bladed red blade."
+    },
+    {
+      "n": 14,
       "slug": "clone-wars-begin",
       "year": -22,
       "yearLabel": "22 BBY",
       "title": "The Clone Wars Begin",
       "era": "Clone Wars",
       "place": "Geonosis",
-      "description": "Clone troopers and Jedi storm a desert world to face the Separatist droid army, igniting a galaxy-wide war."
+      "description": "White-armored clone troopers and Jedi storm a desert arena, igniting a galaxy-wide war."
     },
     {
-      "n": 4,
+      "n": 15,
+      "slug": "battle-of-christophsis",
+      "year": -21.9,
+      "yearLabel": "22 BBY",
+      "title": "Battle of Christophsis",
+      "era": "Clone Wars",
+      "place": "Christophsis",
+      "description": "Clones and Jedi defend a city of blue crystal towers from droids."
+    },
+    {
+      "n": 16,
+      "slug": "rescue-of-rotta",
+      "year": -21.8,
+      "yearLabel": "22 BBY",
+      "title": "The Hutt Hunt",
+      "era": "Clone Wars",
+      "place": "Teth",
+      "description": "A Jedi and her new apprentice rescue a kidnapped Hutt heir from a cliff monastery."
+    },
+    {
+      "n": 17,
+      "slug": "battle-of-saleucami",
+      "year": -21.7,
+      "yearLabel": "22 BBY",
+      "title": "Battle of Saleucami",
+      "era": "Clone Wars",
+      "place": "Saleucami",
+      "description": "Clones clash with droids across a wild frontier world."
+    },
+    {
+      "n": 18,
+      "slug": "battle-of-ryloth",
+      "year": -21.65,
+      "yearLabel": "22 BBY",
+      "title": "Liberation of Ryloth",
+      "era": "Clone Wars",
+      "place": "Ryloth",
+      "description": "Clones free the Twi'lek homeworld from Separatist occupation."
+    },
+    {
+      "n": 19,
+      "slug": "battle-of-malevolence",
+      "year": -21.5,
+      "yearLabel": "22 BBY",
+      "title": "The Malevolence",
+      "era": "Clone Wars",
+      "place": "Kaliida Nebula",
+      "description": "Jedi cripple a massive Separatist warship armed with an ion cannon."
+    },
+    {
+      "n": 20,
+      "slug": "zillo-beast",
+      "year": -21.3,
+      "yearLabel": "21 BBY",
+      "title": "The Zillo Beast",
+      "era": "Clone Wars",
+      "place": "Coruscant",
+      "description": "A colossal armored beast is unleashed in the heart of the capital."
+    },
+    {
+      "n": 21,
+      "slug": "battle-of-kamino",
+      "year": -21,
+      "yearLabel": "21 BBY",
+      "title": "Battle of Kamino",
+      "era": "Clone Wars",
+      "place": "Kamino",
+      "description": "Droids assault the stormy ocean cloning world where the clone army is born."
+    },
+    {
+      "n": 22,
+      "slug": "the-gathering",
+      "year": -20.9,
+      "yearLabel": "21 BBY",
+      "title": "The Gathering",
+      "era": "Clone Wars",
+      "place": "Ilum",
+      "description": "Young Jedi venture into ice caves to find their first crystals."
+    },
+    {
+      "n": 23,
+      "slug": "the-mortis-gods",
+      "year": -20.8,
+      "yearLabel": "20 BBY",
+      "title": "The Mortis Gods",
+      "era": "Clone Wars",
+      "place": "Mortis",
+      "description": "On a mystical world, Jedi meet living embodiments of the Force."
+    },
+    {
+      "n": 24,
+      "slug": "the-citadel",
+      "year": -20.7,
+      "yearLabel": "20 BBY",
+      "title": "The Citadel",
+      "era": "Clone Wars",
+      "place": "Lola Sayu",
+      "description": "Jedi break into an inescapable prison fortress on a lava world."
+    },
+    {
+      "n": 25,
+      "slug": "maul-returns",
+      "year": -20.6,
+      "yearLabel": "20 BBY",
+      "title": "The Return of Maul",
+      "era": "Clone Wars",
+      "place": "Lotho Minor",
+      "description": "The horned Sith is found alive and mad on a junk world."
+    },
+    {
+      "n": 26,
+      "slug": "battle-of-umbara",
+      "year": -20.5,
+      "yearLabel": "20 BBY",
+      "title": "Battle of Umbara",
+      "era": "Clone Wars",
+      "place": "Umbara",
+      "description": "Clones fight through a glowing alien jungle on a shadowy world."
+    },
+    {
+      "n": 27,
+      "slug": "the-deception",
+      "year": -20.4,
+      "yearLabel": "20 BBY",
+      "title": "The Deception",
+      "era": "Clone Wars",
+      "place": "Coruscant",
+      "description": "A Jedi goes undercover as a bounty hunter to foil a plot."
+    },
+    {
+      "n": 28,
+      "slug": "the-box",
+      "year": -20.35,
+      "yearLabel": "20 BBY",
+      "title": "The Box",
+      "era": "Clone Wars",
+      "place": "Serenno",
+      "description": "Bounty hunters compete in a deadly trial of traps to plot an assassination."
+    },
+    {
+      "n": 29,
+      "slug": "onderon-uprising",
+      "year": -20.3,
+      "yearLabel": "20 BBY",
+      "title": "Onderon Uprising",
+      "era": "Clone Wars",
+      "place": "Onderon",
+      "description": "Jedi train rebels to free their world from droid rule."
+    },
+    {
+      "n": 30,
+      "slug": "nightsister-massacre",
+      "year": -20.2,
+      "yearLabel": "20 BBY",
+      "title": "Massacre of the Nightsisters",
+      "era": "Clone Wars",
+      "place": "Dathomir",
+      "description": "Battle droids wipe out a clan of red-robed witches in a swamp."
+    },
+    {
+      "n": 31,
+      "slug": "maul-takes-mandalore",
+      "year": -20,
+      "yearLabel": "20 BBY",
+      "title": "Shadow Collective",
+      "era": "Clone Wars",
+      "place": "Mandalore",
+      "description": "The horned Sith Maul seizes the domed warrior world of Mandalore."
+    },
+    {
+      "n": 32,
+      "slug": "battle-of-felucia",
+      "year": -19.7,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Felucia",
+      "era": "Clone Wars",
+      "place": "Felucia",
+      "description": "Clones and Jedi fight through a world of giant fungus and color."
+    },
+    {
+      "n": 33,
+      "slug": "battle-of-scipio",
+      "year": -19.6,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Scipio",
+      "era": "Clone Wars",
+      "place": "Scipio",
+      "description": "War reaches the icy vault-world of the galaxy's bankers."
+    },
+    {
+      "n": 34,
+      "slug": "the-wrong-jedi",
+      "year": -19.5,
+      "yearLabel": "19 BBY",
+      "title": "The Trial of Ahsoka",
+      "era": "Clone Wars",
+      "place": "Coruscant",
+      "description": "A young Jedi is wrongly accused and walks away from the Order."
+    },
+    {
+      "n": 35,
+      "slug": "battle-of-anaxes",
+      "year": -19.4,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Anaxes",
+      "era": "Clone Wars",
+      "place": "Anaxes",
+      "description": "An elite squad of unusual clones turns the tide of a shipyard siege."
+    },
+    {
+      "n": 36,
+      "slug": "siege-of-mandalore",
+      "year": -19.3,
+      "yearLabel": "19 BBY",
+      "title": "Siege of Mandalore",
+      "era": "Clone Wars",
+      "place": "Mandalore",
+      "description": "A former padawan and clones storm Mandalore to capture the Sith Maul."
+    },
+    {
+      "n": 37,
+      "slug": "battle-of-coruscant",
+      "year": -19.15,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Coruscant",
+      "era": "Clone Wars",
+      "place": "Coruscant",
+      "description": "A vast space battle rages above the capital as the Chancellor is rescued."
+    },
+    {
+      "n": 38,
+      "slug": "battle-of-kashyyyk",
+      "year": -19.1,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Kashyyyk",
+      "era": "Clone Wars",
+      "place": "Kashyyyk",
+      "description": "Wookiees and clones defend a forest world of giant trees."
+    },
+    {
+      "n": 39,
+      "slug": "battle-of-utapau",
+      "year": -19.08,
+      "yearLabel": "19 BBY",
+      "title": "Battle of Utapau",
+      "era": "Clone Wars",
+      "place": "Utapau",
+      "description": "A Jedi hunts a four-armed cyborg general in a sinkhole city."
+    },
+    {
+      "n": 40,
       "slug": "order-66",
       "year": -19,
       "yearLabel": "19 BBY",
-      "title": "Order 66 and the Empire's Rise",
+      "title": "Order 66",
       "era": "Age of the Empire",
       "place": "Coruscant",
-      "description": "The Supreme Chancellor turns the clone army on the Jedi, who are betrayed and all but destroyed as the Republic becomes an Empire."
+      "description": "The Chancellor turns the clones on the Jedi, who are betrayed and destroyed."
     },
     {
-      "n": 5,
+      "n": 41,
+      "slug": "duel-on-mustafar",
+      "year": -18.98,
+      "yearLabel": "19 BBY",
+      "title": "Duel on Mustafar",
+      "era": "Age of the Empire",
+      "place": "Mustafar",
+      "description": "A master and his fallen apprentice duel above rivers of lava."
+    },
+    {
+      "n": 42,
+      "slug": "birth-of-the-twins",
+      "year": -18.95,
+      "yearLabel": "19 BBY",
+      "title": "Birth of the Twins",
+      "era": "Age of the Empire",
+      "place": "Polis Massa",
+      "description": "Twin children are hidden away as the galaxy falls to darkness."
+    },
+    {
+      "n": 43,
+      "slug": "declaration-of-empire",
+      "year": -18.9,
+      "yearLabel": "19 BBY",
+      "title": "Birth of the Empire",
+      "era": "Age of the Empire",
+      "place": "Coruscant",
+      "description": "A Chancellor crowns himself Emperor before a cheering Senate."
+    },
+    {
+      "n": 44,
+      "slug": "clone-force-99",
+      "year": -18.88,
+      "yearLabel": "19 BBY",
+      "title": "Clone Force 99",
+      "era": "Age of the Empire",
+      "place": "Kamino",
+      "description": "A squad of defective clones goes rogue as the Empire rises."
+    },
+    {
+      "n": 45,
+      "slug": "fall-of-kamino",
+      "year": -18.7,
+      "yearLabel": "18 BBY",
+      "title": "The Fall of Kamino",
+      "era": "Age of the Empire",
+      "place": "Kamino",
+      "description": "The Empire destroys the clone cloning world it no longer needs."
+    },
+    {
+      "n": 46,
+      "slug": "purge-of-mandalore",
+      "year": -18.5,
+      "yearLabel": "18 BBY",
+      "title": "Night of a Thousand Tears",
+      "era": "Age of the Empire",
+      "place": "Mandalore",
+      "description": "The Empire devastates the Mandalorian homeworld from orbit."
+    },
+    {
+      "n": 47,
+      "slug": "first-death-star-begun",
+      "year": -18,
+      "yearLabel": "18 BBY",
+      "title": "The Death Star Rises",
+      "era": "Age of the Empire",
+      "place": "Geonosis",
+      "description": "The Empire begins building a moon-sized battle station in secret."
+    },
+    {
+      "n": 48,
+      "slug": "kenobi-on-tatooine",
+      "year": -16,
+      "yearLabel": "16 BBY",
+      "title": "The Hermit of Tatooine",
+      "era": "Age of the Empire",
+      "place": "Tatooine",
+      "description": "A hunted Jedi master lives in hiding, watching over a desert boy."
+    },
+    {
+      "n": 49,
+      "slug": "conveyex-heist",
+      "year": -10.2,
+      "yearLabel": "10 BBY",
+      "title": "The Conveyex Heist",
+      "era": "Age of the Empire",
+      "place": "Vandor",
+      "description": "Outlaws raid an armored cargo train on a snowy mountain bridge."
+    },
+    {
+      "n": 50,
+      "slug": "battle-of-mimban",
+      "year": -10.1,
+      "yearLabel": "10 BBY",
+      "title": "The Mud Trenches of Mimban",
+      "era": "Age of the Empire",
+      "place": "Mimban",
+      "description": "Imperial soldiers slog through the muddy trenches of a war-torn world."
+    },
+    {
+      "n": 51,
+      "slug": "solo-kessel-run",
+      "year": -10,
+      "yearLabel": "10 BBY",
+      "title": "The Kessel Run",
+      "era": "Age of the Empire",
+      "place": "Kessel",
+      "description": "A young smuggler pilots a freighter through a deadly maelstrom."
+    },
+    {
+      "n": 52,
+      "slug": "kenobi-vs-vader",
+      "year": -9,
+      "yearLabel": "9 BBY",
+      "title": "Kenobi and Vader",
+      "era": "Age of the Empire",
+      "place": "Mustafar",
+      "description": "The old master and the masked Sith cross blades again among ruins."
+    },
+    {
+      "n": 53,
+      "slug": "ghost-crew-formed",
+      "year": -5.5,
+      "yearLabel": "5 BBY",
+      "title": "The Ghost Crew",
+      "era": "Age of the Empire",
+      "place": "Lothal",
+      "description": "A ragtag rebel crew and their freighter begin striking the Empire."
+    },
+    {
+      "n": 54,
+      "slug": "aldhani-heist",
+      "year": -5,
+      "yearLabel": "5 BBY",
+      "title": "The Aldhani Heist",
+      "era": "Age of the Empire",
+      "place": "Aldhani",
+      "description": "Rebels rob an Imperial garrison under a sky of meteors."
+    },
+    {
+      "n": 55,
+      "slug": "narkina-break",
+      "year": -4.2,
+      "yearLabel": "5 BBY",
+      "title": "The Narkina 5 Break",
+      "era": "Age of the Empire",
+      "place": "Narkina 5",
+      "description": "Slave-labor prisoners stage a desperate escape from a white factory prison."
+    },
+    {
+      "n": 56,
+      "slug": "ferrix-uprising",
+      "year": -4,
+      "yearLabel": "5 BBY",
+      "title": "The Ferrix Uprising",
+      "era": "Age of the Empire",
+      "place": "Ferrix",
+      "description": "A funeral becomes a riot that ignites open rebellion."
+    },
+    {
+      "n": 57,
+      "slug": "malachor",
+      "year": -3.5,
+      "yearLabel": "3 BBY",
+      "title": "Twilight of the Apprentice",
+      "era": "Age of Rebellion",
+      "place": "Malachor",
+      "description": "Jedi confront the masked Sith Lord amid an ancient Sith temple."
+    },
+    {
+      "n": 58,
+      "slug": "grand-inquisitor",
+      "year": -3.2,
+      "yearLabel": "3 BBY",
+      "title": "The Inquisitor",
+      "era": "Age of Rebellion",
+      "place": "Lothal",
+      "description": "A red-bladed Imperial Jedi hunter stalks the surviving rebels."
+    },
+    {
+      "n": 59,
+      "slug": "battle-of-atollon",
+      "year": -3,
+      "yearLabel": "3 BBY",
+      "title": "Battle of Atollon",
+      "era": "Age of Rebellion",
+      "place": "Atollon",
+      "description": "A rebel base is besieged by an Imperial fleet led by a master tactician."
+    },
+    {
+      "n": 60,
+      "slug": "the-bendu",
+      "year": -2.8,
+      "yearLabel": "2 BBY",
+      "title": "The Bendu",
+      "era": "Age of Rebellion",
+      "place": "Atollon",
+      "description": "A colossal ancient Force-being awakens between the light and the dark."
+    },
+    {
+      "n": 61,
+      "slug": "mon-mothma-defects",
+      "year": -2.5,
+      "yearLabel": "2 BBY",
+      "title": "The Defection of Mon Mothma",
+      "era": "Age of Rebellion",
+      "place": "Coruscant",
+      "description": "A senator risks everything to openly defy the Emperor."
+    },
+    {
+      "n": 62,
+      "slug": "rebel-alliance-forms",
+      "year": -2,
+      "yearLabel": "2 BBY",
+      "title": "Birth of the Rebellion",
+      "era": "Age of Rebellion",
+      "place": "Dantooine",
+      "description": "Scattered cells unite into one Alliance to fight the Empire."
+    },
+    {
+      "n": 63,
+      "slug": "liberation-of-lothal-rebels",
+      "year": -1.5,
+      "yearLabel": "2 BBY",
+      "title": "The Lothal Resistance",
+      "era": "Age of Rebellion",
+      "place": "Lothal",
+      "description": "Rebels strike the Imperial factories of a grassland world."
+    },
+    {
+      "n": 64,
+      "slug": "rescue-of-hera",
+      "year": -1.2,
+      "yearLabel": "1 BBY",
+      "title": "The Rescue of Hera",
+      "era": "Age of Rebellion",
+      "place": "Lothal",
+      "description": "Rebels break their captured pilot out of an Imperial stronghold."
+    },
+    {
+      "n": 65,
       "slug": "liberation-of-lothal",
       "year": -1,
       "yearLabel": "1 BBY",
       "title": "Liberation of Lothal",
       "era": "Age of Rebellion",
       "place": "Lothal",
-      "description": "Rebel cells drive the Empire off a backwater world in one of the rebellion's first true victories."
+      "description": "Rebel cells drive the Empire off a backwater world."
     },
     {
-      "n": 6,
+      "n": 66,
+      "slug": "ezra-and-the-purrgil",
+      "year": -0.5,
+      "yearLabel": "1 BBY",
+      "title": "The Purrgil",
+      "era": "Age of Rebellion",
+      "place": "Lothal",
+      "description": "A young Jedi summons space whales to banish an Imperial fleet."
+    },
+    {
+      "n": 67,
+      "slug": "mustering-at-sullust",
+      "year": -0.4,
+      "yearLabel": "1 BBY",
+      "title": "Mustering at Sullust",
+      "era": "Age of Rebellion",
+      "place": "Sullust",
+      "description": "The Rebel fleet gathers above a volcanic world before its boldest strike."
+    },
+    {
+      "n": 68,
+      "slug": "fall-of-jedha",
+      "year": -0.35,
+      "yearLabel": "0 BBY",
+      "title": "The Fall of Jedha",
+      "era": "Age of Rebellion",
+      "place": "Jedha",
+      "description": "The Empire tests its superweapon on a desert holy city."
+    },
+    {
+      "n": 69,
+      "slug": "eadu-strike",
+      "year": -0.3,
+      "yearLabel": "0 BBY",
+      "title": "The Eadu Strike",
+      "era": "Age of Rebellion",
+      "place": "Eadu",
+      "description": "Rebels raid a rain-lashed mountain research base."
+    },
+    {
+      "n": 70,
+      "slug": "battle-of-scarif",
+      "year": -0.2,
+      "yearLabel": "0 BBY",
+      "title": "Battle of Scarif",
+      "era": "Age of Rebellion",
+      "place": "Scarif",
+      "description": "Rebels die stealing the plans to the Empire's planet-killing station."
+    },
+    {
+      "n": 71,
+      "slug": "destruction-of-alderaan",
+      "year": -0.1,
+      "yearLabel": "0 BBY",
+      "title": "Destruction of Alderaan",
+      "era": "Age of Rebellion",
+      "place": "Alderaan",
+      "description": "The battle station destroys a peaceful planet in a single blast."
+    },
+    {
+      "n": 72,
+      "slug": "escape-from-death-star",
+      "year": -0.05,
+      "yearLabel": "0 BBY",
+      "title": "Escape from the Death Star",
+      "era": "Age of Rebellion",
+      "place": "Death Star",
+      "description": "Heroes flee the battle station through corridors of stormtroopers."
+    },
+    {
+      "n": 73,
       "slug": "battle-of-yavin",
       "year": 0,
       "yearLabel": "0 ABY",
       "title": "Battle of Yavin",
       "era": "Age of Rebellion",
       "place": "Yavin 4",
-      "description": "A farm boy turned pilot destroys the Empire's planet-killing battle station with a single proton-torpedo shot."
+      "description": "A pilot destroys the planet-killing battle station with a single torpedo."
     },
     {
-      "n": 7,
+      "n": 74,
       "slug": "battle-of-hoth",
       "year": 3,
       "yearLabel": "3 ABY",
       "title": "Battle of Hoth",
       "era": "Age of Rebellion",
       "place": "Hoth",
-      "description": "Imperial walkers assault a hidden Rebel base dug into the ice of a frozen world."
+      "description": "Towering walkers assault a hidden Rebel base on a frozen world."
     },
     {
-      "n": 8,
+      "n": 75,
+      "slug": "asteroid-field",
+      "year": 3.05,
+      "yearLabel": "3 ABY",
+      "title": "The Asteroid Field",
+      "era": "Age of Rebellion",
+      "place": "Hoth system",
+      "description": "A freighter dodges through a deadly field of giant tumbling rocks."
+    },
+    {
+      "n": 76,
+      "slug": "duel-on-cloud-city",
+      "year": 3.2,
+      "yearLabel": "3 ABY",
+      "title": "Duel on Cloud City",
+      "era": "Age of Rebellion",
+      "place": "Bespin",
+      "description": "A young hero loses a hand and learns a terrible truth in a floating city."
+    },
+    {
+      "n": 77,
+      "slug": "escape-cloud-city",
+      "year": 3.25,
+      "yearLabel": "3 ABY",
+      "title": "Escape from Cloud City",
+      "era": "Age of Rebellion",
+      "place": "Bespin",
+      "description": "Heroes flee a betrayal in a city floating in orange clouds."
+    },
+    {
+      "n": 78,
+      "slug": "jabbas-palace",
+      "year": 3.9,
+      "yearLabel": "4 ABY",
+      "title": "Rescue at Jabba's Palace",
+      "era": "Age of Rebellion",
+      "place": "Tatooine",
+      "description": "Heroes free a frozen friend and battle a crime lord on a sail barge."
+    },
+    {
+      "n": 79,
       "slug": "battle-of-endor",
       "year": 4,
       "yearLabel": "4 ABY",
       "title": "Battle of Endor",
       "era": "Age of Rebellion",
       "place": "Endor",
-      "description": "The Rebels destroy a second, unfinished battle station above a forest moon, and the Emperor is thrown down."
+      "description": "The Rebels destroy a second battle station above a forest moon; the Emperor falls."
     },
     {
-      "n": 9,
+      "n": 80,
+      "slug": "battle-of-jakku",
+      "year": 5,
+      "yearLabel": "5 ABY",
+      "title": "Battle of Jakku",
+      "era": "The New Republic",
+      "place": "Jakku",
+      "description": "The Empire's last fleet is shattered above a desert graveyard of ships."
+    },
+    {
+      "n": 81,
       "slug": "the-mandalorian-and-grogu",
       "year": 9,
       "yearLabel": "9 ABY",
       "title": "A Mandalorian and the Child",
       "era": "The New Republic",
       "place": "Nevarro",
-      "description": "A lone bounty hunter in beskar armor takes in a mysterious Force-sensitive child as the young New Republic struggles to hold order."
+      "description": "A lone bounty hunter takes in a mysterious Force-sensitive green child."
     },
     {
-      "n": 10,
+      "n": 82,
+      "slug": "the-armorer-forge",
+      "year": 9.05,
+      "yearLabel": "9 ABY",
+      "title": "The Mandalorian Covert",
+      "era": "The New Republic",
+      "place": "Nevarro",
+      "description": "Hidden Mandalorians forge beskar armor in secret tunnels."
+    },
+    {
+      "n": 83,
+      "slug": "dark-troopers",
+      "year": 9.1,
+      "yearLabel": "9 ABY",
+      "title": "The Dark Troopers",
+      "era": "The New Republic",
+      "place": "Imperial cruiser",
+      "description": "Black battle droids march the halls of an Imperial cruiser."
+    },
+    {
+      "n": 84,
+      "slug": "rescue-of-grogu",
+      "year": 9.12,
+      "yearLabel": "9 ABY",
+      "title": "The Rescue of Grogu",
+      "era": "The New Republic",
+      "place": "Imperial cruiser",
+      "description": "A caped Jedi and Mandalorians storm a cruiser to save a kidnapped child."
+    },
+    {
+      "n": 85,
+      "slug": "krayt-dragon-hunt",
+      "year": 9.15,
+      "yearLabel": "9 ABY",
+      "title": "The Krayt Dragon",
+      "era": "The New Republic",
+      "place": "Tatooine",
+      "description": "Villagers and a Mandalorian slay a colossal sand dragon."
+    },
+    {
+      "n": 86,
+      "slug": "boba-fett-returns",
+      "year": 9.2,
+      "yearLabel": "9 ABY",
+      "title": "The Return of Boba Fett",
+      "era": "The New Republic",
+      "place": "Tatooine",
+      "description": "An armored bounty hunter claims a crime throne in a desert palace."
+    },
+    {
+      "n": 87,
+      "slug": "battle-of-mos-espa",
+      "year": 9.25,
+      "yearLabel": "9 ABY",
+      "title": "The Battle of Mos Espa",
+      "era": "The New Republic",
+      "place": "Tatooine",
+      "description": "A crime war erupts in the streets of a desert spaceport town."
+    },
+    {
+      "n": 88,
+      "slug": "luke-and-grogu",
+      "year": 9.3,
+      "yearLabel": "9 ABY",
+      "title": "Grogu Meets the Jedi",
+      "era": "The New Republic",
+      "place": "Ossus",
+      "description": "A robed Jedi begins to train the small green foundling."
+    },
+    {
+      "n": 89,
+      "slug": "shadow-council",
+      "year": 9.4,
+      "yearLabel": "9 ABY",
+      "title": "The Shadow Council",
+      "era": "The New Republic",
+      "place": "Imperial remnant",
+      "description": "Imperial warlords plot in secret to rebuild their fallen empire."
+    },
+    {
+      "n": 90,
+      "slug": "ahsoka-and-thrawn",
+      "year": 9.5,
+      "yearLabel": "9 ABY",
+      "title": "The Return of Thrawn",
+      "era": "The New Republic",
+      "place": "Peridea",
+      "description": "A white-bladed Jedi hunts a blue-skinned Imperial warlord across the stars."
+    },
+    {
+      "n": 91,
+      "slug": "reconquest-of-mandalore",
+      "year": 9.6,
+      "yearLabel": "9 ABY",
+      "title": "The Reconquest of Mandalore",
+      "era": "The New Republic",
+      "place": "Mandalore",
+      "description": "Mandalorian clans unite to retake their poisoned homeworld."
+    },
+    {
+      "n": 92,
+      "slug": "hosnian-cataclysm",
+      "year": 34,
+      "yearLabel": "34 ABY",
+      "title": "The Hosnian Cataclysm",
+      "era": "Rise of the First Order",
+      "place": "Hosnian Prime",
+      "description": "A new superweapon destroys the Republic capital from across the galaxy."
+    },
+    {
+      "n": 93,
+      "slug": "battle-of-takodana",
+      "year": 34.05,
+      "yearLabel": "34 ABY",
+      "title": "Battle of Takodana",
+      "era": "Rise of the First Order",
+      "place": "Takodana",
+      "description": "First Order forces attack a castle by a forest lake."
+    },
+    {
+      "n": 94,
+      "slug": "battle-of-starkiller",
+      "year": 34.1,
+      "yearLabel": "34 ABY",
+      "title": "Battle of Starkiller Base",
+      "era": "Rise of the First Order",
+      "place": "Ilum",
+      "description": "The Resistance destroys a planet-sized weapon carved into an icy world."
+    },
+    {
+      "n": 95,
+      "slug": "starkiller-duel",
+      "year": 34.12,
+      "yearLabel": "34 ABY",
+      "title": "Duel in the Snow",
+      "era": "Rise of the First Order",
+      "place": "Ilum",
+      "description": "A scavenger and a masked dark warrior duel with sabers in a snowy forest."
+    },
+    {
+      "n": 96,
+      "slug": "the-last-jedi-island",
+      "year": 34.2,
+      "yearLabel": "34 ABY",
+      "title": "The Last Jedi",
+      "era": "Rise of the First Order",
+      "place": "Ahch-To",
+      "description": "A scavenger finds the lost master on a remote ocean island."
+    },
+    {
+      "n": 97,
+      "slug": "throne-room-duel",
+      "year": 34.35,
+      "yearLabel": "34 ABY",
+      "title": "The Praetorian Guard",
+      "era": "Rise of the First Order",
+      "place": "The Supremacy",
+      "description": "Two Force-users fight back to back against red-armored guards."
+    },
+    {
+      "n": 98,
+      "slug": "holdo-maneuver",
+      "year": 34.4,
+      "yearLabel": "34 ABY",
+      "title": "The Holdo Maneuver",
+      "era": "Rise of the First Order",
+      "place": "Crait",
+      "description": "A lone ship jumps to lightspeed through an enemy fleet, splitting it apart."
+    },
+    {
+      "n": 99,
+      "slug": "battle-of-crait",
+      "year": 34.45,
+      "yearLabel": "34 ABY",
+      "title": "Battle of Crait",
+      "era": "Rise of the First Order",
+      "place": "Crait",
+      "description": "Speeders race across a white salt flat that bleeds red beneath them."
+    },
+    {
+      "n": 100,
       "slug": "battle-of-exegol",
       "year": 35,
       "yearLabel": "35 ABY",
       "title": "Battle of Exegol",
       "era": "Rise of the First Order",
       "place": "Exegol",
-      "description": "The Resistance and a hidden fleet of resurrected Sith warships clash above a dark, uncharted world in a final reckoning."
+      "description": "The Resistance and a fleet of resurrected Sith warships clash above a dark world."
     }
   ]
 }
