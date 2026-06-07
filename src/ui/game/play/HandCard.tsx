@@ -9,7 +9,7 @@ export default function HandCard({
   image,
 }: {
   id: string
-  year: number
+  year: number | string
   title?: string
   artist?: string
   image?: string | null

@@ -58,6 +58,7 @@ export default function Hand({
   titleOf,
   artistOf,
   imageOf,
+  labelOf,
   piled = false,
   interactive = true,
 }: {
@@ -66,6 +67,7 @@ export default function Hand({
   titleOf?: (id: string) => string | undefined
   artistOf?: (id: string) => string | undefined
   imageOf?: (id: string) => string | null | undefined
+  labelOf?: (id: string) => string | undefined
   piled?: boolean
   interactive?: boolean
 }) {
@@ -157,13 +159,13 @@ export default function Hand({
               <button
                 className="hand-pick"
                 data-testid={`hand-card-${it.cardIdx}`}
-                aria-label={`Card ${it.card.year}`}
+                aria-label={`Card ${labelOf?.(it.card.id) ?? it.card.year}`}
                 disabled={!interactive}
                 onClick={() => pick(it.cardIdx)}
               >
                 <HandCard
                   id={it.card.id}
-                  year={it.card.year}
+                  year={labelOf?.(it.card.id) ?? it.card.year}
                   title={titleOf?.(it.card.id)}
                   artist={artistOf?.(it.card.id)}
                   image={imageOf?.(it.card.id)}

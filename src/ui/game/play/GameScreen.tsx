@@ -18,6 +18,7 @@ export default function GameScreen({
   titleOf,
   artistOf,
   imageOf,
+  labelOf,
   piled = false,
   interactive = true,
 }: {
@@ -31,6 +32,7 @@ export default function GameScreen({
   titleOf?: (id: string) => string | undefined
   artistOf?: (id: string) => string | undefined
   imageOf?: (id: string) => string | null | undefined
+  labelOf?: (id: string) => string | undefined
   piled?: boolean
   interactive?: boolean
 }) {
@@ -55,6 +57,7 @@ export default function GameScreen({
         titleOf={titleOf}
         artistOf={artistOf}
         imageOf={imageOf}
+        labelOf={labelOf}
         piled={piled}
         interactive={interactive}
       />
