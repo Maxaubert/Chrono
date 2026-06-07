@@ -1,0 +1,61 @@
+/* Star Wars skin: deep-space black + crawl-yellow. Scoped under .skin-starwars.
+ * All CSS is bundled globally, so every rule stays skin-scoped. */
+.skin-starwars .sw-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 18px;
+  overflow: hidden;
+  background: #05060a;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+}
+
+.skin-starwars .sw-stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 20%, #cfe3ff, transparent),
+    radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 85%, #bcd4ff, transparent), #05060a;
+  opacity: 0.8;
+}
+
+.skin-starwars .sw-year,
+.skin-starwars .sw-title,
+.skin-starwars .sw-rule {
+  position: relative;
+  z-index: 1;
+}
+
+.skin-starwars .sw-year {
+  font-size: 13px;
+  letter-spacing: 3px;
+  font-weight: 800;
+  color: color-mix(in srgb, var(--accent) 80%, #fff);
+}
+
+.skin-starwars .sw-title {
+  font-family: var(--title-font, inherit);
+  font-size: 22px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 18px var(--glow);
+}
+
+.skin-starwars .sw-rule {
+  height: 2px;
+  width: 60%;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* the reveal cover melts to crawl-yellow rather than Hitster purple */
+.skin-starwars .reveal-back {
+  background: linear-gradient(160deg, #11121a, #05060a);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}

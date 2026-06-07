@@ -1,0 +1,105 @@
+{
+  "$comment": "Chrono Star Wars deck. In-universe events on the BBY/ABY axis (year 0 = Battle of Yavin). 'year' is the signed numeric sort key (BBY negative, ABY non-negative); 'yearLabel' is shown on reveal and timeline. 'description' is the guess clue and never states the BBY/ABY value. Typographic cards: no images.",
+  "cards": [
+    {
+      "n": 1,
+      "slug": "great-hyperspace-disaster",
+      "year": -232,
+      "yearLabel": "232 BBY",
+      "title": "The Great Hyperspace Disaster",
+      "era": "The High Republic",
+      "place": "Hetzal system",
+      "description": "A catastrophic hyperspace accident scatters deadly wreckage across a system at the height of the High Republic, and the Jedi race to save it."
+    },
+    {
+      "n": 2,
+      "slug": "invasion-of-naboo",
+      "year": -32,
+      "yearLabel": "32 BBY",
+      "title": "Invasion of Naboo",
+      "era": "Fall of the Republic",
+      "place": "Naboo",
+      "description": "The Trade Federation blockades and occupies a peaceful world, drawing a young slave boy from Tatooine into the fate of the galaxy."
+    },
+    {
+      "n": 3,
+      "slug": "clone-wars-begin",
+      "year": -22,
+      "yearLabel": "22 BBY",
+      "title": "The Clone Wars Begin",
+      "era": "Clone Wars",
+      "place": "Geonosis",
+      "description": "Clone troopers and Jedi storm a desert world to face the Separatist droid army, igniting a galaxy-wide war."
+    },
+    {
+      "n": 4,
+      "slug": "order-66",
+      "year": -19,
+      "yearLabel": "19 BBY",
+      "title": "Order 66 and the Empire's Rise",
+      "era": "Age of the Empire",
+      "place": "Coruscant",
+      "description": "The Supreme Chancellor turns the clone army on the Jedi, who are betrayed and all but destroyed as the Republic becomes an Empire."
+    },
+    {
+      "n": 5,
+      "slug": "liberation-of-lothal",
+      "year": -1,
+      "yearLabel": "1 BBY",
+      "title": "Liberation of Lothal",
+      "era": "Age of Rebellion",
+      "place": "Lothal",
+      "description": "Rebel cells drive the Empire off a backwater world in one of the rebellion's first true victories."
+    },
+    {
+      "n": 6,
+      "slug": "battle-of-yavin",
+      "year": 0,
+      "yearLabel": "0 ABY",
+      "title": "Battle of Yavin",
+      "era": "Age of Rebellion",
+      "place": "Yavin 4",
+      "description": "A farm boy turned pilot destroys the Empire's planet-killing battle station with a single proton-torpedo shot."
+    },
+    {
+      "n": 7,
+      "slug": "battle-of-hoth",
+      "year": 3,
+      "yearLabel": "3 ABY",
+      "title": "Battle of Hoth",
+      "era": "Age of Rebellion",
+      "place": "Hoth",
+      "description": "Imperial walkers assault a hidden Rebel base dug into the ice of a frozen world."
+    },
+    {
+      "n": 8,
+      "slug": "battle-of-endor",
+      "year": 4,
+      "yearLabel": "4 ABY",
+      "title": "Battle of Endor",
+      "era": "Age of Rebellion",
+      "place": "Endor",
+      "description": "The Rebels destroy a second, unfinished battle station above a forest moon, and the Emperor is thrown down."
+    },
+    {
+      "n": 9,
+      "slug": "the-mandalorian-and-grogu",
+      "year": 9,
+      "yearLabel": "9 ABY",
+      "title": "A Mandalorian and the Child",
+      "era": "The New Republic",
+      "place": "Nevarro",
+      "description": "A lone bounty hunter in beskar armor takes in a mysterious Force-sensitive child as the young New Republic struggles to hold order."
+    },
+    {
+      "n": 10,
+      "slug": "battle-of-exegol",
+      "year": 35,
+      "yearLabel": "35 ABY",
+      "title": "Battle of Exegol",
+      "era": "Rise of the First Order",
+      "place": "Exegol",
+      "description": "The Resistance and a hidden fleet of resurrected Sith warships clash above a dark, uncharted world in a final reckoning."
+    }
+  ]
+}
