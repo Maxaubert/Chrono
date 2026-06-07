@@ -40,7 +40,9 @@ test-results
 *.sln
 *.sw?
 
-# Large local mockup assets (videos), do not commit
+# Large local mockup assets (videos), do not commit -- except the one Star Wars
+# menu background we actually ship, so it deploys to production.
 public/bg/
 public/starwars/*.mp4
+!public/starwars/sith-trooper.mp4
 .vercel
