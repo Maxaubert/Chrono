@@ -1,0 +1,178 @@
+/* Generic static-deck setup popup. Colours from the active theme's CSS vars. */
+.sd-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: color-mix(in srgb, var(--bg) 80%, rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(6px);
+}
+
+.sd-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 28px;
+  width: min(760px, 96vw);
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  box-shadow: 0 24px 80px -20px var(--glow);
+  color: color-mix(in srgb, var(--accent) 92%, #fff);
+}
+
+.sd-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+  font-size: 18px;
+}
+
+.sd-kicker {
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.sd-wordmark {
+  margin-top: 6px;
+  font-family: var(--title-font, inherit);
+  font-size: 40px;
+  line-height: 1.05;
+  color: var(--accent);
+}
+
+.sd-blurb {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.sd-section {
+  margin-bottom: 22px;
+}
+
+.sd-label {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--accent2);
+}
+
+.sd-stepper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.sd-step-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+}
+
+.sd-step-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.sd-step-val {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.sd-step-unit {
+  font-size: 12px;
+  margin-left: 6px;
+  opacity: 0.6;
+}
+
+.sd-names {
+  display: grid;
+  gap: 8px;
+}
+
+.sd-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sd-name-idx {
+  width: 22px;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.sd-name input,
+.sd-win {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  color: inherit;
+  font-size: 15px;
+}
+
+.sd-winrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sd-win {
+  width: 84px;
+  flex: 0 0 auto;
+}
+
+.sd-win-sub {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.sd-slider {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.sd-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  box-shadow: 0 0 28px -6px var(--accent);
+}
+
+.sd-start:disabled {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
