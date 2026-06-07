@@ -94,6 +94,18 @@
   }
 }
 
+/* Star Wars: dark-red tiles + an upright logo wordmark (the Distant Galaxy face
+   already reads as the logo, so drop Hitster's skew/uppercase). */
+.skin-starwars .xtile {
+  background: linear-gradient(180deg, #1c0d11, #0a0507);
+  box-shadow: inset 0 0 0 1px rgba(255, 61, 61, 0.12);
+}
+.skin-starwars .xlogo {
+  transform: none;
+  letter-spacing: 2px;
+  text-transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .xover .xtile {
     animation-duration: 0.01ms !important;
