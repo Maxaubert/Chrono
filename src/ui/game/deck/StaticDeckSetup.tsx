@@ -5,8 +5,10 @@ import './static-setup.css'
 
 /**
  * Generic new-game setup for a static-deck game (no audio, no Spotify): players
- * + win target, then START. Theme-driven - the wordmark/tagline come from the
- * active game's theme, and colours from its CSS variables, so each specialized
+ * + win target, then START. Built in the same angular HUD shape as Hitster's
+ * setup (beveled frame, corner slashes, decorative card fan, chip player names,
+ * big win number), but fully theme-driven - the wordmark/tagline come from the
+ * active game's theme and every colour is a CSS variable, so each specialized
  * deck (Star Wars, ...) gets its own look with no per-game setup code. The
  * data-testids (name-0..5, target, start-game, player-plus/minus, setup-close)
  * are load-bearing for the shared e2e and must not change.
@@ -49,10 +51,21 @@ export default function StaticDeckSetup({ onStart, onClose }: GameSetupProps) {
         )}
 
         <aside className="sd-rail">
-          <div className="sd-kicker">New Game</div>
-          <div className="sd-wordmark">{game.theme.title}</div>
-          <div className="sd-blurb">{game.theme.tagline}</div>
-          <div className="sd-leaf" aria-hidden="true" />
+          <span className="sd-slash sd-slash-tl" />
+          <span className="sd-slash sd-slash-br" />
+          <div>
+            <div className="sd-kicker">// New Game</div>
+            <div className="sd-wordmark">{game.theme.title}</div>
+            <div className="sd-blurb">{game.theme.tagline}</div>
+          </div>
+          <div className="sd-fan" aria-hidden="true">
+            <div className="sd-card sd-card-1" />
+            <div className="sd-card sd-card-2" />
+            <div className="sd-card sd-card-3" />
+          </div>
+          <div className="sd-foot">
+            <span className="sd-dot" /> Local &middot; Pass &amp; Play
+          </div>
         </aside>
 
         <main className="sd-form">
@@ -70,7 +83,7 @@ export default function StaticDeckSetup({ onStart, onClose }: GameSetupProps) {
               </button>
               <div className="sd-step-val">
                 {count}
-                <span className="sd-step-unit">of 6</span>
+                <span className="sd-step-unit">/ 6</span>
               </div>
               <button
                 className="sd-step-btn"
@@ -85,7 +98,7 @@ export default function StaticDeckSetup({ onStart, onClose }: GameSetupProps) {
             <div className="sd-names">
               {names.map((name, i) => (
                 <label className="sd-name" key={i}>
-                  <span className="sd-name-idx">{i + 1}</span>
+                  <span className="sd-name-idx">P{i + 1}</span>
                   <input
                     data-testid={`name-${i}`}
                     placeholder={`Player ${i + 1}`}
@@ -139,8 +152,8 @@ export default function StaticDeckSetup({ onStart, onClose }: GameSetupProps) {
               })
             }
           >
-            <span>Start Game</span>
-            <span className="sd-k">&#9656;</span>
+            <span>START GAME</span>
+            <span className="sd-k">&#9654;</span>
           </button>
         </main>
       </div>
