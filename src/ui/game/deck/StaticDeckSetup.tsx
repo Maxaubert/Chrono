@@ -52,6 +52,7 @@ export default function StaticDeckSetup({ onStart, onClose }: GameSetupProps) {
           <div className="sd-kicker">New Game</div>
           <div className="sd-wordmark">{game.theme.title}</div>
           <div className="sd-blurb">{game.theme.tagline}</div>
+          <div className="sd-leaf" aria-hidden="true" />
         </aside>
 
         <main className="sd-form">
