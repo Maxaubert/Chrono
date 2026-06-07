@@ -30,6 +30,10 @@ export interface GameTheme {
   skinClass: string
   /** Decorative card for the menu fan, given its slot index (0-based). */
   FanCard: ComponentType<{ index: number }>
+  /** Optional looping background video for the menu (absolute public path). The
+   *  menu renders it behind a skin-styled scrim; if the file is missing it just
+   *  shows the skin's CSS background, so it degrades gracefully. */
+  menuVideo?: string
 }
 
 export interface GameModule {

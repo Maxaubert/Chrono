@@ -4,9 +4,10 @@ import './skin.css'
 
 /**
  * Star Wars game module. A specialized timeline deck riding the shared
- * deck-driven engine. Deep-space crawl vibe (crawl-yellow on black). Events are
- * placed on the in-universe BBY/ABY axis. We do not ship the trademarked Star
- * Wars typeface; the wordmark uses a free condensed stack.
+ * deck-driven engine. Imperial-red dark-side vibe (red glow on deep space) with
+ * a Distant Galaxy wordmark and a (local-only) video background. Events are
+ * placed on the in-universe BBY/ABY axis. The wordmark + video are free
+ * lookalikes/assets; the real Star Wars logo and footage are trademarks.
  */
 export const starwars: GameModule = {
   id: 'starwars',
@@ -16,17 +17,19 @@ export const starwars: GameModule = {
   theme: {
     title: 'Star Wars',
     tagline: 'A long time ago... place it on the line.',
-    titleFont:
-      "'Arial Narrow', 'Franklin Gothic Medium', 'Helvetica Neue', sans-serif",
+    titleFont: "'Distant Galaxy', 'Arial Narrow', 'Helvetica Neue', sans-serif",
     palette: {
-      bg: '#05060a',
-      panel: '#0b0e16',
-      accent: '#ffe81f',
-      accent2: '#5fa8ff',
-      glow: 'rgba(255, 232, 31, 0.18)',
-      ink: '#0a0a04',
+      bg: '#070608',
+      panel: '#140a0c',
+      accent: '#ff3d3d',
+      accent2: '#ff8f8f',
+      glow: 'rgba(255, 61, 61, 0.18)',
+      ink: '#1a0303',
     },
     skinClass: 'skin-starwars',
     FanCard,
+    // Local-only menu background (the .mp4 is gitignored, so production falls
+    // back to the CSS starfield in skin.css). Hitster handles its bg the same way.
+    menuVideo: '/starwars/sith-trooper.mp4',
   },
 }

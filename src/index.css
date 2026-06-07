@@ -1,6 +1,9 @@
-/* Techno Race (italic display) for the Hitster wordmark. Hosted on cdnfonts for
-   now; self-host the .woff under public/fonts for production + licence clarity. */
+/* Display wordmark fonts, hosted on cdnfonts for now; self-host the .woff under
+   public/fonts for production + licence clarity. Techno Race = Hitster wordmark,
+   Distant Galaxy = Star Wars wordmark (free lookalike; the real logo is a
+   trademark). */
 @import url('https://fonts.cdnfonts.com/css/techno-race');
+@import url('https://fonts.cdnfonts.com/css/distant-galaxy');
 @import 'tailwindcss';
 
 :root {

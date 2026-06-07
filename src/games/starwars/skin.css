@@ -1,5 +1,119 @@
-/* Star Wars skin: deep-space black + crawl-yellow. Scoped under .skin-starwars.
- * All CSS is bundled globally, so every rule stays skin-scoped. */
+/* Star Wars skin: Imperial red on deep space. Scoped under .skin-starwars.
+ * All CSS is bundled globally, so every rule stays skin-scoped. Layout/placement
+ * is inherited from the shared menu (.split/.hand/.fan-slot); this file only sets
+ * the vibe: the starfield fallback, the video scrim, the wordmark, the menu
+ * buttons, and the card faces. */
+
+/* ---- menu background: starfield fallback shown when the video is absent
+   (e.g. production, where the .mp4 is gitignored) ---- */
+.skin-starwars .menu-screen {
+  background:
+    radial-gradient(1.3px 1.3px at 12% 22%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 32% 70%, #ffd9d9, transparent),
+    radial-gradient(1.5px 1.5px at 55% 18%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 72% 62%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 86% 35%, #ffc9c9, transparent),
+    radial-gradient(1px 1px at 46% 88%, #fff, transparent),
+    radial-gradient(900px 560px at 30% 40%, var(--glow), transparent 60%),
+    var(--bg);
+}
+
+/* dark scrim over the video so the wordmark + menu stay readable */
+.skin-starwars .menu-screen .menu-scrim {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 3, 4, 0.5) 0%,
+      rgba(5, 3, 4, 0.12) 28%,
+      rgba(5, 3, 4, 0.5) 60%,
+      rgba(7, 5, 6, 0.86) 100%
+    ),
+    radial-gradient(
+      120% 120% at 72% 50%,
+      transparent 38%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+}
+
+/* ---- wordmark + tagline ---- */
+.skin-starwars .menu-screen .logo {
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-shadow:
+    0 0 38px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 10px rgba(0, 0, 0, 0.85);
+}
+.skin-starwars .menu-screen .tag {
+  color: var(--accent2);
+  opacity: 0.95;
+}
+
+/* ---- holo-glow menu buttons (mirror History's panel idea, Star Wars look) ---- */
+.skin-starwars .menu-screen .btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, rgba(7, 5, 8, 0.66));
+  border: 1px solid color-mix(in srgb, var(--accent) 52%, transparent);
+  box-shadow:
+    0 0 24px -8px color-mix(in srgb, var(--accent) 50%, transparent),
+    inset 0 0 30px color-mix(in srgb, var(--accent) 6%, transparent);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+.skin-starwars .menu-screen .btn::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 90%, #fff),
+    transparent
+  );
+}
+.skin-starwars .menu-screen .btn .bt {
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.skin-starwars .menu-screen .btn .bx {
+  color: var(--accent2);
+  letter-spacing: 2px;
+}
+.skin-starwars .menu-screen .btn .bk {
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+.skin-starwars .menu-screen .btn.primary {
+  box-shadow:
+    0 0 34px -6px color-mix(in srgb, var(--accent) 60%, transparent),
+    inset 0 0 30px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.skin-starwars .menu-screen .btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 90%, #000);
+  color: var(--ink);
+  border-color: var(--accent);
+  box-shadow: 0 0 30px -4px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+.skin-starwars .menu-screen .btn:hover:not(:disabled) .bx,
+.skin-starwars .menu-screen .btn:hover:not(:disabled) .bk {
+  color: var(--ink);
+}
+.skin-starwars .menu-screen .btn:hover:not(:disabled) .bk {
+  transform: translateY(-50%) translateX(3px);
+}
+.skin-starwars .menu-screen .btn:disabled {
+  opacity: 0.5;
+}
+
+/* ---- card faces (typographic; placement comes from the shared .hand) ---- */
 .skin-starwars .sw-card {
   position: relative;
   display: flex;
@@ -8,21 +122,23 @@
   gap: 8px;
   padding: 18px;
   overflow: hidden;
-  background: #05060a;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: linear-gradient(180deg, #0b0608, #040305);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 0 40px -8px color-mix(in srgb, var(--accent) 45%, transparent),
+    inset 0 0 30px rgba(0, 0, 0, 0.5);
   color: var(--accent);
 }
 
 .skin-starwars .sw-stars {
   position: absolute;
   inset: 0;
+  opacity: 0.5;
   background:
-    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
-    radial-gradient(1px 1px at 70% 20%, #cfe3ff, transparent),
-    radial-gradient(1px 1px at 40% 70%, #fff, transparent),
-    radial-gradient(1px 1px at 85% 60%, #fff, transparent),
-    radial-gradient(1px 1px at 55% 85%, #bcd4ff, transparent), #05060a;
-  opacity: 0.8;
+    radial-gradient(1px 1px at 22% 28%, #fff, transparent),
+    radial-gradient(1px 1px at 68% 22%, #ffd9d9, transparent),
+    radial-gradient(1px 1px at 42% 66%, #fff, transparent),
+    radial-gradient(1px 1px at 82% 58%, #fff, transparent);
 }
 
 .skin-starwars .sw-year,
@@ -36,16 +152,17 @@
   font-size: 13px;
   letter-spacing: 3px;
   font-weight: 800;
-  color: color-mix(in srgb, var(--accent) 80%, #fff);
+  color: color-mix(in srgb, var(--accent) 82%, #fff);
 }
 
 .skin-starwars .sw-title {
-  font-family: var(--title-font, inherit);
-  font-size: 22px;
-  line-height: 1.1;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 21px;
+  line-height: 1.12;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--accent);
-  text-shadow: 0 0 18px var(--glow);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 .skin-starwars .sw-rule {
@@ -54,8 +171,8 @@
   background: linear-gradient(90deg, var(--accent), transparent);
 }
 
-/* the reveal cover melts to crawl-yellow rather than Hitster purple */
+/* the reveal cover melts to imperial red rather than Hitster purple */
 .skin-starwars .reveal-back {
-  background: linear-gradient(160deg, #11121a, #05060a);
+  background: linear-gradient(160deg, #1a0c0e, #070608);
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
 }
