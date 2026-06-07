@@ -6,6 +6,7 @@ import GameContainer from './game/GameContainer'
 import { useSpotifySession } from './game/useSpotifySession'
 import { makeHitsterPlay } from './game/hitster/play'
 import { makeHistoryPlay } from './game/history/play'
+import { makeStarWarsPlay } from './game/starwars/play'
 import { clearResumeSetup, peekResumeSetup } from './game/resumeSetup'
 import type { GamePlay, GameSetupResult } from './game/play/adapter'
 import ScreenTransition from './transition/ScreenTransition'
@@ -43,8 +44,11 @@ function GameRoot() {
   // otherwise the Hitster Setup captures a stale session and never sees the
   // playback device connect, leaving START greyed out forever.
   const computedPlay = useMemo(
-    () =>
-      game.id === 'history' ? makeHistoryPlay() : makeHitsterPlay(session),
+    () => {
+      if (game.id === 'history') return makeHistoryPlay()
+      if (game.id === 'starwars') return makeStarWarsPlay()
+      return makeHitsterPlay(session)
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       game.id,
