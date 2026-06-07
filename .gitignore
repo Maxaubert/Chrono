@@ -46,3 +46,10 @@ public/bg/
 public/starwars/*.mp4
 !public/starwars/sith-trooper.mp4
 .vercel
+
+# Star Wars dev-only tools (mockups, verification gallery, deck copy, scripts) -- not shipped
+public/starwars/preview.html
+public/starwars/setup-preview.html
+public/starwars/cards-gallery.html
+public/starwars/deck.json
+/scripts/
