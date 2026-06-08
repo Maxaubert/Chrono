@@ -34,6 +34,7 @@ export default function GameContainer({
   const imageById = useRef(new Map<string, string | undefined>())
   const titleById = useRef(new Map<string, string | undefined>())
   const artistById = useRef(new Map<string, string | undefined>())
+  const labelById = useRef(new Map<string, string | undefined>())
 
   // setTimeout that registers its id so every pending choreography timer can be
   // cleared on unmount (e.g. a future "quit to menu"), instead of firing against
@@ -60,6 +61,7 @@ export default function GameContainer({
   const imageOf = (id: string) => imageById.current.get(id)
   const titleOf = (id: string) => titleById.current.get(id)
   const artistOf = (id: string) => artistById.current.get(id)
+  const labelOf = (id: string) => labelById.current.get(id)
 
   // Record a drawn card's reveal content so its metadata survives placement.
   function record(drawn: DrawnCard | null) {
@@ -67,6 +69,7 @@ export default function GameContainer({
     imageById.current.set(drawn.card.id, play.revealImage?.(drawn))
     titleById.current.set(drawn.card.id, drawn.reveal.title)
     artistById.current.set(drawn.card.id, drawn.reveal.subtitle)
+    labelById.current.set(drawn.card.id, drawn.reveal.yearLabel)
   }
 
   // Optimistically show the playing state, but undo it if the provider rejects
@@ -195,6 +198,7 @@ export default function GameContainer({
         titleOf={titleOf}
         artistOf={artistOf}
         imageOf={imageOf}
+        labelOf={labelOf}
         piled={piled}
         interactive={!ending && !switching}
         playing={playing}

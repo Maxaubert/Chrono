@@ -12,7 +12,7 @@ export default function RevealOverlay({
   onNext: () => void
 }) {
   if (!state.drawn || !state.lastOutcome) return null
-  const { title, subtitle, year } = state.drawn.reveal
+  const { title, subtitle, year, yearLabel } = state.drawn.reveal
   const id = state.drawn.card.id
   const correct = state.lastOutcome.correct
   const art = image
@@ -31,7 +31,7 @@ export default function RevealOverlay({
         {/* the mystery card flies in, then its back melts away to reveal the
             answer beneath (FIFA pack-opening style). */}
         <div className="reveal-the-card">
-          <span className="reveal-c-year">{year}</span>
+          <span className="reveal-c-year">{yearLabel ?? year}</span>
           <div className="reveal-c-art" style={art} />
           <div className="reveal-c-title">{title}</div>
           {subtitle && <div className="reveal-c-sub">{subtitle}</div>}

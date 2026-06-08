@@ -1,10 +1,12 @@
 import rawDeck from '@/games/history/deck.json'
 import type { DrawnCard } from '@/core'
 import type { DeckHandle } from '../play/adapter'
+import { makeStaticDeck } from '../deck/staticDeck'
 
 interface HistoryCardData {
   slug: string
   year: number
+  yearLabel: string
   title: string
   era: string
   description: string
@@ -24,27 +26,16 @@ export const clueBySlug = new Map(
 function toDrawn(c: HistoryCardData): DrawnCard {
   return {
     card: { id: c.slug, year: c.year },
-    reveal: { title: c.title, subtitle: c.era, year: c.year },
+    reveal: {
+      title: c.title,
+      subtitle: c.era,
+      year: c.year,
+      yearLabel: c.yearLabel,
+    },
   }
-}
-
-/** Fisher-Yates shuffle into a new array using an injected rng (0..1). */
-function shuffle<T>(items: readonly T[], rng: () => number): T[] {
-  const out = items.slice()
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1))
-    ;[out[i], out[j]] = [out[j], out[i]]
-  }
-  return out
 }
 
 /** A DeckHandle over the shuffled History deck (static; years are known). */
 export function makeHistoryDeck(rng: () => number): DeckHandle {
-  const pile = shuffle(CARDS, rng)
-  let i = 0
-  return {
-    async next() {
-      return i < pile.length ? toDrawn(pile[i++]) : null
-    },
-  }
+  return makeStaticDeck(CARDS, toDrawn, rng)
 }

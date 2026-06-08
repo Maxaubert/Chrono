@@ -14,8 +14,25 @@
   color: var(--accent);
 }
 
+/* optional looping background video + its scrim (a game opts in via theme.menuVideo) */
+.menu-screen .menu-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.menu-screen .menu-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .menu-screen .split {
   position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;

@@ -9,3 +9,5 @@ dist
 public/bg
 *.mp4
 *.mov
+# ...but DO ship the one Star Wars menu background video (24 MB, well under limits).
+!public/starwars/sith-trooper.mp4

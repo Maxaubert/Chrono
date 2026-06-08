@@ -1,5 +1,6 @@
 import './menu-base.css'
 import { useState } from 'react'
+import { listGames } from '@/games'
 import { useActiveGame } from '../theme/activeGameContext'
 import GamePicker from './GamePicker'
 
@@ -16,6 +17,19 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
 
   return (
     <div className="menu-screen">
+      {theme.menuVideo && (
+        <>
+          <video
+            className="menu-bg"
+            src={theme.menuVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          <span className="menu-scrim" />
+        </>
+      )}
       <span className="slash s-tl" />
       <span className="slash s-br" />
 
@@ -53,7 +67,11 @@ export default function MenuScreen({ onPlay }: { onPlay: () => void }) {
               onClick={() => setPickerOpen(true)}
             >
               <span className="bt">CHOOSE GAME</span>
-              <span className="bx">HITSTER &middot; HISTORY</span>
+              <span className="bx">
+                {listGames()
+                  .map((g) => g.name.toUpperCase())
+                  .join(' · ')}
+              </span>
             </button>
             <button
               className="btn el d5"

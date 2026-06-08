@@ -102,3 +102,19 @@
   letter-spacing: 0.2em;
   color: color-mix(in srgb, var(--accent2) 80%, #fff);
 }
+
+/* ---------- Star Wars: a starfield cover; the name keeps --accent (red) +
+   the Distant Galaxy wordmark face ---------- */
+.skin-starwars .tswitch::before {
+  background:
+    radial-gradient(1.2px 1.2px at 18% 26%, #fff, transparent),
+    radial-gradient(1px 1px at 72% 40%, #ffd9d9, transparent),
+    radial-gradient(1px 1px at 46% 74%, #fff, transparent),
+    radial-gradient(1px 1px at 86% 62%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 56%, #fff, transparent),
+    radial-gradient(120% 90% at 50% 42%, #1a0709, #040207 78%);
+}
+.skin-starwars .tswitch-sub {
+  letter-spacing: 0.34em;
+  color: color-mix(in srgb, var(--accent2) 82%, #fff);
+}

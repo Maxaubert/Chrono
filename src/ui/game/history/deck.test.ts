@@ -27,6 +27,6 @@ describe('makeHistoryDeck', () => {
     const handle = makeHistoryDeck(() => 0)
     let n = 0
     while (await handle.next()) n++
-    expect(n).toBe(100)
+    expect(n).toBe(200)
   })
 })

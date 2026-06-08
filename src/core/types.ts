@@ -18,4 +18,7 @@ export interface CardReveal {
   title: string
   subtitle?: string
   year: number
+  /** Optional display label for the year (e.g. "3100 BC", "32 BBY"). Falls back
+   *  to `year` when absent. `year` stays the numeric sort/scoring key. */
+  yearLabel?: string
 }
