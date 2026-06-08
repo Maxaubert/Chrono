@@ -51,5 +51,8 @@ public/starwars/*.mp4
 public/starwars/preview.html
 public/starwars/setup-preview.html
 public/starwars/cards-gallery.html
+public/starwars/iconic-9b.html
 public/starwars/deck.json
+public/starwars/cards-9b/
+public/starwars/cards-fix/
 /scripts/
