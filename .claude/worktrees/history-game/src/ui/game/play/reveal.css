@@ -1,0 +1,115 @@
+/* src/ui/game/play/reveal.css */
+.reveal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 3, 10, 0.62);
+  backdrop-filter: blur(5px);
+}
+.reveal-card {
+  width: min(420px, 92vw);
+  padding: 26px;
+  text-align: center;
+  color: #e8e2ff;
+  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.85);
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+/* the revealed song, shown as a card */
+.reveal-the-card {
+  position: relative;
+  width: 188px;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #160e26, #0c0814);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 18px 40px -16px rgba(0, 0, 0, 0.8),
+    0 0 26px -10px var(--glow);
+}
+.reveal-c-year {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--accent);
+  z-index: 2;
+}
+.reveal-c-art {
+  margin: 26px auto 0;
+  width: 162px;
+  height: 162px;
+  border-radius: 9px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.reveal-c-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #f3eefb;
+  line-height: 1.15;
+}
+.reveal-c-sub {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--accent);
+}
+.reveal-outcome {
+  margin-top: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.reveal-outcome.ok {
+  color: #61e3a7;
+}
+.reveal-outcome.no {
+  color: #ff6b8a;
+}
+.reveal-next {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px 24px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  clip-path: polygon(
+    11px 0,
+    100% 0,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    0 100%,
+    0 11px
+  );
+}
+.reveal-next:hover {
+  box-shadow: 0 0 26px -4px var(--accent);
+}
+.reveal-err {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #5a1020;
+  color: #ffd7df;
+  font-size: 13px;
+}

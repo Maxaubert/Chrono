@@ -1,0 +1,465 @@
+/* History new-game setup: a warm museum / almanac popup over the menu. The soft
+   counterpoint to Hitster's edgy HUD (setup.css) — same rail + form layout, but
+   serif type, rounded corners, paper grain, warm gold + olive, soft shadows. No
+   purple, no clip-path wedges, no skew. Scoped under .hs-screen and reads the
+   theme palette vars (--bg/--panel/--accent/--accent2/--glow/--ink). */
+
+.hs-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  padding: 24px;
+  /* popup over the menu: warm dim + soft blur of the page behind */
+  background: radial-gradient(
+    120% 120% at 50% 0%,
+    rgba(20, 16, 8, 0.62),
+    rgba(6, 5, 3, 0.82)
+  );
+  backdrop-filter: blur(7px);
+  color: #f0e7d2;
+  font-family: Georgia, 'Times New Roman', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  animation: hsFade 0.22s ease-out;
+}
+.hs-screen * {
+  box-sizing: border-box;
+}
+@keyframes hsFade {
+  from {
+    opacity: 0;
+  }
+}
+
+.hs-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+.hs-close:hover {
+  background: color-mix(in srgb, var(--accent) 18%, var(--ink));
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  transform: rotate(90deg);
+}
+
+.hs-frame {
+  position: relative;
+  width: min(1040px, 94vw);
+  height: min(660px, 92vh);
+  display: grid;
+  grid-template-columns: 40% 60%;
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--panel) 90%, #2a2a1c),
+    var(--ink)
+  );
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 20px;
+  box-shadow:
+    0 48px 120px -28px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 0 7px color-mix(in srgb, var(--accent) 7%, transparent) inset;
+  overflow: hidden;
+}
+/* faint warm paper grain over the whole popup, matching the menu skin */
+.hs-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(205, 163, 73, 0.5) 0.5px, transparent 0.6px),
+    radial-gradient(rgba(138, 154, 107, 0.4) 0.5px, transparent 0.6px);
+  background-size:
+    7px 7px,
+    11px 11px;
+  background-position:
+    0 0,
+    3px 4px;
+}
+
+/* ---------- left rail ---------- */
+.hs-rail {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background:
+    radial-gradient(130% 90% at 0% 0%, var(--glow), transparent 60%),
+    radial-gradient(
+      120% 80% at 0% 100%,
+      color-mix(in srgb, var(--accent2) 18%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--panel) 92%, #2a2a1c),
+      var(--ink) 80%
+    );
+  border-right: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.hs-kicker {
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--accent2);
+  margin-bottom: 14px;
+}
+.hs-wordmark {
+  position: relative;
+  display: inline-block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: clamp(38px, 5vw, 60px);
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--accent);
+  text-shadow: 0 1px 24px var(--glow);
+}
+/* slim warm underline rule beneath the wordmark, echoing the menu logo */
+.hs-wordmark::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  bottom: -10px;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 30%, transparent) 70%,
+    transparent
+  );
+}
+.hs-blurb {
+  margin-top: 26px;
+  font-size: 14.5px;
+  font-style: italic;
+  letter-spacing: 0.4px;
+  color: color-mix(in srgb, #f0e7d2 78%, var(--accent2));
+  max-width: 250px;
+  line-height: 1.6;
+}
+
+/* a quiet stack of aged index cards, softly fanned */
+.hs-stack {
+  position: relative;
+  height: 168px;
+  margin: 6px 0;
+}
+.hs-leaf {
+  position: absolute;
+  left: 30px;
+  bottom: 8px;
+  width: 132px;
+  height: 150px;
+  border-radius: 10px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, #f3e6c4 88%, var(--accent)),
+    #d8c79c
+  );
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, #b9a878);
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, 0.7);
+  transform-origin: bottom center;
+}
+.hs-leaf-1 {
+  transform: rotate(-3deg);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.hs-leaf-2 {
+  transform: rotate(7deg) translateX(20px);
+  background: linear-gradient(160deg, #e9dab4, #cdba8c);
+  filter: brightness(0.96);
+}
+.hs-leaf-3 {
+  transform: rotate(15deg) translateX(40px);
+  background: linear-gradient(160deg, #ddcca2, #c1ae80);
+  filter: brightness(0.9);
+}
+.hs-leaf-rule {
+  height: 1px;
+  width: 100%;
+  background: color-mix(in srgb, var(--accent2) 55%, transparent);
+}
+.hs-leaf-rule:first-child {
+  width: 64%;
+}
+.hs-leaf-year {
+  margin-top: auto;
+  align-self: flex-end;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: color-mix(in srgb, var(--ink) 78%, var(--accent));
+}
+
+.hs-foot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--accent2);
+}
+.hs-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+/* ---------- right form ---------- */
+.hs-form {
+  position: relative;
+  padding: 44px 46px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: auto;
+}
+.hs-section {
+  position: relative;
+  padding: 20px 22px;
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 8px 22px -18px rgba(0, 0, 0, 0.8);
+}
+.hs-label {
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--accent2);
+  margin-bottom: 14px;
+}
+
+/* players stepper */
+.hs-stepper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hs-step-btn {
+  width: 42px;
+  height: 42px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--accent);
+  cursor: pointer;
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 11px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.hs-step-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
+  border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: 0 0 20px -6px var(--glow);
+}
+.hs-step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.hs-step-val {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  min-width: 78px;
+  justify-content: center;
+  color: #fbf3df;
+}
+.hs-step-unit {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent2);
+}
+.hs-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.hs-name {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px 6px 6px;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  border-radius: 999px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.hs-name:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.hs-name-idx {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--accent);
+  border-radius: 50%;
+}
+.hs-name input {
+  width: 96px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f0e7d2;
+  font-size: 15px;
+  font-family: inherit;
+}
+.hs-name input::placeholder {
+  color: color-mix(in srgb, #f0e7d2 42%, transparent);
+  font-style: italic;
+}
+
+/* win at */
+.hs-winrow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.hs-win {
+  width: 96px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  text-shadow: 0 1px 22px var(--glow);
+  -moz-appearance: textfield;
+}
+.hs-win::-webkit-outer-spin-button,
+.hs-win::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.hs-win-sub {
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: var(--accent2);
+}
+.hs-slider {
+  flex: 1;
+  accent-color: var(--accent);
+  height: 6px;
+  cursor: pointer;
+}
+
+/* big start button: warm gradient with soft glow, fully rounded */
+.hs-start {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px;
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--ink);
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  border-radius: 16px;
+  background: linear-gradient(
+    100deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent2) 70%, var(--accent))
+  );
+  box-shadow:
+    0 0 30px -8px var(--glow),
+    0 1px 0 rgba(255, 255, 255, 0.18) inset,
+    0 14px 30px -16px rgba(0, 0, 0, 0.8);
+  transition:
+    filter 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+.hs-start:hover:not(:disabled) {
+  filter: brightness(1.08);
+  box-shadow:
+    0 0 44px -6px var(--glow),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 16px 34px -16px rgba(0, 0, 0, 0.85);
+}
+.hs-start:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.hs-start:disabled {
+  opacity: 0.42;
+  filter: saturate(0.6);
+  cursor: not-allowed;
+}
+.hs-k {
+  font-size: 15px;
+}
+
+@media (max-width: 760px) {
+  .hs-frame {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 92vh;
+  }
+  .hs-rail {
+    border-right: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-screen {
+    animation: none;
+  }
+  .hs-close:hover {
+    transform: none;
+  }
+}

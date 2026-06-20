@@ -1,0 +1,101 @@
+/* Covering "mosaic" page transition: a grid of tiles materializes in a diagonal
+   wave, the wordmark fades in, then the tiles dissolve outward to reveal the new
+   page. Reads the theme vars (var(--accent) etc.) so it recolours per game. */
+
+.xover {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* the tile grid */
+.xmosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+}
+.xtile {
+  background: linear-gradient(180deg, #1c1340, #0a0717);
+  box-shadow: inset 0 0 0 1px rgba(154, 107, 255, 0.1);
+  transform: scale(0);
+}
+/* History: warm museum tiles + a faint gold inset, instead of Hitster's purple */
+.skin-history .xtile {
+  background: linear-gradient(180deg, #1a1f16, #0d0f0a);
+  box-shadow: inset 0 0 0 1px rgba(205, 163, 73, 0.1);
+}
+.xover.in .xtile {
+  animation: xTileIn 0.28s ease-out forwards;
+  animation-delay: calc(var(--d) * 14ms);
+}
+.xover.hold .xtile {
+  transform: scale(1.05); /* slight overlap seals any sub-pixel gaps */
+}
+.xover.out .xtile {
+  animation: xTileOut 0.28s ease-in forwards;
+  animation-delay: calc(var(--dr) * 13ms);
+}
+@keyframes xTileIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+@keyframes xTileOut {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+/* wordmark, revealed once the screen is covered */
+.xlogo-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.xlogo {
+  position: relative;
+  opacity: 0;
+  font-family: var(--title-font, inherit);
+  font-size: clamp(44px, 9vw, 104px);
+  font-weight: 900;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--accent);
+  transform: skewX(-7deg);
+  text-shadow: 0 0 36px var(--glow);
+}
+/* History: upright serif wordmark — no skew, gentler tracking */
+.skin-history .xlogo {
+  transform: none;
+  letter-spacing: 2px;
+  text-transform: none;
+}
+.xover.hold .xlogo {
+  animation: xLogoIn 0.2s ease forwards;
+}
+.xover.out .xlogo {
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+@keyframes xLogoIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xover .xtile {
+    animation-duration: 0.01ms !important;
+  }
+}

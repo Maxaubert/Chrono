@@ -1,0 +1,632 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chrono — History deck (100 cards)</title>
+<style>
+ :root{color-scheme:dark}
+ body{margin:0;padding:26px 30px;background:#0d0f0a;color:#e8e2d0;font-family:Georgia,'Times New Roman',serif}
+ h1{color:#cda349;font-weight:700;margin:0 0 4px}
+ .sub{opacity:.7;margin:0 0 18px}
+ .bar{display:flex;gap:12px;align-items:center;margin-bottom:22px;flex-wrap:wrap}
+ .tg{background:#1a1f16;border:1px solid rgba(205,163,73,.5);color:#cda349;font:600 13px Georgia,serif;padding:9px 16px;border-radius:10px;cursor:pointer}
+ .tg:hover{background:rgba(205,163,73,.14)}
+ .count{opacity:.6;font-size:13px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:22px}
+ .hc{position:relative;margin:0;aspect-ratio:240/344;border-radius:14px;overflow:hidden;
+     border:1px solid rgba(205,163,73,.45);box-shadow:0 16px 36px -16px #000,0 0 0 6px rgba(205,163,73,.08) inset}
+ .hc img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.06) brightness(.94);transition:filter .25s}
+ .duo{position:absolute;inset:0;mix-blend-mode:color;opacity:.5;background:linear-gradient(180deg,#e6c069,#7a5a23 55%,#2a1e0c);transition:opacity .25s}
+ .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,4,.3),transparent 28%,transparent 55%,rgba(10,8,4,.9) 92%)}
+ .yr{position:absolute;top:9px;right:12px;color:#f0e2b3;font:700 19px Georgia,serif;text-shadow:0 2px 10px #000,0 0 18px rgba(0,0,0,.6)}
+ .ti{position:absolute;left:14px;right:14px;bottom:14px;color:#f0e2b3;font:700 17px Georgia,serif;text-shadow:0 2px 12px #000,0 0 18px rgba(0,0,0,.6);line-height:1.08}
+ .grid.raw .hc img{filter:none}
+ .grid.raw .duo{opacity:0}
+</style></head><body>
+<h1>Chrono — History deck</h1>
+<p class="sub">All 100 cards, oil paintings via Klein 9B + PiD, in the History card treatment (year + title).</p>
+<div class="bar">
+  <button class="tg" onclick="g.classList.toggle('raw')">Raw art / deck toning</button>
+  <span class="count">100 cards</span>
+</div>
+<div class="grid" id="g">
+  <figure class="hc" title="Unification of Egypt">
+    <img src="egypt-unification.jpg" loading="lazy" alt="Unification of Egypt"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">3100 BC</span>
+    <span class="ti">Unification of Egypt</span>
+  </figure>
+  <figure class="hc" title="Great Pyramid">
+    <img src="great-pyramid.jpg" loading="lazy" alt="Great Pyramid"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">2560 BC</span>
+    <span class="ti">Great Pyramid</span>
+  </figure>
+  <figure class="hc" title="Code of Hammurabi">
+    <img src="hammurabi-code.jpg" loading="lazy" alt="Code of Hammurabi"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1754 BC</span>
+    <span class="ti">Code of Hammurabi</span>
+  </figure>
+  <figure class="hc" title="Battle of Kadesh">
+    <img src="kadesh.jpg" loading="lazy" alt="Battle of Kadesh"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1274 BC</span>
+    <span class="ti">Battle of Kadesh</span>
+  </figure>
+  <figure class="hc" title="First Olympic Games">
+    <img src="first-olympics.jpg" loading="lazy" alt="First Olympic Games"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">776 BC</span>
+    <span class="ti">First Olympic Games</span>
+  </figure>
+  <figure class="hc" title="Founding of Rome">
+    <img src="founding-of-rome.jpg" loading="lazy" alt="Founding of Rome"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">753 BC</span>
+    <span class="ti">Founding of Rome</span>
+  </figure>
+  <figure class="hc" title="Birth of the Buddha">
+    <img src="buddha.jpg" loading="lazy" alt="Birth of the Buddha"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">563 BC</span>
+    <span class="ti">Birth of the Buddha</span>
+  </figure>
+  <figure class="hc" title="Birth of Confucius">
+    <img src="confucius.jpg" loading="lazy" alt="Birth of Confucius"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">551 BC</span>
+    <span class="ti">Birth of Confucius</span>
+  </figure>
+  <figure class="hc" title="Roman Republic">
+    <img src="roman-republic.jpg" loading="lazy" alt="Roman Republic"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">509 BC</span>
+    <span class="ti">Roman Republic</span>
+  </figure>
+  <figure class="hc" title="Battle of Marathon">
+    <img src="marathon.jpg" loading="lazy" alt="Battle of Marathon"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">490 BC</span>
+    <span class="ti">Battle of Marathon</span>
+  </figure>
+  <figure class="hc" title="Thermopylae">
+    <img src="thermopylae.jpg" loading="lazy" alt="Thermopylae"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">480 BC</span>
+    <span class="ti">Thermopylae</span>
+  </figure>
+  <figure class="hc" title="The Parthenon">
+    <img src="parthenon.jpg" loading="lazy" alt="The Parthenon"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">447 BC</span>
+    <span class="ti">The Parthenon</span>
+  </figure>
+  <figure class="hc" title="Death of Socrates">
+    <img src="socrates.jpg" loading="lazy" alt="Death of Socrates"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">399 BC</span>
+    <span class="ti">Death of Socrates</span>
+  </figure>
+  <figure class="hc" title="Alexander the Great">
+    <img src="alexander.jpg" loading="lazy" alt="Alexander the Great"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">336 BC</span>
+    <span class="ti">Alexander the Great</span>
+  </figure>
+  <figure class="hc" title="Qin Unifies China">
+    <img src="qin-unifies-china.jpg" loading="lazy" alt="Qin Unifies China"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">221 BC</span>
+    <span class="ti">Qin Unifies China</span>
+  </figure>
+  <figure class="hc" title="Hannibal Crosses the Alps">
+    <img src="hannibal-alps.jpg" loading="lazy" alt="Hannibal Crosses the Alps"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">218 BC</span>
+    <span class="ti">Hannibal Crosses the Alps</span>
+  </figure>
+  <figure class="hc" title="Death of Caesar">
+    <img src="caesar.jpg" loading="lazy" alt="Death of Caesar"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">44 BC</span>
+    <span class="ti">Death of Caesar</span>
+  </figure>
+  <figure class="hc" title="Birth of Jesus">
+    <img src="birth-of-jesus.jpg" loading="lazy" alt="Birth of Jesus"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">4 BC</span>
+    <span class="ti">Birth of Jesus</span>
+  </figure>
+  <figure class="hc" title="The Crucifixion">
+    <img src="crucifixion.jpg" loading="lazy" alt="The Crucifixion"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">30</span>
+    <span class="ti">The Crucifixion</span>
+  </figure>
+  <figure class="hc" title="Vesuvius">
+    <img src="vesuvius.jpg" loading="lazy" alt="Vesuvius"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">79</span>
+    <span class="ti">Vesuvius</span>
+  </figure>
+  <figure class="hc" title="Hadrian's Wall">
+    <img src="hadrians-wall.jpg" loading="lazy" alt="Hadrian's Wall"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">122</span>
+    <span class="ti">Hadrian's Wall</span>
+  </figure>
+  <figure class="hc" title="Constantine's Vision">
+    <img src="milvian-bridge.jpg" loading="lazy" alt="Constantine's Vision"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">312</span>
+    <span class="ti">Constantine's Vision</span>
+  </figure>
+  <figure class="hc" title="Visigoths Sack Rome">
+    <img src="sack-of-rome.jpg" loading="lazy" alt="Visigoths Sack Rome"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">410</span>
+    <span class="ti">Visigoths Sack Rome</span>
+  </figure>
+  <figure class="hc" title="Fall of Rome">
+    <img src="fall-of-rome.jpg" loading="lazy" alt="Fall of Rome"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">476</span>
+    <span class="ti">Fall of Rome</span>
+  </figure>
+  <figure class="hc" title="The Hijra">
+    <img src="the-hijra.jpg" loading="lazy" alt="The Hijra"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">622</span>
+    <span class="ti">The Hijra</span>
+  </figure>
+  <figure class="hc" title="Charlemagne Crowned">
+    <img src="charlemagne.jpg" loading="lazy" alt="Charlemagne Crowned"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">800</span>
+    <span class="ti">Charlemagne Crowned</span>
+  </figure>
+  <figure class="hc" title="The Tale of Genji">
+    <img src="tale-of-genji.jpg" loading="lazy" alt="The Tale of Genji"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1010</span>
+    <span class="ti">The Tale of Genji</span>
+  </figure>
+  <figure class="hc" title="Hastings">
+    <img src="hastings.jpg" loading="lazy" alt="Hastings"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1066</span>
+    <span class="ti">Hastings</span>
+  </figure>
+  <figure class="hc" title="First Crusade">
+    <img src="first-crusade.jpg" loading="lazy" alt="First Crusade"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1095</span>
+    <span class="ti">First Crusade</span>
+  </figure>
+  <figure class="hc" title="Genghis Khan">
+    <img src="genghis-khan.jpg" loading="lazy" alt="Genghis Khan"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1206</span>
+    <span class="ti">Genghis Khan</span>
+  </figure>
+  <figure class="hc" title="Magna Carta">
+    <img src="magna-carta.jpg" loading="lazy" alt="Magna Carta"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1215</span>
+    <span class="ti">Magna Carta</span>
+  </figure>
+  <figure class="hc" title="Marco Polo">
+    <img src="marco-polo.jpg" loading="lazy" alt="Marco Polo"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1271</span>
+    <span class="ti">Marco Polo</span>
+  </figure>
+  <figure class="hc" title="Founding of Tenochtitlan">
+    <img src="tenochtitlan.jpg" loading="lazy" alt="Founding of Tenochtitlan"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1325</span>
+    <span class="ti">Founding of Tenochtitlan</span>
+  </figure>
+  <figure class="hc" title="The Black Death">
+    <img src="black-death.jpg" loading="lazy" alt="The Black Death"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1347</span>
+    <span class="ti">The Black Death</span>
+  </figure>
+  <figure class="hc" title="Ming Dynasty">
+    <img src="ming-dynasty.jpg" loading="lazy" alt="Ming Dynasty"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1368</span>
+    <span class="ti">Ming Dynasty</span>
+  </figure>
+  <figure class="hc" title="Joan of Arc">
+    <img src="joan-of-arc.jpg" loading="lazy" alt="Joan of Arc"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1431</span>
+    <span class="ti">Joan of Arc</span>
+  </figure>
+  <figure class="hc" title="Fall of Constantinople">
+    <img src="fall-of-constantinople.jpg" loading="lazy" alt="Fall of Constantinople"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1453</span>
+    <span class="ti">Fall of Constantinople</span>
+  </figure>
+  <figure class="hc" title="Gutenberg Bible">
+    <img src="gutenberg.jpg" loading="lazy" alt="Gutenberg Bible"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1455</span>
+    <span class="ti">Gutenberg Bible</span>
+  </figure>
+  <figure class="hc" title="Columbus">
+    <img src="columbus.jpg" loading="lazy" alt="Columbus"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1492</span>
+    <span class="ti">Columbus</span>
+  </figure>
+  <figure class="hc" title="Da Gama Reaches India">
+    <img src="da-gama.jpg" loading="lazy" alt="Da Gama Reaches India"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1498</span>
+    <span class="ti">Da Gama Reaches India</span>
+  </figure>
+  <figure class="hc" title="The Mona Lisa">
+    <img src="mona-lisa.jpg" loading="lazy" alt="The Mona Lisa"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1503</span>
+    <span class="ti">The Mona Lisa</span>
+  </figure>
+  <figure class="hc" title="Luther's 95 Theses">
+    <img src="luther.jpg" loading="lazy" alt="Luther's 95 Theses"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1517</span>
+    <span class="ti">Luther's 95 Theses</span>
+  </figure>
+  <figure class="hc" title="Fall of the Aztecs">
+    <img src="cortes-aztecs.jpg" loading="lazy" alt="Fall of the Aztecs"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1521</span>
+    <span class="ti">Fall of the Aztecs</span>
+  </figure>
+  <figure class="hc" title="Mughal Empire">
+    <img src="mughal-empire.jpg" loading="lazy" alt="Mughal Empire"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1526</span>
+    <span class="ti">Mughal Empire</span>
+  </figure>
+  <figure class="hc" title="Copernicus">
+    <img src="copernicus.jpg" loading="lazy" alt="Copernicus"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1543</span>
+    <span class="ti">Copernicus</span>
+  </figure>
+  <figure class="hc" title="Birth of Shakespeare">
+    <img src="shakespeare.jpg" loading="lazy" alt="Birth of Shakespeare"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1564</span>
+    <span class="ti">Birth of Shakespeare</span>
+  </figure>
+  <figure class="hc" title="Spanish Armada">
+    <img src="spanish-armada.jpg" loading="lazy" alt="Spanish Armada"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1588</span>
+    <span class="ti">Spanish Armada</span>
+  </figure>
+  <figure class="hc" title="Jamestown">
+    <img src="jamestown.jpg" loading="lazy" alt="Jamestown"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1607</span>
+    <span class="ti">Jamestown</span>
+  </figure>
+  <figure class="hc" title="Galileo's Telescope">
+    <img src="galileo.jpg" loading="lazy" alt="Galileo's Telescope"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1610</span>
+    <span class="ti">Galileo's Telescope</span>
+  </figure>
+  <figure class="hc" title="The Mayflower">
+    <img src="mayflower.jpg" loading="lazy" alt="The Mayflower"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1620</span>
+    <span class="ti">The Mayflower</span>
+  </figure>
+  <figure class="hc" title="Taj Mahal">
+    <img src="taj-mahal.jpg" loading="lazy" alt="Taj Mahal"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1632</span>
+    <span class="ti">Taj Mahal</span>
+  </figure>
+  <figure class="hc" title="Qing Dynasty">
+    <img src="qing-dynasty.jpg" loading="lazy" alt="Qing Dynasty"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1644</span>
+    <span class="ti">Qing Dynasty</span>
+  </figure>
+  <figure class="hc" title="Peace of Westphalia">
+    <img src="westphalia.jpg" loading="lazy" alt="Peace of Westphalia"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1648</span>
+    <span class="ti">Peace of Westphalia</span>
+  </figure>
+  <figure class="hc" title="Newton's Principia">
+    <img src="newton-principia.jpg" loading="lazy" alt="Newton's Principia"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1687</span>
+    <span class="ti">Newton's Principia</span>
+  </figure>
+  <figure class="hc" title="Lisbon Earthquake">
+    <img src="lisbon-earthquake.jpg" loading="lazy" alt="Lisbon Earthquake"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1755</span>
+    <span class="ti">Lisbon Earthquake</span>
+  </figure>
+  <figure class="hc" title="Declaration of Independence">
+    <img src="declaration-independence.jpg" loading="lazy" alt="Declaration of Independence"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1776</span>
+    <span class="ti">Declaration of Independence</span>
+  </figure>
+  <figure class="hc" title="Bastille">
+    <img src="bastille.jpg" loading="lazy" alt="Bastille"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1789</span>
+    <span class="ti">Bastille</span>
+  </figure>
+  <figure class="hc" title="Haitian Revolution">
+    <img src="haitian-revolution.jpg" loading="lazy" alt="Haitian Revolution"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1791</span>
+    <span class="ti">Haitian Revolution</span>
+  </figure>
+  <figure class="hc" title="Napoleon Emperor">
+    <img src="napoleon-emperor.jpg" loading="lazy" alt="Napoleon Emperor"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1804</span>
+    <span class="ti">Napoleon Emperor</span>
+  </figure>
+  <figure class="hc" title="Waterloo">
+    <img src="waterloo.jpg" loading="lazy" alt="Waterloo"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1815</span>
+    <span class="ti">Waterloo</span>
+  </figure>
+  <figure class="hc" title="First Steam Railway">
+    <img src="steam-railway.jpg" loading="lazy" alt="First Steam Railway"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1825</span>
+    <span class="ti">First Steam Railway</span>
+  </figure>
+  <figure class="hc" title="Queen Victoria">
+    <img src="queen-victoria.jpg" loading="lazy" alt="Queen Victoria"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1837</span>
+    <span class="ti">Queen Victoria</span>
+  </figure>
+  <figure class="hc" title="Communist Manifesto">
+    <img src="communist-manifesto.jpg" loading="lazy" alt="Communist Manifesto"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1848</span>
+    <span class="ti">Communist Manifesto</span>
+  </figure>
+  <figure class="hc" title="Origin of Species">
+    <img src="darwin-origin.jpg" loading="lazy" alt="Origin of Species"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1859</span>
+    <span class="ti">Origin of Species</span>
+  </figure>
+  <figure class="hc" title="American Civil War">
+    <img src="civil-war.jpg" loading="lazy" alt="American Civil War"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1861</span>
+    <span class="ti">American Civil War</span>
+  </figure>
+  <figure class="hc" title="Lincoln Assassinated">
+    <img src="lincoln-assassination.jpg" loading="lazy" alt="Lincoln Assassinated"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1865</span>
+    <span class="ti">Lincoln Assassinated</span>
+  </figure>
+  <figure class="hc" title="Suez Canal">
+    <img src="suez-canal.jpg" loading="lazy" alt="Suez Canal"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1869</span>
+    <span class="ti">Suez Canal</span>
+  </figure>
+  <figure class="hc" title="The Telephone">
+    <img src="telephone.jpg" loading="lazy" alt="The Telephone"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1876</span>
+    <span class="ti">The Telephone</span>
+  </figure>
+  <figure class="hc" title="The Light Bulb">
+    <img src="light-bulb.jpg" loading="lazy" alt="The Light Bulb"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1879</span>
+    <span class="ti">The Light Bulb</span>
+  </figure>
+  <figure class="hc" title="First Automobile">
+    <img src="automobile.jpg" loading="lazy" alt="First Automobile"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1885</span>
+    <span class="ti">First Automobile</span>
+  </figure>
+  <figure class="hc" title="Eiffel Tower">
+    <img src="eiffel-tower.jpg" loading="lazy" alt="Eiffel Tower"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1889</span>
+    <span class="ti">Eiffel Tower</span>
+  </figure>
+  <figure class="hc" title="First Film Screening">
+    <img src="first-film.jpg" loading="lazy" alt="First Film Screening"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1895</span>
+    <span class="ti">First Film Screening</span>
+  </figure>
+  <figure class="hc" title="Transatlantic Radio">
+    <img src="transatlantic-radio.jpg" loading="lazy" alt="Transatlantic Radio"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1901</span>
+    <span class="ti">Transatlantic Radio</span>
+  </figure>
+  <figure class="hc" title="First Flight">
+    <img src="first-flight.jpg" loading="lazy" alt="First Flight"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1903</span>
+    <span class="ti">First Flight</span>
+  </figure>
+  <figure class="hc" title="Special Relativity">
+    <img src="relativity.jpg" loading="lazy" alt="Special Relativity"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1905</span>
+    <span class="ti">Special Relativity</span>
+  </figure>
+  <figure class="hc" title="Titanic">
+    <img src="titanic.jpg" loading="lazy" alt="Titanic"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1912</span>
+    <span class="ti">Titanic</span>
+  </figure>
+  <figure class="hc" title="World War I">
+    <img src="wwi.jpg" loading="lazy" alt="World War I"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1914</span>
+    <span class="ti">World War I</span>
+  </figure>
+  <figure class="hc" title="Russian Revolution">
+    <img src="russian-revolution.jpg" loading="lazy" alt="Russian Revolution"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1917</span>
+    <span class="ti">Russian Revolution</span>
+  </figure>
+  <figure class="hc" title="Tutankhamun's Tomb">
+    <img src="tut-tomb.jpg" loading="lazy" alt="Tutankhamun's Tomb"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1922</span>
+    <span class="ti">Tutankhamun's Tomb</span>
+  </figure>
+  <figure class="hc" title="Lindbergh's Flight">
+    <img src="lindbergh.jpg" loading="lazy" alt="Lindbergh's Flight"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1927</span>
+    <span class="ti">Lindbergh's Flight</span>
+  </figure>
+  <figure class="hc" title="Penicillin">
+    <img src="penicillin.jpg" loading="lazy" alt="Penicillin"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1928</span>
+    <span class="ti">Penicillin</span>
+  </figure>
+  <figure class="hc" title="Wall Street Crash">
+    <img src="wall-street-crash.jpg" loading="lazy" alt="Wall Street Crash"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1929</span>
+    <span class="ti">Wall Street Crash</span>
+  </figure>
+  <figure class="hc" title="Hitler Becomes Chancellor">
+    <img src="hitler-chancellor.jpg" loading="lazy" alt="Hitler Becomes Chancellor"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1933</span>
+    <span class="ti">Hitler Becomes Chancellor</span>
+  </figure>
+  <figure class="hc" title="World War II">
+    <img src="wwii.jpg" loading="lazy" alt="World War II"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1939</span>
+    <span class="ti">World War II</span>
+  </figure>
+  <figure class="hc" title="End of WWII">
+    <img src="wwii-end.jpg" loading="lazy" alt="End of WWII"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1945</span>
+    <span class="ti">End of WWII</span>
+  </figure>
+  <figure class="hc" title="Indian Independence">
+    <img src="indian-independence.jpg" loading="lazy" alt="Indian Independence"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1947</span>
+    <span class="ti">Indian Independence</span>
+  </figure>
+  <figure class="hc" title="People's Republic of China">
+    <img src="prc-founded.jpg" loading="lazy" alt="People's Republic of China"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1949</span>
+    <span class="ti">People's Republic of China</span>
+  </figure>
+  <figure class="hc" title="Structure of DNA">
+    <img src="dna-structure.jpg" loading="lazy" alt="Structure of DNA"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1953</span>
+    <span class="ti">Structure of DNA</span>
+  </figure>
+  <figure class="hc" title="Sputnik">
+    <img src="sputnik.jpg" loading="lazy" alt="Sputnik"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1957</span>
+    <span class="ti">Sputnik</span>
+  </figure>
+  <figure class="hc" title="First Human in Space">
+    <img src="gagarin.jpg" loading="lazy" alt="First Human in Space"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1961</span>
+    <span class="ti">First Human in Space</span>
+  </figure>
+  <figure class="hc" title="JFK Assassinated">
+    <img src="jfk-assassination.jpg" loading="lazy" alt="JFK Assassinated"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1963</span>
+    <span class="ti">JFK Assassinated</span>
+  </figure>
+  <figure class="hc" title="Moon Landing">
+    <img src="moon-landing.jpg" loading="lazy" alt="Moon Landing"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1969</span>
+    <span class="ti">Moon Landing</span>
+  </figure>
+  <figure class="hc" title="Apple Founded">
+    <img src="apple-founded.jpg" loading="lazy" alt="Apple Founded"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1976</span>
+    <span class="ti">Apple Founded</span>
+  </figure>
+  <figure class="hc" title="Chernobyl">
+    <img src="chernobyl.jpg" loading="lazy" alt="Chernobyl"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1986</span>
+    <span class="ti">Chernobyl</span>
+  </figure>
+  <figure class="hc" title="Berlin Wall Falls">
+    <img src="berlin-wall.jpg" loading="lazy" alt="Berlin Wall Falls"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1989</span>
+    <span class="ti">Berlin Wall Falls</span>
+  </figure>
+  <figure class="hc" title="World Wide Web">
+    <img src="world-wide-web.jpg" loading="lazy" alt="World Wide Web"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1990</span>
+    <span class="ti">World Wide Web</span>
+  </figure>
+  <figure class="hc" title="Soviet Union Dissolves">
+    <img src="soviet-collapse.jpg" loading="lazy" alt="Soviet Union Dissolves"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1991</span>
+    <span class="ti">Soviet Union Dissolves</span>
+  </figure>
+  <figure class="hc" title="Mandela Elected">
+    <img src="mandela-elected.jpg" loading="lazy" alt="Mandela Elected"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1994</span>
+    <span class="ti">Mandela Elected</span>
+  </figure>
+  <figure class="hc" title="Dolly the Sheep">
+    <img src="dolly-sheep.jpg" loading="lazy" alt="Dolly the Sheep"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">1996</span>
+    <span class="ti">Dolly the Sheep</span>
+  </figure>
+  <figure class="hc" title="September 11">
+    <img src="sept-11.jpg" loading="lazy" alt="September 11"/>
+    <span class="duo"></span><span class="scrim"></span>
+    <span class="yr">2001</span>
+    <span class="ti">September 11</span>
+  </figure></div>
+<script>const g=document.getElementById('g')</script>
+</body></html>

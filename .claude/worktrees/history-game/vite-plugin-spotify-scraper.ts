@@ -1,0 +1,51 @@
+import type { Plugin } from 'vite'
+import {
+  isSpotifyId,
+  scrapeAllTracks,
+  getTrackYear,
+} from './server/spotifyScraper'
+import { apiRateLimit, clientIp } from './server/rateLimit'
+
+/**
+ * Dev-server adapter over server/spotifyScraper.ts: serves /api/playlist-tracks
+ * and /api/track-year so the browser can read a public playlist (and a track's
+ * year) without CORS or the dev-mode 403. The same core powers the Vercel
+ * serverless functions in api/, so dev and prod behave identically.
+ */
+export function spotifyScraperPlugin(): Plugin {
+  return {
+    name: 'spotify-scraper',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const url = req.url ?? ''
+        const isTracks = url.startsWith('/api/playlist-tracks')
+        const isYear = url.startsWith('/api/track-year')
+        if (!isTracks && !isYear) return next()
+        res.setHeader('content-type', 'application/json')
+        const ip = clientIp(req.headers, req.socket?.remoteAddress)
+        const rl = apiRateLimit(ip)
+        if (!rl.ok) {
+          res.statusCode = 429
+          res.setHeader('Retry-After', Math.ceil(rl.retryAfterMs / 1000))
+          res.end(JSON.stringify({ error: 'rate limited' }))
+          return
+        }
+        const id = new URL(url, 'http://localhost').searchParams.get('id')
+        if (!isSpotifyId(id)) {
+          res.statusCode = 400
+          res.end(JSON.stringify({ error: 'bad id' }))
+          return
+        }
+        try {
+          const payload = isYear
+            ? { year: await getTrackYear(id) }
+            : await scrapeAllTracks(id)
+          res.end(JSON.stringify(payload))
+        } catch (e) {
+          res.statusCode = 502
+          res.end(JSON.stringify({ error: String(e) }))
+        }
+      })
+    },
+  }
+}

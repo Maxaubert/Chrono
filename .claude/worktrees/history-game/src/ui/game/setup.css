@@ -1,0 +1,690 @@
+/* Setup screen: cyberpunk HUD (layout D). Scoped under .setup-screen; reads the
+   theme vars (var(--accent) etc.) for the accent so it matches the active game.
+   Step 1 = login + players + win (NEXT). Step 2 = playlist (temporary). */
+
+.setup-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  padding: 24px;
+  /* popup over the menu: dim + blur the page behind */
+  background: rgba(4, 3, 10, 0.72);
+  backdrop-filter: blur(6px);
+  color: #e8e2ff;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  animation: suFade 0.18s ease-out;
+}
+.setup-screen * {
+  box-sizing: border-box;
+}
+@keyframes suFade {
+  from {
+    opacity: 0;
+  }
+}
+.setup-screen .su-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(15, 8, 32, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  cursor: pointer;
+  clip-path: polygon(
+    6px 0,
+    100% 0,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    0 100%,
+    0 6px
+  );
+}
+.setup-screen .su-close:hover {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.setup-screen .su-frame {
+  position: relative;
+  width: min(1080px, 94vw);
+  height: min(680px, 92vh);
+  display: grid;
+  grid-template-columns: 38% 62%;
+  background: var(--panel, #0e0a1a);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  box-shadow:
+    0 40px 120px -20px var(--glow),
+    inset 0 0 80px rgba(107, 63, 214, 0.06);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 26px) 0,
+    100% 26px,
+    100% 100%,
+    26px 100%,
+    0 calc(100% - 26px)
+  );
+}
+
+/* ---------- left rail ---------- */
+.setup-screen .su-rail {
+  position: relative;
+  overflow: hidden;
+  padding: 46px 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background:
+    radial-gradient(
+      120% 90% at 0% 0%,
+      rgba(154, 107, 255, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      110% 80% at 0% 100%,
+      rgba(107, 63, 214, 0.2),
+      transparent 62%
+    ),
+    linear-gradient(160deg, #160c2e 0%, #0d0820 70%, #0b0719 100%);
+  border-right: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.setup-screen .su-slash {
+  position: absolute;
+  width: 54px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.7;
+  box-shadow: 0 0 10px var(--accent);
+}
+.setup-screen .su-slash-tl {
+  top: 30px;
+  left: -12px;
+  transform: rotate(45deg);
+}
+.setup-screen .su-slash-br {
+  bottom: 30px;
+  right: -12px;
+  transform: rotate(45deg);
+}
+.setup-screen .su-kicker {
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  color: var(--accent);
+  opacity: 0.85;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.setup-screen .su-wordmark {
+  position: relative;
+  font-family: var(--title-font, inherit);
+  font-weight: 900;
+  font-size: clamp(40px, 5.5vw, 68px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: #f3eeff;
+  text-shadow: 0 0 26px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.setup-screen .su-blurb {
+  margin-top: 18px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: #a99ccf;
+  max-width: 240px;
+  line-height: 1.5;
+}
+.setup-screen .su-fan {
+  position: relative;
+  height: 170px;
+  margin: 10px 0;
+}
+.setup-screen .su-card {
+  position: absolute;
+  left: 40px;
+  bottom: 10px;
+  width: 96px;
+  height: 134px;
+  border-radius: 8px;
+  background: linear-gradient(155deg, var(--accent2), #2a1456);
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 14px 34px -10px rgba(107, 63, 214, 0.7);
+}
+.setup-screen .su-card-1 {
+  transform: rotate(-18deg) translateX(-26px);
+  background: linear-gradient(155deg, #3a1f6e, #1a0d38);
+}
+.setup-screen .su-card-2 {
+  transform: rotate(-2deg);
+}
+.setup-screen .su-card-3 {
+  transform: rotate(15deg) translateX(28px);
+  background: linear-gradient(155deg, #8a5bff, #3a1f7a);
+}
+.setup-screen .su-foot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: #8a7caf;
+  text-transform: uppercase;
+}
+.setup-screen .su-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* ---------- right form ---------- */
+.setup-screen .su-form {
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: auto;
+}
+.setup-screen .su-section {
+  position: relative;
+  padding: 16px 18px;
+  background: rgba(15, 8, 32, 0.6);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+.setup-screen .su-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.setup-screen .su-label {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #9a8cc4;
+  margin-bottom: 12px;
+}
+.setup-screen .su-row .su-label {
+  margin-bottom: 0;
+}
+
+/* spotify */
+.setup-screen .su-login {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+}
+.setup-screen .su-login:hover {
+  filter: brightness(1.12);
+}
+.setup-screen .su-linked {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8aa0c4;
+}
+.setup-screen .su-logout {
+  background: none;
+  border: none;
+  color: #8a7caf;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 0 0 2px;
+}
+.setup-screen .su-logout:hover {
+  color: var(--accent);
+}
+
+/* players */
+.setup-screen .su-stepper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.setup-screen .su-step-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  color: #e8e2ff;
+  cursor: pointer;
+  background: rgba(107, 63, 214, 0.16);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  clip-path: polygon(
+    6px 0,
+    100% 0,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    0 100%,
+    0 6px
+  );
+}
+.setup-screen .su-step-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.setup-screen .su-step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.setup-screen .su-step-val {
+  font-size: 30px;
+  font-weight: 800;
+  min-width: 54px;
+  text-align: center;
+  color: #f3eeff;
+}
+.setup-screen .su-step-unit {
+  font-size: 14px;
+  color: #7d6fa6;
+  margin-left: 4px;
+  font-weight: 500;
+}
+.setup-screen .su-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+.setup-screen .su-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  background: rgba(154, 107, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+}
+.setup-screen .su-name-idx {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--accent);
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+.setup-screen .su-name input {
+  width: 88px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e8e2ff;
+  font-size: 14px;
+  font-family: inherit;
+}
+.setup-screen .su-name input::placeholder {
+  color: #6f6593;
+}
+
+/* review step: read-only player + win summaries */
+.setup-screen .su-rv-name span:last-child {
+  color: #e8e2ff;
+  font-size: 14px;
+}
+.setup-screen .su-rv-win {
+  font-size: 18px;
+  color: #cfc6ef;
+}
+.setup-screen .su-rv-win strong {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 60%, transparent);
+  margin: 0 4px;
+}
+
+/* win at */
+.setup-screen .su-winrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.setup-screen .su-win {
+  width: 86px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 46px;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 60%, transparent);
+  font-family: inherit;
+}
+.setup-screen .su-win-sub {
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #9a8cc4;
+}
+.setup-screen .su-slider {
+  flex: 1;
+  accent-color: var(--accent);
+  height: 6px;
+}
+
+/* big action buttons */
+.setup-screen .su-next,
+.setup-screen .su-start {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 17px;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.26em;
+  color: var(--ink);
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(100deg, var(--accent), var(--accent2));
+  box-shadow:
+    0 0 34px color-mix(in srgb, var(--accent) 50%, transparent),
+    inset 0 0 20px rgba(255, 255, 255, 0.12);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 16px) 0,
+    100% 16px,
+    100% 100%,
+    16px 100%,
+    0 calc(100% - 16px)
+  );
+}
+.setup-screen .su-next:hover:not(:disabled),
+.setup-screen .su-start:hover:not(:disabled) {
+  filter: brightness(1.12);
+  box-shadow: 0 0 48px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.setup-screen .su-next:disabled,
+.setup-screen .su-start:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.setup-screen .su-k {
+  font-size: 13px;
+}
+
+/* ---------- step 2 (playlist, temporary) ---------- */
+.setup-screen .su-inputrow {
+  display: flex;
+  gap: 10px;
+}
+.setup-screen .su-input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #d8d0ff;
+  background: rgba(8, 6, 15, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  outline: none;
+  font-family: inherit;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+.setup-screen .su-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.setup-screen .su-import,
+.setup-screen .su-use {
+  padding: 0 18px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--ink);
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+.setup-screen .su-import:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.setup-screen .su-pl-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.setup-screen .su-mine {
+  background: none;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--accent);
+  padding: 6px 14px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+}
+.setup-screen .su-count {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #8a7caf;
+}
+.setup-screen .su-count-num {
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 15px;
+}
+.setup-screen .su-pl-list {
+  margin-top: 12px;
+  max-height: 220px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.setup-screen .su-pl-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  background: rgba(154, 107, 255, 0.06);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.setup-screen .su-pl-cover {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(154, 107, 255, 0.12);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.setup-screen .su-pl-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.setup-screen .su-pl-noart {
+  color: var(--accent);
+  font-size: 18px;
+  opacity: 0.65;
+}
+.setup-screen .su-pl-name {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  color: #e2dafc;
+}
+.setup-screen .su-pl-by {
+  font-size: 11px;
+  color: #8a7caf;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.setup-screen .su-use {
+  padding: 6px 12px;
+  font-size: 10px;
+}
+
+.setup-screen .su-error {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #ffb4c0;
+  background: rgba(255, 77, 106, 0.12);
+  border: 1px solid rgba(255, 77, 106, 0.4);
+}
+.setup-screen .su-back {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #8a7caf;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0;
+}
+.setup-screen .su-back:hover {
+  color: var(--accent);
+}
+
+/* search field above the playlist list */
+.setup-screen .su-search {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #d8d0ff;
+  background: rgba(8, 6, 15, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  outline: none;
+  font-family: inherit;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+}
+.setup-screen .su-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.setup-screen .su-pl-empty {
+  padding: 14px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #7d6fa6;
+}
+/* import row sits under the playlist list */
+.setup-screen .su-inputrow {
+  margin-top: 12px;
+}
+
+/* added playlists (managed list) */
+.setup-screen .su-selected .su-pl-list {
+  max-height: 150px;
+  margin-top: 10px;
+}
+.setup-screen .su-remove {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--accent);
+  background: rgba(15, 8, 32, 0.7);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  cursor: pointer;
+  clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+}
+.setup-screen .su-remove:hover {
+  background: color-mix(in srgb, var(--no, #ff4d6a) 22%, transparent);
+  border-color: var(--no, #ff4d6a);
+  color: #ffd0d8;
+}
+
+/* ---------- login gate (first step when not connected) ---------- */
+.setup-screen .su-gate {
+  justify-content: center;
+}
+.setup-screen .su-gate-msg {
+  max-width: 400px;
+}
+.setup-screen .su-gate-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f3eeff;
+  margin: 8px 0 10px;
+  letter-spacing: 0.01em;
+}
+.setup-screen .su-gate-sub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #a99ccf;
+  margin-bottom: 26px;
+}
+.setup-screen .su-login-big {
+  padding: 16px 28px;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+}
+.setup-screen .su-guest-link {
+  display: block;
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: #9a8cc4;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.setup-screen .su-guest-link:hover {
+  color: #e8e2ff;
+}
+.setup-screen .su-foot-logout {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #8a7caf;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.setup-screen .su-foot-logout:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 760px) {
+  .setup-screen .su-frame {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 92vh;
+  }
+  .setup-screen .su-rail {
+    border-right: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}

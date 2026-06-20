@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Star Wars - corrected saber cards</title>
+    <link
+      href="https://fonts.cdnfonts.com/css/distant-galaxy"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --r: #ff3d3d;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #0a0a0f;
+        color: #fff;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        padding: 24px;
+      }
+      h1 {
+        font-size: 14px;
+        letter-spacing: 2px;
+        color: #9aa;
+        margin: 4px 0 6px;
+      }
+      h1 b {
+        color: var(--r);
+      }
+      .sub {
+        font-size: 12px;
+        color: #6f7682;
+        margin-bottom: 20px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 360px);
+        gap: 26px;
+        justify-content: center;
+      }
+      .card {
+        position: relative;
+        width: 360px;
+        height: 504px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #05060c;
+        border: 1px solid color-mix(in srgb, var(--r) 50%, transparent);
+        box-shadow: 0 0 30px -10px color-mix(in srgb, var(--r) 50%, transparent);
+      }
+      .photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .scrim {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.28) 0%,
+          transparent 24%,
+          transparent 50%,
+          rgba(3, 2, 4, 0.86) 84%
+        );
+      }
+      .year {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 3;
+        font-weight: 800;
+        font-size: 13px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid color-mix(in srgb, var(--r) 70%, transparent);
+        border-radius: 18px;
+        padding: 4px 11px;
+      }
+      .bottom {
+        position: absolute;
+        z-index: 3;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 17px;
+      }
+      .title {
+        font-family: 'Distant Galaxy', 'Arial Narrow', sans-serif;
+        font-size: 25px;
+        color: #fff;
+        text-shadow:
+          0 0 16px color-mix(in srgb, var(--r) 70%, transparent),
+          0 2px 6px #000;
+      }
+      .era {
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: color-mix(in srgb, var(--r) 55%, #fff);
+        margin-top: 6px;
+      }
+      .note {
+        font-size: 11px;
+        color: #6fe08a;
+        margin-top: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>STAR WARS - <b>CORRECTED SABER CARDS</b></h1>
+    <div class="sub">
+      The 4 re-rolled crowd scenes (live deck art). Sabers are now in Jedi hands
+      only.
+    </div>
+    <div class="grid" id="grid"></div>
+    <script>
+      const CARDS = [
+        [
+          'clone-wars-begin',
+          '22 BBY',
+          'The Clone Wars Begin',
+          'Clone Wars · Geonosis',
+          'clones now carry blasters; 2 Jedi blades',
+        ],
+        [
+          'the-gathering',
+          '21 BBY',
+          'The Gathering',
+          'Clone Wars · Ilum',
+          'unlit hilts + kyber crystals; no lit blades',
+        ],
+        [
+          'onderon-uprising',
+          '20 BBY',
+          'Onderon Uprising',
+          'Clone Wars · Onderon',
+          'one Jedi blade; rebels with blasters',
+        ],
+        [
+          'the-citadel',
+          '20 BBY',
+          'The Citadel',
+          'Clone Wars · Lola Sayu',
+          'two blue Jedi blades; clones with blasters',
+        ],
+        [
+          'battle-of-felucia',
+          '19 BBY',
+          'Battle of Felucia',
+          'Clone Wars · Felucia',
+          'one Jedi blade; clones with blasters',
+        ],
+        [
+          'malachor',
+          '3 BBY',
+          'Twilight of the Apprentice',
+          'Age of Rebellion · Malachor',
+          "Ahsoka's 2 white + Vader's red; clean 3",
+        ],
+        [
+          'grand-inquisitor',
+          '3 BBY',
+          'The Inquisitor',
+          'Age of Rebellion · Lothal',
+          'clean double-blade (2 red), no spray',
+        ],
+        [
+          'rescue-of-grogu',
+          '9 ABY',
+          'The Rescue of Grogu',
+          'The New Republic · Imperial cruiser',
+          'one green blade; accurate Grogu',
+        ],
+        [
+          'luke-and-grogu',
+          '9 ABY',
+          'Grogu Meets the Jedi',
+          'The New Republic · Ossus',
+          'accurate Grogu; no sabers',
+        ],
+        [
+          'throne-room-duel',
+          '34 ABY',
+          'The Praetorian Guard',
+          'Rise of the First Order · The Supremacy',
+          '2 upright blades; guards with pikes',
+        ],
+        [
+          'starkiller-duel',
+          '34 ABY',
+          'Duel in the Snow',
+          'Rise of the First Order · Ilum',
+          '2 upright blades, no crossed X',
+        ],
+      ]
+      document.getElementById('grid').innerHTML = CARDS.map(
+        ([slug, year, title, era, note]) => `<div class="card">
+          <img class="photo" src="/starwars/cards/${slug}.jpg" alt="" />
+          <div class="scrim"></div>
+          <div class="year">${year}</div>
+          <div class="bottom"><div class="title">${title}</div><div class="era">${era}</div><div class="note">${note}</div></div>
+        </div>`,
+      ).join('')
+    </script>
+  </body>
+</html>
