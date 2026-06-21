@@ -4,6 +4,21 @@ A web platform for **timeline-guessing card games**. Hear or read a card, place
 it on your timeline by year, and build the longest correct timeline. Hitster
 (music) and a History game are the first two games on a shared engine.
 
+## Screenshots
+
+<p align="center"><img src="screenshots/historyhome.png" alt="History game" width="100%"></p>
+<p align="center"><sub><b>History.</b> Pick a deck and start placing events on your timeline.</sub></p>
+
+<table>
+<tr>
+<td width="50%"><img src="screenshots/hitsterHome.png" alt="Hitster"><br><sub><b>Hitster.</b> Music timeline game powered by Spotify.</sub></td>
+<td width="50%"><img src="screenshots/starwarshome.png" alt="Star Wars"><br><sub><b>Star Wars.</b> A themed timeline deck on the same engine.</sub></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><img src="screenshots/ingamehistory.png" alt="In game" width="100%"><br><sub><b>In game.</b> Place each card on your timeline by year and build the longest correct run.</sub></td>
+</tr>
+</table>
+
 ## Quick start
 
 ```bash
