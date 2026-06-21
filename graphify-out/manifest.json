@@ -1,0 +1,817 @@
+{
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\.prettierrc.json": {
+    "mtime": 1780485878.213987,
+    "ast_hash": "404870b434b4a3e4a460b2130dfa5003",
+    "semantic_hash": "404870b434b4a3e4a460b2130dfa5003"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\api\\playlist-tracks.ts": {
+    "mtime": 1780680606.2160969,
+    "ast_hash": "8c9e57f28f8f2bcd8c9aab96ec61e621",
+    "semantic_hash": "8c9e57f28f8f2bcd8c9aab96ec61e621"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\api\\track-year.ts": {
+    "mtime": 1780680595.037804,
+    "ast_hash": "2910fe97ab498640e8753c7201548f7d",
+    "semantic_hash": "2910fe97ab498640e8753c7201548f7d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\game.spec.ts": {
+    "mtime": 1780649050.2817862,
+    "ast_hash": "008ea3f96690a91796ebc629b186a130",
+    "semantic_hash": "008ea3f96690a91796ebc629b186a130"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\guest.spec.ts": {
+    "mtime": 1780676643.103223,
+    "ast_hash": "1c159a9abb7e4262cd9b3d4e4632b45a",
+    "semantic_hash": "1c159a9abb7e4262cd9b3d4e4632b45a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\history.spec.ts": {
+    "mtime": 1780681177.0624185,
+    "ast_hash": "9f0d730bba67c3c45d078c9b18fd0dfd",
+    "semantic_hash": "9f0d730bba67c3c45d078c9b18fd0dfd"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\menu.spec.ts": {
+    "mtime": 1780681177.0629287,
+    "ast_hash": "691de9d4c01c93ab1cf42c4fdc55eb5b",
+    "semantic_hash": "691de9d4c01c93ab1cf42c4fdc55eb5b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\smoke.spec.ts": {
+    "mtime": 1780649050.2823057,
+    "ast_hash": "312bd1f4d853bec7bac6ab64e9d646e4",
+    "semantic_hash": "312bd1f4d853bec7bac6ab64e9d646e4"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\spike.spec.ts": {
+    "mtime": 1780649050.2828147,
+    "ast_hash": "0c9425ee2913ac8fda5e45a1016f3bb6",
+    "semantic_hash": "0c9425ee2913ac8fda5e45a1016f3bb6"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\e2e\\starwars.spec.ts": {
+    "mtime": 1780917776.1979795,
+    "ast_hash": "bb2bb7b6b0c34b3dd993fc7c9cf5dc81",
+    "semantic_hash": "bb2bb7b6b0c34b3dd993fc7c9cf5dc81"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\eslint.config.js": {
+    "mtime": 1780485912.0337448,
+    "ast_hash": "3a408bcf28b20ee70f0413c636549497",
+    "semantic_hash": "3a408bcf28b20ee70f0413c636549497"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\package.json": {
+    "mtime": 1780675526.639833,
+    "ast_hash": "7bf4407c46a1cd4a0c8add7a22dee1fa",
+    "semantic_hash": "7bf4407c46a1cd4a0c8add7a22dee1fa"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\playwright.config.ts": {
+    "mtime": 1780512996.2223716,
+    "ast_hash": "f62a3fe3cd263c7e6bac7fe816f16f26",
+    "semantic_hash": "f62a3fe3cd263c7e6bac7fe816f16f26"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\server\\rateLimit.test.ts": {
+    "mtime": 1780678345.1110241,
+    "ast_hash": "b811f18114d10f0561d02ecf71837452",
+    "semantic_hash": "b811f18114d10f0561d02ecf71837452"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\server\\rateLimit.ts": {
+    "mtime": 1780678345.1115336,
+    "ast_hash": "125b7eade93d6c204ad22a368a13bac0",
+    "semantic_hash": "125b7eade93d6c204ad22a368a13bac0"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\server\\spotifyScraper.test.ts": {
+    "mtime": 1780675674.1446803,
+    "ast_hash": "6ceaafea62d7f653dbc6a1b567337946",
+    "semantic_hash": "6ceaafea62d7f653dbc6a1b567337946"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\server\\spotifyScraper.ts": {
+    "mtime": 1780680620.3154619,
+    "ast_hash": "c5a71bc0e2c59134e7b3d8d10f9859cd",
+    "semantic_hash": "c5a71bc0e2c59134e7b3d8d10f9859cd"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\audio\\index.ts": {
+    "mtime": 1780676643.1037285,
+    "ast_hash": "213a8094d3c436332956a38fc31d99b4",
+    "semantic_hash": "213a8094d3c436332956a38fc31d99b4"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\audio\\itunes.test.ts": {
+    "mtime": 1780676643.1037285,
+    "ast_hash": "ee30d55f04422c402c9d9a54647e3242",
+    "semantic_hash": "ee30d55f04422c402c9d9a54647e3242"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\audio\\itunes.ts": {
+    "mtime": 1780676643.104233,
+    "ast_hash": "98ea93a476760255bffe8698dcfce9a7",
+    "semantic_hash": "98ea93a476760255bffe8698dcfce9a7"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\audio\\mock.ts": {
+    "mtime": 1780661335.6149626,
+    "ast_hash": "a1569a69b382b42e8761ae2482870305",
+    "semantic_hash": "a1569a69b382b42e8761ae2482870305"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\audio\\types.ts": {
+    "mtime": 1780676643.104738,
+    "ast_hash": "807ef87a7f32aa433185d9c8a918eec7",
+    "semantic_hash": "807ef87a7f32aa433185d9c8a918eec7"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\game.test.ts": {
+    "mtime": 1780649050.2828147,
+    "ast_hash": "5a8e784e3ee9e143cafc6686ce1023bb",
+    "semantic_hash": "5a8e784e3ee9e143cafc6686ce1023bb"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\game.ts": {
+    "mtime": 1780649050.28332,
+    "ast_hash": "26823bd7f0bce2b54ec8feb35df81ead",
+    "semantic_hash": "26823bd7f0bce2b54ec8feb35df81ead"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\index.ts": {
+    "mtime": 1780649050.283828,
+    "ast_hash": "c93a42d1743eaf68e016c881c4a2047f",
+    "semantic_hash": "c93a42d1743eaf68e016c881c4a2047f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\timeline.test.ts": {
+    "mtime": 1780485964.6224196,
+    "ast_hash": "e69121463717d434575cbafbdc4768d1",
+    "semantic_hash": "e69121463717d434575cbafbdc4768d1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\timeline.ts": {
+    "mtime": 1780485954.7272747,
+    "ast_hash": "6cc7f7361ae14fda0f2b3999eaa84c83",
+    "semantic_hash": "6cc7f7361ae14fda0f2b3999eaa84c83"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\core\\types.ts": {
+    "mtime": 1780917776.3864763,
+    "ast_hash": "39532bdc3fe0e46ab6dd4e065143dbbb",
+    "semantic_hash": "39532bdc3fe0e46ab6dd4e065143dbbb"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\HistoryCard.test.tsx": {
+    "mtime": 1780681177.1595087,
+    "ast_hash": "3a670e0edeba75d31d65aa3fd73ce2ef",
+    "semantic_hash": "3a670e0edeba75d31d65aa3fd73ce2ef"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\HistoryCard.tsx": {
+    "mtime": 1780663886.3075752,
+    "ast_hash": "80920bdb60a14a4f11c201b525277d3d",
+    "semantic_hash": "80920bdb60a14a4f11c201b525277d3d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\deck.data.test.ts": {
+    "mtime": 1780719269.4330435,
+    "ast_hash": "fdda20b930a2e3c65cd43174d6d72d8c",
+    "semantic_hash": "fdda20b930a2e3c65cd43174d6d72d8c"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\deck.json": {
+    "mtime": 1780843535.426844,
+    "ast_hash": "204ab7c8fc2080cd8b7002c12950b7d5",
+    "semantic_hash": "204ab7c8fc2080cd8b7002c12950b7d5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\events.ts": {
+    "mtime": 1780649050.2848377,
+    "ast_hash": "2fab5158e9e3f5f45d682c785b6cd1be",
+    "semantic_hash": "2fab5158e9e3f5f45d682c785b6cd1be"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\history\\index.ts": {
+    "mtime": 1780681177.160527,
+    "ast_hash": "83c3f3b6c092810738b0c462c8cfd0c9",
+    "semantic_hash": "83c3f3b6c092810738b0c462c8cfd0c9"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\hitster\\HitsterCard.test.tsx": {
+    "mtime": 1780649050.2858467,
+    "ast_hash": "f912da3c14c444543e6aae9f684804ce",
+    "semantic_hash": "f912da3c14c444543e6aae9f684804ce"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\hitster\\HitsterCard.tsx": {
+    "mtime": 1780663886.3080904,
+    "ast_hash": "20ebea17ac577e778c6aae53f6fc595f",
+    "semantic_hash": "20ebea17ac577e778c6aae53f6fc595f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\hitster\\deck.ts": {
+    "mtime": 1780661335.6164787,
+    "ast_hash": "ac421845eb69dcc80515d1009d1ed8e9",
+    "semantic_hash": "ac421845eb69dcc80515d1009d1ed8e9"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\hitster\\index.ts": {
+    "mtime": 1780649050.286857,
+    "ast_hash": "fa9b53621288cf49ed6953dfc8fbc2c1",
+    "semantic_hash": "fa9b53621288cf49ed6953dfc8fbc2c1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\index.ts": {
+    "mtime": 1780917776.3874865,
+    "ast_hash": "fe6459918721a6cb2a0232309054e11a",
+    "semantic_hash": "fe6459918721a6cb2a0232309054e11a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\registry.ts": {
+    "mtime": 1780485993.5267973,
+    "ast_hash": "8b3fe3f08d97f9ac4699cc9b96bda1c3",
+    "semantic_hash": "8b3fe3f08d97f9ac4699cc9b96bda1c3"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\starwars\\StarWarsCard.tsx": {
+    "mtime": 1782000443.7136562,
+    "ast_hash": "d9ac691a46ee6a45b5c2e2461c3f040e",
+    "semantic_hash": "d9ac691a46ee6a45b5c2e2461c3f040e"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\starwars\\deck.data.test.ts": {
+    "mtime": 1780917776.3889947,
+    "ast_hash": "813a1eaca3377473050f670b6487480a",
+    "semantic_hash": "813a1eaca3377473050f670b6487480a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\starwars\\deck.json": {
+    "mtime": 1780917776.3900502,
+    "ast_hash": "f43a42322d6b7a0e4d293b3f583d0fa2",
+    "semantic_hash": "f43a42322d6b7a0e4d293b3f583d0fa2"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\starwars\\index.ts": {
+    "mtime": 1780917776.391575,
+    "ast_hash": "e9dcb7f7d3a8f7bff212b2d6331fad36",
+    "semantic_hash": "e9dcb7f7d3a8f7bff212b2d6331fad36"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\games\\types.ts": {
+    "mtime": 1780917776.3935843,
+    "ast_hash": "806d6908767e101eb4053a0436be4536",
+    "semantic_hash": "806d6908767e101eb4053a0436be4536"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\main.tsx": {
+    "mtime": 1780661335.6169837,
+    "ast_hash": "c80286ee1fbb97fc55488d74b34af34f",
+    "semantic_hash": "c80286ee1fbb97fc55488d74b34af34f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\index.ts": {
+    "mtime": 1780676643.1052468,
+    "ast_hash": "e3f02b2764c0b7520a5bef4d55a58a20",
+    "semantic_hash": "e3f02b2764c0b7520a5bef4d55a58a20"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\mock-scanner.test.ts": {
+    "mtime": 1780512996.2228763,
+    "ast_hash": "c32e1fb156bf3520fae390007cef1355",
+    "semantic_hash": "c32e1fb156bf3520fae390007cef1355"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\mock-scanner.ts": {
+    "mtime": 1780512996.223425,
+    "ast_hash": "40c39a6fcca5336f881a07d420650ae1",
+    "semantic_hash": "40c39a6fcca5336f881a07d420650ae1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\qr-image.test.ts": {
+    "mtime": 1780512996.2239313,
+    "ast_hash": "6a5601c98056d5aa5cdf7f0a0a45a5b3",
+    "semantic_hash": "6a5601c98056d5aa5cdf7f0a0a45a5b3"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\qr-image.ts": {
+    "mtime": 1780512996.2244358,
+    "ast_hash": "7a1f756b716b0c36c169c1e76acf856a",
+    "semantic_hash": "7a1f756b716b0c36c169c1e76acf856a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\scan\\scanner.ts": {
+    "mtime": 1780512996.2244358,
+    "ast_hash": "3a92886df576cd67e17d8325cd51b44a",
+    "semantic_hash": "3a92886df576cd67e17d8325cd51b44a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\auth.test.ts": {
+    "mtime": 1780512996.2254486,
+    "ast_hash": "a3246446194cfacae580fc23a2b6c1bc",
+    "semantic_hash": "a3246446194cfacae580fc23a2b6c1bc"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\auth.ts": {
+    "mtime": 1780720026.2573438,
+    "ast_hash": "d32007312ac701eba7c673265ddc5e69",
+    "semantic_hash": "d32007312ac701eba7c673265ddc5e69"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\client.test.ts": {
+    "mtime": 1780661335.61749,
+    "ast_hash": "f776f4de1ff7072959941c2b79d64f67",
+    "semantic_hash": "f776f4de1ff7072959941c2b79d64f67"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\client.ts": {
+    "mtime": 1780661335.6179943,
+    "ast_hash": "09df56d3b4c39e268b6b54216ab9b1d7",
+    "semantic_hash": "09df56d3b4c39e268b6b54216ab9b1d7"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\config.test.ts": {
+    "mtime": 1780512996.2264593,
+    "ast_hash": "0b91f55b5f1b10b8a45963ee88b951f2",
+    "semantic_hash": "0b91f55b5f1b10b8a45963ee88b951f2"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\config.ts": {
+    "mtime": 1780512996.2269638,
+    "ast_hash": "4a60266ae8eeca3e7fd2b4a20cbb7b67",
+    "semantic_hash": "4a60266ae8eeca3e7fd2b4a20cbb7b67"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\embed.test.ts": {
+    "mtime": 1780661335.6185017,
+    "ast_hash": "3cfcfb579997747beafeae365fd373af",
+    "semantic_hash": "3cfcfb579997747beafeae365fd373af"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\embed.ts": {
+    "mtime": 1780661335.6190066,
+    "ast_hash": "87031e6c5f52c10262f2a2f7eead0dd6",
+    "semantic_hash": "87031e6c5f52c10262f2a2f7eead0dd6"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\index.ts": {
+    "mtime": 1780720026.2578506,
+    "ast_hash": "4d9ef22e626b6f8b41a87c98225ec0e0",
+    "semantic_hash": "4d9ef22e626b6f8b41a87c98225ec0e0"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\itunesYear.test.ts": {
+    "mtime": 1780677657.5646944,
+    "ast_hash": "24e5dec35ab82823dc9c409a94fa2adc",
+    "semantic_hash": "24e5dec35ab82823dc9c409a94fa2adc"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\itunesYear.ts": {
+    "mtime": 1780677657.5652075,
+    "ast_hash": "3fc88dce3403f0de6ad0aa88c1db53b5",
+    "semantic_hash": "3fc88dce3403f0de6ad0aa88c1db53b5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\loopback.test.ts": {
+    "mtime": 1780661335.619515,
+    "ast_hash": "1f65dfae40b9750890daa9a96bdf5b20",
+    "semantic_hash": "1f65dfae40b9750890daa9a96bdf5b20"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\loopback.ts": {
+    "mtime": 1780661335.619515,
+    "ast_hash": "3ecbccbf3deb2d11d323da415279b3fe",
+    "semantic_hash": "3ecbccbf3deb2d11d323da415279b3fe"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\pathfinder.test.ts": {
+    "mtime": 1780677657.5657182,
+    "ast_hash": "be540c1ae63dc8ef78d3560ce455a622",
+    "semantic_hash": "be540c1ae63dc8ef78d3560ce455a622"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\pathfinder.ts": {
+    "mtime": 1780677657.5657182,
+    "ast_hash": "42169193cb313dad3d4331f9428ce0e2",
+    "semantic_hash": "42169193cb313dad3d4331f9428ce0e2"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\pkce.test.ts": {
+    "mtime": 1780512996.2284775,
+    "ast_hash": "b60bb1d89bfff01ed30ccefab60897b0",
+    "semantic_hash": "b60bb1d89bfff01ed30ccefab60897b0"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\pkce.ts": {
+    "mtime": 1780512996.2289834,
+    "ast_hash": "217a455e1b62c5213a5be9a2ab6c83d1",
+    "semantic_hash": "217a455e1b62c5213a5be9a2ab6c83d1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\provider.test.ts": {
+    "mtime": 1780512996.2289834,
+    "ast_hash": "7d8e3168aafbe20e6c41918a46ca7a6c",
+    "semantic_hash": "7d8e3168aafbe20e6c41918a46ca7a6c"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\provider.ts": {
+    "mtime": 1780661335.6211128,
+    "ast_hash": "7a8786057847522dd5929212d947e448",
+    "semantic_hash": "7a8786057847522dd5929212d947e448"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\sdk.test.ts": {
+    "mtime": 1780512996.2294886,
+    "ast_hash": "ca0aa64e01130dc2e0c09793b741b00d",
+    "semantic_hash": "ca0aa64e01130dc2e0c09793b741b00d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\sdk.ts": {
+    "mtime": 1780718160.6850462,
+    "ast_hash": "72b608f38e9e97db3242d2f9898f5943",
+    "semantic_hash": "72b608f38e9e97db3242d2f9898f5943"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\spotify\\types.ts": {
+    "mtime": 1780661335.6216176,
+    "ast_hash": "d6ac6f395f3224fa4ff2f4cf2b488adc",
+    "semantic_hash": "d6ac6f395f3224fa4ff2f4cf2b488adc"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\test\\setup.ts": {
+    "mtime": 1780649050.290409,
+    "ast_hash": "4d8296f49ad50b986be3f6f7491c0dd9",
+    "semantic_hash": "4d8296f49ad50b986be3f6f7491c0dd9"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\App.test.tsx": {
+    "mtime": 1780671252.5106046,
+    "ast_hash": "cfb31c43d04b96950b31c52e5c63d6a4",
+    "semantic_hash": "cfb31c43d04b96950b31c52e5c63d6a4"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\App.tsx": {
+    "mtime": 1780917776.394086,
+    "ast_hash": "74fa5593269fde4459e2103c8c6a636f",
+    "semantic_hash": "74fa5593269fde4459e2103c8c6a636f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\SpikeHarness.tsx": {
+    "mtime": 1780661335.622125,
+    "ast_hash": "052a74b989d6d19bcb078ae752f9adee",
+    "semantic_hash": "052a74b989d6d19bcb078ae752f9adee"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\GameContainer.tsx": {
+    "mtime": 1780917776.3960865,
+    "ast_hash": "c5fd1dbb29f006cededb8e97fefc26d1",
+    "semantic_hash": "c5fd1dbb29f006cededb8e97fefc26d1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\SetupScreen.tsx": {
+    "mtime": 1780671252.5121467,
+    "ast_hash": "916affb159386d157660f9186c4127ac",
+    "semantic_hash": "916affb159386d157660f9186c4127ac"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck.test.ts": {
+    "mtime": 1780661335.6231437,
+    "ast_hash": "861bca5cab0be3c0e88b5a968b4f160e",
+    "semantic_hash": "861bca5cab0be3c0e88b5a968b4f160e"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck.ts": {
+    "mtime": 1780649050.2935615,
+    "ast_hash": "0609375a3166aa66d7d35254cfd6bc5a",
+    "semantic_hash": "0609375a3166aa66d7d35254cfd6bc5a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\StaticDeckSetup.tsx": {
+    "mtime": 1780917776.3960865,
+    "ast_hash": "6ec3621545e00d187868c1df5d6ff9c5",
+    "semantic_hash": "6ec3621545e00d187868c1df5d6ff9c5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\TypographicMystery.tsx": {
+    "mtime": 1780917776.3970916,
+    "ast_hash": "95655139c91f66b1f6951001858913cf",
+    "semantic_hash": "95655139c91f66b1f6951001858913cf"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\makeDeckPlay.test.tsx": {
+    "mtime": 1780917776.3975978,
+    "ast_hash": "b3e693860284e6b44458b48488e2460f",
+    "semantic_hash": "b3e693860284e6b44458b48488e2460f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\makeDeckPlay.tsx": {
+    "mtime": 1780917776.3975978,
+    "ast_hash": "a7e60b71bb16abc1c76a5ced704b8a0b",
+    "semantic_hash": "a7e60b71bb16abc1c76a5ced704b8a0b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\staticDeck.test.ts": {
+    "mtime": 1780917776.4001117,
+    "ast_hash": "0395ebb7c79fa4895b45b948d788761a",
+    "semantic_hash": "0395ebb7c79fa4895b45b948d788761a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\deck\\staticDeck.ts": {
+    "mtime": 1780917776.401122,
+    "ast_hash": "e45655c99bee61898f853a3cf70dcec1",
+    "semantic_hash": "e45655c99bee61898f853a3cf70dcec1"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\history\\HistoryMystery.tsx": {
+    "mtime": 1780681177.161543,
+    "ast_hash": "c01b9650d91d89c9053c7e52d931cc52",
+    "semantic_hash": "c01b9650d91d89c9053c7e52d931cc52"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\history\\HistorySetup.tsx": {
+    "mtime": 1780846391.2481513,
+    "ast_hash": "6c2ace9bdbdc808bdc577eae528c0f57",
+    "semantic_hash": "6c2ace9bdbdc808bdc577eae528c0f57"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\history\\deck.test.ts": {
+    "mtime": 1780917776.401122,
+    "ast_hash": "2918ce60c0c36fb29969c1e758d265c9",
+    "semantic_hash": "2918ce60c0c36fb29969c1e758d265c9"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\history\\deck.ts": {
+    "mtime": 1780917776.4026406,
+    "ast_hash": "86c273a9e728c3c451f3a689f2fa2545",
+    "semantic_hash": "86c273a9e728c3c451f3a689f2fa2545"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\history\\play.tsx": {
+    "mtime": 1780681177.1635761,
+    "ast_hash": "865fe62dc437fa7a87a0361fdf94ef5a",
+    "semantic_hash": "865fe62dc437fa7a87a0361fdf94ef5a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\hitster\\HitsterMystery.tsx": {
+    "mtime": 1780678091.8640814,
+    "ast_hash": "699be3a55cf85d331c99d7153e352ac5",
+    "semantic_hash": "699be3a55cf85d331c99d7153e352ac5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\hitster\\deckSource.test.ts": {
+    "mtime": 1780678091.8645878,
+    "ast_hash": "5d52267896b7d52aecfbb0689e9384fb",
+    "semantic_hash": "5d52267896b7d52aecfbb0689e9384fb"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\hitster\\deckSource.ts": {
+    "mtime": 1780678091.86515,
+    "ast_hash": "f511f98e2f13ef4164a73b18d50273e5",
+    "semantic_hash": "f511f98e2f13ef4164a73b18d50273e5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\hitster\\play.tsx": {
+    "mtime": 1780678091.8656569,
+    "ast_hash": "07e26ea8e87d410a855b10fc425dad99",
+    "semantic_hash": "07e26ea8e87d410a855b10fc425dad99"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\GameBackground.tsx": {
+    "mtime": 1780649050.2945762,
+    "ast_hash": "bb072f36274f1c45a2bcb2de9fb62d41",
+    "semantic_hash": "bb072f36274f1c45a2bcb2de9fb62d41"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\GameScreen.tsx": {
+    "mtime": 1780917776.4031398,
+    "ast_hash": "51fbcf1eb5671faeca433224c4ea700a",
+    "semantic_hash": "51fbcf1eb5671faeca433224c4ea700a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\Hand.test.tsx": {
+    "mtime": 1780649050.2950814,
+    "ast_hash": "408d84b5ff3e390de240df0ff072fc11",
+    "semantic_hash": "408d84b5ff3e390de240df0ff072fc11"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\Hand.tsx": {
+    "mtime": 1780917776.4041398,
+    "ast_hash": "c957e2420b9f043a864af7deefdd39c5",
+    "semantic_hash": "c957e2420b9f043a864af7deefdd39c5"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\HandCard.test.tsx": {
+    "mtime": 1780917776.4046404,
+    "ast_hash": "c0673ac67f497ada1c6ff9ec26a8de9a",
+    "semantic_hash": "c0673ac67f497ada1c6ff9ec26a8de9a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\HandCard.tsx": {
+    "mtime": 1780917776.4051404,
+    "ast_hash": "dd5c8fa130c82b33898e0dcfb47775d7",
+    "semantic_hash": "dd5c8fa130c82b33898e0dcfb47775d7"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\MysteryCard.test.tsx": {
+    "mtime": 1780676643.1072721,
+    "ast_hash": "56e7159ebe60ed020108825e27a5561b",
+    "semantic_hash": "56e7159ebe60ed020108825e27a5561b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\MysteryCard.tsx": {
+    "mtime": 1780676643.107777,
+    "ast_hash": "75585b1f7ce87f6e7898b880a27a16d6",
+    "semantic_hash": "75585b1f7ce87f6e7898b880a27a16d6"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\Overview.test.tsx": {
+    "mtime": 1780649050.297126,
+    "ast_hash": "25d92a1beebf536bc7615b397d66eb3d",
+    "semantic_hash": "25d92a1beebf536bc7615b397d66eb3d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\Overview.tsx": {
+    "mtime": 1780649050.297126,
+    "ast_hash": "7b4eefd5dc043f45f43c9ff6a3c6b428",
+    "semantic_hash": "7b4eefd5dc043f45f43c9ff6a3c6b428"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\RevealOverlay.tsx": {
+    "mtime": 1780917776.4061446,
+    "ast_hash": "eabb0f1633c0fa8c5cc44bf7643cff04",
+    "semantic_hash": "eabb0f1633c0fa8c5cc44bf7643cff04"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\TurnSwitch.tsx": {
+    "mtime": 1780649050.2981431,
+    "ast_hash": "3e8fe59ea3387cef4ab2fe1cd848fcfe",
+    "semantic_hash": "3e8fe59ea3387cef4ab2fe1cd848fcfe"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\WinScreen.tsx": {
+    "mtime": 1780649050.298651,
+    "ast_hash": "6eb2478f5bf4d71f15848412adee3e89",
+    "semantic_hash": "6eb2478f5bf4d71f15848412adee3e89"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\adapter.ts": {
+    "mtime": 1780678091.8661647,
+    "ast_hash": "a5d7aaa41201dc4db596602ad3f11caf",
+    "semantic_hash": "a5d7aaa41201dc4db596602ad3f11caf"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\cardArt.test.ts": {
+    "mtime": 1780649050.299161,
+    "ast_hash": "e8b4f12ba0017eb30b524cdaa63a9f17",
+    "semantic_hash": "e8b4f12ba0017eb30b524cdaa63a9f17"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\cardArt.ts": {
+    "mtime": 1780649050.299161,
+    "ast_hash": "00d1b74b8c9fae7916d6f81f8ce9454a",
+    "semantic_hash": "00d1b74b8c9fae7916d6f81f8ce9454a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\handGeometry.test.ts": {
+    "mtime": 1780649050.3006828,
+    "ast_hash": "a5600e225a028ab20e7a79faf7bea956",
+    "semantic_hash": "a5600e225a028ab20e7a79faf7bea956"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\play\\handGeometry.ts": {
+    "mtime": 1780649050.3011878,
+    "ast_hash": "85787bb5f87656b40452646ff38ccccb",
+    "semantic_hash": "85787bb5f87656b40452646ff38ccccb"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\resumeSetup.test.ts": {
+    "mtime": 1780664818.935062,
+    "ast_hash": "d242d0a1d374b7588256ed8a29ed7159",
+    "semantic_hash": "d242d0a1d374b7588256ed8a29ed7159"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\resumeSetup.ts": {
+    "mtime": 1780664818.935062,
+    "ast_hash": "861ae8633c796ae5293596d78403aa1b",
+    "semantic_hash": "861ae8633c796ae5293596d78403aa1b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\starwars\\deck.ts": {
+    "mtime": 1780917776.4081576,
+    "ast_hash": "bdb47cf71974a3a861ca431eae327cf8",
+    "semantic_hash": "bdb47cf71974a3a861ca431eae327cf8"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\starwars\\play.tsx": {
+    "mtime": 1780917776.4086566,
+    "ast_hash": "b81ac1b89b2b405144989bad14ca84fc",
+    "semantic_hash": "b81ac1b89b2b405144989bad14ca84fc"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\useGame.test.ts": {
+    "mtime": 1780649050.303724,
+    "ast_hash": "35137a2b5258f393e0b5215ff3fb5a61",
+    "semantic_hash": "35137a2b5258f393e0b5215ff3fb5a61"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\useGame.ts": {
+    "mtime": 1780649050.304232,
+    "ast_hash": "22927e78bab6cae58c15dfbc87f4fcef",
+    "semantic_hash": "22927e78bab6cae58c15dfbc87f4fcef"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\game\\useSpotifySession.ts": {
+    "mtime": 1780720026.2593796,
+    "ast_hash": "7fc58dd2c675107d39e7e0e3f6d1a329",
+    "semantic_hash": "7fc58dd2c675107d39e7e0e3f6d1a329"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\menu\\GamePicker.test.tsx": {
+    "mtime": 1780681177.164083,
+    "ast_hash": "4d168841e1b3c0292298a4ab179af8d3",
+    "semantic_hash": "4d168841e1b3c0292298a4ab179af8d3"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\menu\\GamePicker.tsx": {
+    "mtime": 1780649050.3052514,
+    "ast_hash": "a1b1ece768caa572ff69e0000bfcbffa",
+    "semantic_hash": "a1b1ece768caa572ff69e0000bfcbffa"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\menu\\MenuScreen.test.tsx": {
+    "mtime": 1780649050.3057563,
+    "ast_hash": "23e8d7282872f0e9d2b583847be286e8",
+    "semantic_hash": "23e8d7282872f0e9d2b583847be286e8"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\menu\\MenuScreen.tsx": {
+    "mtime": 1780917776.4086566,
+    "ast_hash": "563f8a7ec893086ed6be43e9b4de6d2d",
+    "semantic_hash": "563f8a7ec893086ed6be43e9b4de6d2d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\spike-deps.test.ts": {
+    "mtime": 1780512996.2310057,
+    "ast_hash": "131d607e0154c00b963de21cdd3f2827",
+    "semantic_hash": "131d607e0154c00b963de21cdd3f2827"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\spike-deps.ts": {
+    "mtime": 1780512996.2315102,
+    "ast_hash": "14c61d3236177b4a46cbd1a7e82e9a10",
+    "semantic_hash": "14c61d3236177b4a46cbd1a7e82e9a10"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\theme\\ThemeProvider.test.tsx": {
+    "mtime": 1780649050.3139596,
+    "ast_hash": "d752f288d83bdc7535d90fb47a8432a9",
+    "semantic_hash": "d752f288d83bdc7535d90fb47a8432a9"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\theme\\ThemeProvider.tsx": {
+    "mtime": 1780649050.3144648,
+    "ast_hash": "0b0930d5a9a6f440082f5fa973a57f0b",
+    "semantic_hash": "0b0930d5a9a6f440082f5fa973a57f0b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\theme\\activeGameContext.ts": {
+    "mtime": 1780649050.3149705,
+    "ast_hash": "5b8f187f015ba372c1cb3a0dbf2aac2b",
+    "semantic_hash": "5b8f187f015ba372c1cb3a0dbf2aac2b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\ui\\transition\\ScreenTransition.tsx": {
+    "mtime": 1780649050.315477,
+    "ast_hash": "0cdb76571222dd91947265e9b77452a6",
+    "semantic_hash": "0cdb76571222dd91947265e9b77452a6"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\src\\vite-env.d.ts": {
+    "mtime": 1780512996.2315102,
+    "ast_hash": "c062a4afc112c1a90edd84c6c69b7cb0",
+    "semantic_hash": "c062a4afc112c1a90edd84c6c69b7cb0"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\tsconfig.app.json": {
+    "mtime": 1780681177.1651464,
+    "ast_hash": "872c58b9d7e7832bbc8969f31ba3f4b3",
+    "semantic_hash": "872c58b9d7e7832bbc8969f31ba3f4b3"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\tsconfig.json": {
+    "mtime": 1780485724.6096163,
+    "ast_hash": "a3d39fa780ebff65444de257f291ce6c",
+    "semantic_hash": "a3d39fa780ebff65444de257f291ce6c"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\tsconfig.node.json": {
+    "mtime": 1780675526.6413488,
+    "ast_hash": "a4c4613a266b2a72ec4510b610ae46b3",
+    "semantic_hash": "a4c4613a266b2a72ec4510b610ae46b3"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\vercel.json": {
+    "mtime": 1780675526.641855,
+    "ast_hash": "0ce4c1d578e6fcf5bb3d80a534ab3866",
+    "semantic_hash": "0ce4c1d578e6fcf5bb3d80a534ab3866"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\vite-plugin-spotify-scraper.ts": {
+    "mtime": 1780678345.1120446,
+    "ast_hash": "24ddeaf42e4a2ab0878b7493d4b6732f",
+    "semantic_hash": "24ddeaf42e4a2ab0878b7493d4b6732f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\vite.config.ts": {
+    "mtime": 1780675674.147236,
+    "ast_hash": "fbec5c3e490d8796c2bcd97c8ed661b2",
+    "semantic_hash": "fbec5c3e490d8796c2bcd97c8ed661b2"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\CLAUDE.md": {
+    "mtime": 1780486206.176701,
+    "ast_hash": "85f0fce31cdd5720fbc1d55cee8f29c7",
+    "semantic_hash": "85f0fce31cdd5720fbc1d55cee8f29c7"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\DEPLOY.md": {
+    "mtime": 1780678345.1094947,
+    "ast_hash": "88377f4eb93bca74ea2f839c2ef0276d",
+    "semantic_hash": "88377f4eb93bca74ea2f839c2ef0276d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\README.md": {
+    "mtime": 1782032525.1317115,
+    "ast_hash": "456e232bf046702b3a3d9ba86aa82b4c",
+    "semantic_hash": "456e232bf046702b3a3d9ba86aa82b4c"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\history-deck-events.md": {
+    "mtime": 1780664865.9239018,
+    "ast_hash": "cb302801dbb9076804b45c4688c42fcf",
+    "semantic_hash": "cb302801dbb9076804b45c4688c42fcf"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-03-game-loop.md": {
+    "mtime": 1780515183.3358777,
+    "ast_hash": "19e0eaff444fbde33d4c63953176407b",
+    "semantic_hash": "19e0eaff444fbde33d4c63953176407b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-03-hitster-playback-scan-spike.md": {
+    "mtime": 1780493388.4489899,
+    "ast_hash": "2360b3ea29f57bbfc4a5af1fd3257347",
+    "semantic_hash": "2360b3ea29f57bbfc4a5af1fd3257347"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-04-front-page-menu.md": {
+    "mtime": 1780649050.2802613,
+    "ast_hash": "098745031f0212bf9515f2d8c706fc98",
+    "semantic_hash": "098745031f0212bf9515f2d8c706fc98"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-04-per-game-theming.md": {
+    "mtime": 1780649050.2802613,
+    "ast_hash": "3bec430dc03d472c1e8fc5c905ca6a9d",
+    "semantic_hash": "3bec430dc03d472c1e8fc5c905ca6a9d"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-05-game-screen.md": {
+    "mtime": 1780649050.2807667,
+    "ast_hash": "655ce217802286b98dc52997fe2a789b",
+    "semantic_hash": "655ce217802286b98dc52997fe2a789b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-05-generalize-play-loop.md": {
+    "mtime": 1780678091.8625627,
+    "ast_hash": "4fcc575d06fd78efcfa41c7edd95ec03",
+    "semantic_hash": "4fcc575d06fd78efcfa41c7edd95ec03"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-05-guest-clip-audio.md": {
+    "mtime": 1780676643.1027179,
+    "ast_hash": "355587f8d5653df8d4cb3bd6591e192a",
+    "semantic_hash": "355587f8d5653df8d4cb3bd6591e192a"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-05-guest-qr-mode.md": {
+    "mtime": 1780671252.5050676,
+    "ast_hash": "d2acf2e6dd159e018477083568305d71",
+    "semantic_hash": "d2acf2e6dd159e018477083568305d71"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-05-vercel-deploy.md": {
+    "mtime": 1780675526.6357586,
+    "ast_hash": "de43870444f696018b1b4320a891185e",
+    "semantic_hash": "de43870444f696018b1b4320a891185e"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\plans\\2026-06-07-starwars-deck.md": {
+    "mtime": 1780846391.2833536,
+    "ast_hash": "8d94e668710f1c52a950fd7df410b782",
+    "semantic_hash": "8d94e668710f1c52a950fd7df410b782"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-03-game-loop-design.md": {
+    "mtime": 1780514718.9364483,
+    "ast_hash": "07e07f06673c96e7c2f95bd29478928c",
+    "semantic_hash": "07e07f06673c96e7c2f95bd29478928c"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-03-hitster-playback-scan-spike-design.md": {
+    "mtime": 1780492126.9228466,
+    "ast_hash": "38f0732087b00426f48a6d9a1999166f",
+    "semantic_hash": "38f0732087b00426f48a6d9a1999166f"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-05-equivalent-player-design.md": {
+    "mtime": 1780675526.6362834,
+    "ast_hash": "9839a590e6fa5463c8563456a9debf10",
+    "semantic_hash": "9839a590e6fa5463c8563456a9debf10"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-05-game-screen-design.md": {
+    "mtime": 1780649050.2812786,
+    "ast_hash": "39edba2a95df35f77353c6cbba81aa17",
+    "semantic_hash": "39edba2a95df35f77353c6cbba81aa17"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-05-guest-qr-mode-design.md": {
+    "mtime": 1780671252.50658,
+    "ast_hash": "c893a0048081ec7177d3f55c488565ae",
+    "semantic_hash": "c893a0048081ec7177d3f55c488565ae"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-05-history-game-design.md": {
+    "mtime": 1780678091.8630674,
+    "ast_hash": "0560b2d74ec05087fa5227615bb36fca",
+    "semantic_hash": "0560b2d74ec05087fa5227615bb36fca"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-05-vercel-deploy-design.md": {
+    "mtime": 1780675526.6367917,
+    "ast_hash": "6b0bac2e280681a06c359c5fbc29a633",
+    "semantic_hash": "6b0bac2e280681a06c359c5fbc29a633"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\docs\\superpowers\\specs\\2026-06-07-starwars-deck-design.md": {
+    "mtime": 1780846391.2647195,
+    "ast_hash": "1e7c5201ec484d17581e1cff7d7bb340",
+    "semantic_hash": "1e7c5201ec484d17581e1cff7d7bb340"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\index.html": {
+    "mtime": 1780486039.1501048,
+    "ast_hash": "f9dd58d12c73a2556bdb6f3307a06a1b",
+    "semantic_hash": "f9dd58d12c73a2556bdb6f3307a06a1b"
+  },
+  "C:\\Users\\Admin\\Documents\\Claude\\Github\\Chrono\\roadmap.md": {
+    "mtime": 1780758248.6241043,
+    "ast_hash": "72eb5ecf0e1ad583846fab85761aa6fe",
+    "semantic_hash": "72eb5ecf0e1ad583846fab85761aa6fe"
+  }
+}
