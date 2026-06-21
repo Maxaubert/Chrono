@@ -198,3 +198,115 @@
   background: linear-gradient(160deg, #1a0c0e, #070608);
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
 }
+
+/* ---------- in-play cards: full-bleed art + imperial-red duotone ----------
+ * Makes the hand/placed cards (.handcard) and the reveal card
+ * (.reveal-the-card) match the menu preview: a full-bleed grayscale photo under
+ * a red duotone with a bottom scrim, year top-left, title + era bottom-left.
+ * Mirrors the History treatment (history-play.css) in the Star Wars palette. */
+.skin-starwars .game-screen .handcard,
+.skin-starwars .reveal-the-card {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 14px;
+  background: #070608;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 22px 46px -16px rgba(0, 0, 0, 0.85),
+    0 0 30px -10px var(--glow);
+}
+.skin-starwars .game-screen .handcard .hc-art,
+.skin-starwars .reveal-c-art {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  border-radius: inherit;
+  box-shadow: none;
+  filter: grayscale(1) contrast(1.08) brightness(0.82);
+}
+/* imperial-red duotone over the grayscale art */
+.skin-starwars .game-screen .handcard::before,
+.skin-starwars .reveal-the-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  mix-blend-mode: color;
+  opacity: 0.62;
+  background: linear-gradient(180deg, #ff6a6a, #b22222 55%, #2a0606);
+}
+/* bottom scrim so the year + title stay legible over the art */
+.skin-starwars .game-screen .handcard::after,
+.skin-starwars .reveal-the-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 5, 6, 0.55) 0%,
+    transparent 26%,
+    transparent 48%,
+    rgba(7, 5, 6, 0.92) 90%
+  );
+}
+/* year, top-left */
+.skin-starwars .game-screen .handcard .hc-year,
+.skin-starwars .reveal-c-year {
+  top: 12px;
+  left: 14px;
+  right: auto;
+  z-index: 2;
+  font-weight: 900;
+  font-size: 21px;
+  letter-spacing: 1px;
+  color: color-mix(in srgb, var(--accent) 88%, #fff);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+/* era kicker, bottom */
+.skin-starwars .game-screen .handcard .hc-artist,
+.skin-starwars .reveal-c-sub {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 34px;
+  margin: 0;
+  z-index: 2;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+/* title, bottom */
+.skin-starwars .game-screen .handcard .hc-title,
+.skin-starwars .reveal-c-title {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  margin: 0;
+  z-index: 2;
+  text-align: left;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+}
+/* the "HITSTER" brand never belongs on a Star Wars card */
+.skin-starwars .game-screen .handcard .brand {
+  display: none;
+}
+/* the reveal card needs a card footprint (no inner padding box) */
+.skin-starwars .reveal-the-card {
+  width: 210px;
+  height: 301px;
+  margin: 0 auto;
+}
