@@ -678,13 +678,188 @@
 }
 
 @media (max-width: 760px) {
-  .setup-screen .su-frame {
-    grid-template-columns: 1fr;
-    height: auto;
-    min-height: 92vh;
+  /* Single column, full-height popup. The frame becomes a vertical flex column
+     so the form scrolls and the action button can stick to the bottom. */
+  .setup-screen {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
   }
+  .setup-screen .su-frame {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    /* a flatter wedge on the small frame */
+    clip-path: polygon(
+      0 0,
+      calc(100% - 16px) 0,
+      100% 16px,
+      100% 100%,
+      16px 100%,
+      0 calc(100% - 16px)
+    );
+  }
+
+  /* Rail collapses to a compact header band: wordmark + blurb only. The
+     decorative card fan and the foot row are hidden to save vertical space. */
   .setup-screen .su-rail {
+    flex: 0 0 auto;
+    padding: 22px 22px 18px;
     border-right: none;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  .setup-screen .su-rail > div:first-of-type {
+    /* the kicker/wordmark/blurb block */
+    margin-bottom: 0;
+  }
+  /* Hide only the decorative card fan; keep the foot row (it can hold the
+     Log out button on the players step). */
+  .setup-screen .su-fan {
+    display: none;
+  }
+  .setup-screen .su-foot {
+    margin-top: 12px;
+  }
+  .setup-screen .su-blurb {
+    margin-top: 10px;
+    max-width: none;
+    font-size: 13px;
+  }
+
+  /* Form scrolls; the action button is pulled out as a sticky bar at the
+     bottom of the column (see below) so it stays reachable without scrolling. */
+  .setup-screen .su-form {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 20px 18px 18px;
+    gap: 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Steppers: bigger touch targets. */
+  .setup-screen .su-step-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  /* Player name chips go full-width, one per row, so the input is easy to tap
+     and never triggers iOS zoom (inputs already floored at 16px globally). */
+  .setup-screen .su-names {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .setup-screen .su-name {
+    width: 100%;
+    padding: 8px 12px 8px 8px;
+    min-height: 44px;
+  }
+  .setup-screen .su-name input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  /* Win-at: number + label on the first line, full-width slider under it. */
+  .setup-screen .su-winrow {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+  .setup-screen .su-slider {
+    flex-basis: 100%;
+    height: 30px;
+  }
+
+  /* Playlist list scrolls within the viewport and rows stay tappable. */
+  .setup-screen .su-search {
+    min-height: 44px;
+  }
+  .setup-screen .su-pl-list {
+    max-height: 40vh;
+  }
+  .setup-screen .su-selected .su-pl-list {
+    max-height: 32vh;
+  }
+  .setup-screen .su-pl-row {
+    padding: 8px 10px;
+    min-height: 56px;
+  }
+  .setup-screen .su-pl-name {
+    overflow: hidden;
+  }
+  .setup-screen .su-pl-name > :first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .setup-screen .su-use {
+    flex-shrink: 0;
+    min-height: 38px;
+    padding: 8px 14px;
+  }
+  .setup-screen .su-remove {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Import row stacks so the field is full-width and the button is tappable. */
+  .setup-screen .su-inputrow {
+    flex-direction: column;
+  }
+  .setup-screen .su-input {
+    min-height: 44px;
+  }
+  .setup-screen .su-import {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+
+  /* Sticky action bar: the NEXT / START button sits at the bottom of the form
+     column, pinned, with a backing so list content scrolls under it cleanly. */
+  .setup-screen .su-next,
+  .setup-screen .su-start {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    padding: 16px;
+    /* pad past the iOS home indicator */
+    margin-bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Login gate stays vertically centred but with comfortable phone padding. */
+  .setup-screen .su-gate {
+    justify-content: center;
+  }
+  .setup-screen .su-login-big {
+    width: 100%;
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 430px) {
+  .setup-screen .su-rail {
+    padding: 18px 16px 14px;
+  }
+  .setup-screen .su-form {
+    padding: 16px 14px 14px;
+  }
+  .setup-screen .su-section {
+    padding: 14px;
+  }
+  /* dial back the giant win number so the row fits a 320px width */
+  .setup-screen .su-win {
+    width: 70px;
+    font-size: 38px;
+  }
+  .setup-screen .su-next,
+  .setup-screen .su-start {
+    font-size: 16px;
+    letter-spacing: 0.2em;
   }
 }

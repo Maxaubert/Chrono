@@ -244,6 +244,93 @@
   }
 }
 
+/* ---------- phones: single clean column, full-width touch controls ---------- */
+@media (max-width: 760px) {
+  /* dvh so the iOS Safari URL bar does not clip the bottom of the menu */
+  .menu-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .menu-screen .split {
+    min-height: 100vh;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr;
+  }
+
+  /* fan: shrink and let it overflow into a fixed band so it never widens the
+     page. .left already clips (overflow: hidden); the negative-margin band keeps
+     the scaled-down hand from reserving its full 520x430 box. */
+  .menu-screen .left {
+    padding: 18px 0 0;
+    min-height: 0;
+  }
+  .menu-screen .hand {
+    transform: scale(0.5);
+    /* collapse the scaled-down footprint so it doesn't push the menu down */
+    margin: -86px 0;
+  }
+
+  .menu-screen .right {
+    padding: 4px 20px calc(28px + env(safe-area-inset-bottom, 0px));
+    gap: 12px;
+  }
+  .menu-screen .logo {
+    /* clamp keeps the wordmark inside the narrow column on the smallest phones */
+    font-size: clamp(40px, 13vw, 72px);
+    line-height: 0.95;
+    word-break: break-word;
+  }
+  .menu-screen .tag {
+    margin-bottom: 4px;
+  }
+
+  /* full-width stack; >= 44px tap targets with comfortable spacing */
+  .menu-screen .menu {
+    width: 100%;
+    gap: 12px;
+    margin-top: 2px;
+  }
+  .menu-screen .btn {
+    min-height: 56px;
+    justify-content: center;
+    padding: 12px 18px;
+  }
+  .menu-screen .btn .bk {
+    right: 20px;
+  }
+  .menu-screen .btn.primary {
+    min-height: 64px;
+    padding: 16px 22px;
+  }
+  .menu-screen .btn.primary .bt {
+    font-size: 24px;
+    letter-spacing: 5px;
+  }
+  .menu-screen .foot {
+    margin-top: 10px;
+    text-align: left;
+  }
+}
+
+/* ---------- small phones (<= 430px): tighten the fan + wordmark further ---------- */
+@media (max-width: 430px) {
+  .menu-screen .hand {
+    transform: scale(0.42);
+    margin: -110px 0;
+  }
+  .menu-screen .logo {
+    font-size: clamp(36px, 14vw, 60px);
+  }
+  .menu-screen .btn .bt {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .menu-screen .btn.primary .bt {
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+}
+
 /* ---------- Choose Game picker overlay (themed via vars) ---------- */
 .menu-screen .gp-overlay {
   position: fixed;
@@ -291,9 +378,11 @@
   color: var(--accent);
   transition: 0.15s;
 }
-.menu-screen .gp-item:hover {
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+@media (hover: hover) {
+  .menu-screen .gp-item:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
 }
 .menu-screen .gp-item.on {
   border-color: var(--accent);
@@ -338,6 +427,61 @@
   font-weight: 700;
   letter-spacing: 1px;
 }
-.menu-screen .gp-close:hover {
-  background: color-mix(in srgb, var(--accent) 10%, transparent);
+@media (hover: hover) {
+  .menu-screen .gp-close:hover {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+}
+
+/* ---------- picker overlay on phones: full-height, scrollable, big targets ---------- */
+@media (max-width: 760px) {
+  .menu-screen .gp-overlay {
+    /* fill the viewport with dvh; align to top + allow vertical scroll so a long
+       game list is reachable above the keyboard / URL bar */
+    place-items: start center;
+    align-content: start;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: calc(20px + env(safe-area-inset-top, 0px)) 16px
+      calc(24px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+  }
+  .menu-screen .gp-panel {
+    width: 100%;
+    max-width: 480px;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+  .menu-screen .gp-head {
+    margin-bottom: 16px;
+  }
+  .menu-screen .gp-list {
+    gap: 12px;
+  }
+  .menu-screen .gp-item {
+    min-height: 60px;
+    padding: 14px 16px;
+    row-gap: 2px;
+  }
+  .menu-screen .gp-name {
+    font-size: 17px;
+  }
+  .menu-screen .gp-tag {
+    font-size: 12px;
+  }
+  .menu-screen .gp-dot {
+    width: 16px;
+    height: 16px;
+  }
+  .menu-screen .gp-close {
+    min-height: 48px;
+    padding: 12px;
+    font-size: 15px;
+  }
+  /* touch feedback (hover is gated so a tap doesn't stick in the hover state) */
+  .menu-screen .gp-item:active {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  .menu-screen .gp-close:active {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  }
 }

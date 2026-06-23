@@ -4,24 +4,12 @@ import { currentPlayer } from '@/core'
 import GameBackground from './GameBackground'
 import Overview from './Overview'
 import Hand from './Hand'
+import MobileGameScreen from './MobileGameScreen'
 import type { MysteryProps } from './adapter'
+import { useIsMobile } from '../../useIsMobile'
 import './game-screen.css'
 
-export default function GameScreen({
-  state,
-  Mystery,
-  onPlace,
-  onPause,
-  onResume,
-  onReplay,
-  playing = true,
-  titleOf,
-  artistOf,
-  imageOf,
-  labelOf,
-  piled = false,
-  interactive = true,
-}: {
+export default function GameScreen(props: {
   state: GameState
   Mystery: ComponentType<MysteryProps>
   onPlace: (slotIndex: number) => void
@@ -36,6 +24,24 @@ export default function GameScreen({
   piled?: boolean
   interactive?: boolean
 }) {
+  // Phone widths get a dedicated stacked layout; desktop JSX below is untouched.
+  if (useIsMobile()) return <MobileGameScreen {...props} />
+
+  const {
+    state,
+    Mystery,
+    onPlace,
+    onPause,
+    onResume,
+    onReplay,
+    playing = true,
+    titleOf,
+    artistOf,
+    imageOf,
+    labelOf,
+    piled = false,
+    interactive = true,
+  } = props
   return (
     <div className="game-screen">
       <GameBackground />

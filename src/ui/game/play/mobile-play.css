@@ -1,0 +1,248 @@
+/* Mobile in-game play screen. Every selector is prefixed `.mobile-game-screen`
+ * so nothing leaks onto the desktop play screen (CSS is bundled globally in this
+ * project -- see memory: css-global-scope-gotcha).
+ *
+ * The mobile root carries BOTH `.mobile-game-screen` and `.game-screen`, so the
+ * game-supplied mystery cards keep their `.game-screen .myst-*` / `.hist-myst` /
+ * `.sd-myst` internal styling. Here we override only LAYOUT: the desktop
+ * `position:absolute` overlays (mystery-wrap, hand, ov) and the entrance
+ * animations become a simple three-row flex column. Colours, fonts and card art
+ * are inherited unchanged (Ultra Violet palette via the theme CSS vars). */
+
+/* ---- root: three-row column, hand pinned to the bottom ---- */
+.mobile-game-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* The desktop screen positions ov / mystery-wrap / hand absolutely and animates
+ * them in. Neutralise all of that inside the mobile column. */
+.mobile-game-screen .ov,
+.mobile-game-screen .hand {
+  display: none;
+}
+.mobile-game-screen .mystery-wrap {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  animation: none;
+  width: 100%;
+}
+
+.mobile-game-screen .mgs-top {
+  flex: 0 0 auto;
+  z-index: 6;
+}
+.mobile-game-screen .mgs-mystery {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 4;
+  padding: 8px 12px;
+}
+.mobile-game-screen .mgs-hand {
+  flex: 0 0 auto;
+  z-index: 5;
+}
+
+/* ===================================================================== */
+/* TOP -- compact horizontal scoreboard                                  */
+/* ===================================================================== */
+.mobile-game-screen .mov {
+  padding: 8px 12px 6px;
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  backdrop-filter: blur(6px);
+}
+.mobile-game-screen .mov-turn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.mobile-game-screen .mov-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
+  box-shadow: 0 0 10px var(--accent2);
+}
+.mobile-game-screen .mov-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.mobile-game-screen .mov-chips::-webkit-scrollbar {
+  display: none;
+}
+.mobile-game-screen .mov-chip {
+  flex: 0 0 auto;
+  min-width: 92px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  opacity: 0.72;
+}
+.mobile-game-screen .mov-chip.on {
+  opacity: 1;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.mobile-game-screen .mov-name {
+  display: block;
+  font-weight: 700;
+  font-size: 12px;
+  color: #e8e2ff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mobile-game-screen .mov-count {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.mobile-game-screen .mov-count b {
+  font-weight: 600;
+  color: #8b7fb5;
+}
+.mobile-game-screen .mov-bar {
+  display: block;
+  margin-top: 4px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.mobile-game-screen .mov-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+}
+
+/* ===================================================================== */
+/* MIDDLE -- the game-supplied mystery card, scaled to fit phone width   */
+/* ===================================================================== */
+/* The mystery content is a 240x344 `.h-card` (+ controls + hint) stacked in
+ * `.mystery-wrap`. Scale the whole wrapper down so it fits the available band
+ * without changing its internal proportions (disc / equalizer / clue layout). */
+.mobile-game-screen .mystery-wrap {
+  --myst-scale: 0.84;
+  transform: scale(var(--myst-scale));
+  transform-origin: center center;
+  gap: 12px;
+}
+/* Very short viewports (landscape phones): shrink further so the card + rail fit. */
+@media (max-height: 640px) {
+  .mobile-game-screen .mystery-wrap {
+    --myst-scale: 0.66;
+  }
+}
+@media (max-height: 540px) {
+  .mobile-game-screen .mystery-wrap {
+    --myst-scale: 0.54;
+  }
+}
+
+/* ===================================================================== */
+/* BOTTOM -- tap-to-place rail                                           */
+/* ===================================================================== */
+.mobile-game-screen .mhand {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--bg) 70%, transparent) 30%
+  );
+  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+}
+.mobile-game-screen .mhand-rail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 4px 14px;
+  scroll-padding: 14px;
+}
+.mobile-game-screen .mhand-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* The player's existing cards -- the same HandCard visual, scaled down. The
+ * 240x344 card is wrapped so the scale does not disturb flex sizing. */
+.mobile-game-screen .mhand-card {
+  flex: 0 0 auto;
+  width: calc(240px * 0.42);
+  height: calc(344px * 0.42);
+}
+.mobile-game-screen .mhand-card .h-card.handcard {
+  width: 240px;
+  height: 344px;
+  transform: scale(0.42);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+/* large tappable placement gap between cards (>=44px target) */
+.mobile-game-screen .mhand-gap {
+  flex: 0 0 auto;
+  width: 52px;
+  min-height: calc(344px * 0.42);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--accent);
+  border: 2px dashed color-mix(in srgb, var(--accent) 70%, transparent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: inset 0 0 22px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.mobile-game-screen .mhand-gap:active {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+@media (hover: hover) {
+  .mobile-game-screen .mhand-gap:hover {
+    background: color-mix(in srgb, var(--accent) 26%, transparent);
+  }
+}
+.mobile-game-screen .mhand-plus {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+}
+.mobile-game-screen .mhand-gap-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* turn-handoff: collapse the rail to a calmer look (gaps are not rendered) */
+.mobile-game-screen .mhand.piled .mhand-rail {
+  gap: 4px;
+  opacity: 0.85;
+}
