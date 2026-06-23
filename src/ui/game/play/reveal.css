@@ -3,6 +3,8 @@
   position: fixed;
   inset: 0;
   z-index: 20;
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh; /* iOS Safari URL bar never clips content */
   display: grid;
   place-items: center;
   background: rgba(4, 3, 10, 0.66);
@@ -93,7 +95,12 @@
     0 11px
   );
 }
-.reveal-next:hover {
+@media (hover: hover) {
+  .reveal-next:hover {
+    box-shadow: 0 0 26px -4px var(--accent);
+  }
+}
+.reveal-next:active {
   box-shadow: 0 0 26px -4px var(--accent);
 }
 .reveal-err {
@@ -248,5 +255,23 @@
   .reveal-back,
   .reveal-shine {
     display: none;
+  }
+}
+
+/* ---------- phone widths: comfortable modal + big thumb target ---------- */
+@media (max-width: 760px) {
+  .reveal-card {
+    padding: 22px 18px;
+    max-height: 100dvh;
+    overflow-y: auto;
+  }
+  /* roomier OK/Next button: full-width-ish, >=44px tall thumb target */
+  .reveal-next {
+    margin-top: 22px;
+    min-height: 52px;
+    padding: 15px 30px;
+    width: min(320px, 80vw);
+    justify-content: center;
+    font-size: 16px;
   }
 }

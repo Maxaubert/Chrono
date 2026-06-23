@@ -6,6 +6,8 @@
   position: fixed;
   inset: 0;
   z-index: 200;
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh; /* iOS Safari URL bar never clips content */
   pointer-events: none;
   overflow: hidden;
 }
@@ -109,5 +111,25 @@
 @media (prefers-reduced-motion: reduce) {
   .xover .xtile {
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- phone widths: wordmark never overflows at 320px ---------- */
+@media (max-width: 760px) {
+  .xlogo-wrap {
+    padding: 0 16px;
+  }
+  .xlogo {
+    /* lower floor + tighter tracking so the title fits a 320px portrait line;
+       allow it to wrap rather than spill horizontally */
+    font-size: clamp(34px, 13vw, 88px);
+    letter-spacing: 4px;
+    max-width: 100vw;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .skin-history .xlogo,
+  .skin-starwars .xlogo {
+    letter-spacing: 2px;
   }
 }

@@ -425,14 +425,112 @@
 }
 
 @media (max-width: 760px) {
-  .hs-frame {
-    grid-template-columns: 1fr;
-    height: auto;
-    min-height: 92vh;
+  /* Single-column, full-height popup that scrolls with a pinned action bar. */
+  .hs-screen {
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
   }
+  .hs-frame {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+  }
+
+  /* Rail becomes a compact header band; drop the decorative card stack. */
   .hs-rail {
+    flex: 0 0 auto;
+    padding: 22px 22px 18px;
     border-right: none;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  .hs-stack {
+    display: none;
+  }
+  .hs-foot {
+    margin-top: 12px;
+  }
+  .hs-blurb {
+    margin-top: 10px;
+    max-width: none;
+    font-size: 14px;
+  }
+
+  .hs-form {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 20px 18px 18px;
+    gap: 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Bigger touch targets on the stepper. */
+  .hs-step-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  /* Player chips full-width, one per row. */
+  .hs-names {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .hs-name {
+    width: 100%;
+    padding: 8px 14px 8px 8px;
+    min-height: 44px;
+  }
+  .hs-name input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  /* Win-at: number/label on top, full-width slider beneath. */
+  .hs-winrow {
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  .hs-slider {
+    flex-basis: 100%;
+    height: 30px;
+  }
+
+  /* Sticky action bar pinned to the bottom of the scrolling form. */
+  .hs-start {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    padding: 16px;
+    margin-bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 430px) {
+  .hs-rail {
+    padding: 18px 16px 14px;
+  }
+  .hs-form {
+    padding: 16px 14px 14px;
+  }
+  .hs-section {
+    padding: 16px;
+  }
+  .hs-win {
+    width: 76px;
+    font-size: 40px;
+  }
+  .hs-start {
+    font-size: 17px;
+    letter-spacing: 2.5px;
   }
 }
 

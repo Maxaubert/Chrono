@@ -1,0 +1,44 @@
+/* Mobile base layer. Imported once from index.css, after Tailwind.
+ *
+ * Holds only globally-safe touch ergonomics. Per-screen mobile layout lives in
+ * each screen's own CSS (scoped under its root class or a `@media (max-width:
+ * 760px)` block) so nothing leaks onto desktop -- CSS is bundled globally in this
+ * project (see memory: css-global-scope-gotcha).
+ *
+ * Conventions for all mobile work in this app:
+ *   - Fullscreen overlays use 100dvh (NOT 100vh) so the iOS Safari URL bar does
+ *     not clip the bottom. Fall back: `height: 100vh; height: 100dvh;`.
+ *   - Any `:hover` style change must be gated behind `@media (hover: hover)` so a
+ *     tap on a touch screen does not get stuck in the hover state. Provide
+ *     `:active` feedback for touch instead.
+ *   - Interactive controls are >= 44px on the touch target on phone widths.
+ *   - The desktop/mobile fork for layout-divergent screens is the useIsMobile()
+ *     hook; everything else reflows with `@media (max-width: 760px)`.
+ */
+
+/* Kill the grey tap-flash and the 300ms click delay on every control. Harmless on
+   desktop (mouse never triggers the highlight). */
+button,
+a,
+[role='button'],
+input,
+select,
+textarea,
+label {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (max-width: 760px) {
+  /* Stop iOS from auto-inflating font sizes in landscape. */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  /* Inputs at >= 16px never trigger iOS focus-zoom; enforce a floor app-wide. */
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}

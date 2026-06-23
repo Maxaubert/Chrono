@@ -3,6 +3,8 @@
   position: fixed;
   inset: 0;
   z-index: 40;
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh; /* iOS Safari URL bar never clips content */
   display: grid;
   place-items: center;
   pointer-events: none;
@@ -75,6 +77,25 @@
   .tswitch::before,
   .tswitch-panel {
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- phone widths: keep the big name on-screen at 320px ---------- */
+@media (max-width: 760px) {
+  .tswitch-panel {
+    padding: 0 18px;
+    max-width: 100vw;
+  }
+  .tswitch-name {
+    /* lower floor + tighter tracking so long names never overflow 320px;
+       allow wrapping rather than horizontal overflow */
+    font-size: clamp(32px, 11vw, 72px);
+    letter-spacing: 2px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .skin-history .tswitch-name {
+    letter-spacing: 1px;
   }
 }
 
