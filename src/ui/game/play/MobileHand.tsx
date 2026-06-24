@@ -1,19 +1,20 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import type { Card } from '@/core'
 import HandCard from './HandCard'
 
 /**
  * Mobile placement rail. Renders the current player's timeline as a
- * horizontally-scrollable row of their cards (reusing {@link HandCard} for the
- * visual, sized down via CSS) with a tappable `+` gap between every pair of
- * cards, plus one before the first and one after the last.
+ * horizontally-scrollable row of their cards (reusing {@link HandCard}, sized
+ * down via CSS). It mirrors the desktop {@link Hand} interaction rather than
+ * showing every gap at once: you TAP a card to pick it, and only then do a
+ * BEFORE and an AFTER target appear on either side of that card. Tapping the
+ * picked card again (or the empty backdrop) cancels.
  *
- * Placement contract mirrors the desktop {@link Hand}: a timeline of N cards has
- * N+1 gaps; gap `k` (0..N) calls `onPlace(k)`. The mystery card being placed is
- * shown above in the mystery slot, so the rail only needs the gap targets.
+ * Placement contract matches desktop: picking card `i`, BEFORE calls
+ * `onPlace(i)` and AFTER calls `onPlace(i + 1)`.
  *
- * `interactive === false` disables the gaps (turn ending / switching); `piled`
- * collapses the rail into a calmer "handing off" look with no gaps.
+ * `interactive === false` blocks picking (turn ending / switching); `piled`
+ * is the calmer hand-off look (also no placement targets).
  */
 export default function MobileHand({
   timeline,
@@ -34,50 +35,76 @@ export default function MobileHand({
   piled?: boolean
   interactive?: boolean
 }) {
-  const n = timeline.length
-  const showGaps = interactive && !piled
+  const [pickedState, setPicked] = useState<number | null>(null)
+  // Ignore a stale pick while the hand is non-interactive (turn ending).
+  const picked = interactive ? pickedState : null
 
-  // A gap button for slot k (0..n). The first gap keeps the desktop
-  // `place-before` testid and the last keeps `place-after`, so existing tests
-  // still resolve; every gap also carries `place-gap-{k}` for direct targeting.
-  function gap(k: number) {
-    const testid =
-      k === 0 ? 'place-before' : k === n ? 'place-after' : `place-gap-${k}`
+  function pick(i: number) {
+    setPicked((p) => (p === i ? null : i))
+  }
+  function place(slotIndex: number) {
+    onPlace(slotIndex)
+    setPicked(null)
+  }
+
+  function placeBox(slotIndex: number, side: 'before' | 'after') {
     return (
       <button
-        key={`gap-${k}`}
         className="mhand-gap"
-        data-testid={testid}
-        data-gap={k}
-        aria-label={`Place here (position ${k + 1})`}
-        onClick={() => onPlace(k)}
+        data-testid={side === 'before' ? 'place-before' : 'place-after'}
+        data-gap={slotIndex}
+        aria-label={
+          side === 'before' ? 'Place before this card' : 'Place after this card'
+        }
+        onClick={() => place(slotIndex)}
       >
         <span className="mhand-plus">+</span>
-        <span className="mhand-gap-label">PLACE</span>
+        <span className="mhand-gap-label">
+          {side === 'before' ? 'BEFORE' : 'AFTER'}
+        </span>
       </button>
     )
   }
 
   return (
-    <div className={`mhand ${piled ? 'piled' : ''}`}>
-      <div className="mhand-rail">
-        {showGaps && gap(0)}
-        {timeline.map((card, i) => (
-          <Fragment key={card.id}>
-            <div className="mhand-card" data-testid={`hand-card-${i}`}>
-              <HandCard
-                id={card.id}
-                year={labelOf?.(card.id) ?? card.year}
-                title={titleOf?.(card.id)}
-                artist={artistOf?.(card.id)}
-                image={imageOf?.(card.id)}
-              />
-            </div>
-            {showGaps && i < n - 1 && gap(i + 1)}
-          </Fragment>
-        ))}
-        {showGaps && n > 0 && gap(n)}
+    <>
+      {picked !== null && (
+        <button
+          className="mhand-cancel"
+          aria-label="Cancel placement"
+          onClick={() => setPicked(null)}
+        />
+      )}
+      <div className={`mhand ${piled ? 'piled' : ''}`}>
+        <p className="mhand-hint" aria-live="polite">
+          {picked === null
+            ? 'Tap a card, then place the mystery before or after it'
+            : 'Tap BEFORE or AFTER to place the mystery'}
+        </p>
+        <div className="mhand-rail">
+          {timeline.map((card, i) => (
+            <Fragment key={card.id}>
+              {picked === i && placeBox(i, 'before')}
+              <button
+                className={`mhand-card ${picked === i ? 'picked' : ''}`}
+                data-testid={`hand-card-${i}`}
+                aria-label={`Card ${labelOf?.(card.id) ?? card.year}`}
+                disabled={!interactive}
+                onClick={() => pick(i)}
+              >
+                <HandCard
+                  id={card.id}
+                  year={labelOf?.(card.id) ?? card.year}
+                  title={titleOf?.(card.id)}
+                  artist={artistOf?.(card.id)}
+                  image={imageOf?.(card.id)}
+                />
+              </button>
+              {picked === i && placeBox(i + 1, 'after')}
+            </Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

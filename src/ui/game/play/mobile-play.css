@@ -177,6 +177,11 @@
 .mobile-game-screen.game-screen .sd-myst-kicker {
   font-size: clamp(11px, 3vw, 13px);
 }
+/* The placement instruction now lives in the rail (.mhand-hint), so drop the
+ * mystery card's own hint on mobile to avoid saying it twice. */
+.mobile-game-screen.game-screen .myst-hint {
+  display: none;
+}
 
 /* Hitster's disc card has absolutely-positioned internals (vinyl, equalizer,
  * the `?`), so it must keep its fixed 240x344 aspect. Leave it natural on a
@@ -199,16 +204,40 @@
 }
 
 /* ===================================================================== */
-/* BOTTOM -- tap-to-place rail                                           */
+/* BOTTOM -- swipeable deck rail; tap a card, then BEFORE / AFTER appear  */
 /* ===================================================================== */
 .mobile-game-screen .mhand {
+  position: relative;
+  z-index: 1; /* sits above the full-screen cancel catcher */
   background: linear-gradient(
     180deg,
     transparent,
     color-mix(in srgb, var(--bg) 70%, transparent) 30%
   );
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+  padding: 8px 0 calc(10px + env(safe-area-inset-bottom));
 }
+
+/* full-screen catcher: tap empty space (or the clue) to cancel the pick */
+.mobile-game-screen .mhand-cancel {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.mobile-game-screen .mhand-hint {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  opacity: 0.75;
+  padding: 0 14px;
+}
+
 .mobile-game-screen .mhand-rail {
   display: flex;
   align-items: center;
@@ -223,12 +252,31 @@
   display: none;
 }
 
-/* The player's existing cards -- the same HandCard visual, scaled down. The
- * 240x344 card is wrapped so the scale does not disturb flex sizing. */
+/* The player's existing cards -- the same HandCard visual, scaled down, each a
+ * bare tappable button. The 240x344 card is sized so the scale does not disturb
+ * flex sizing. */
 .mobile-game-screen .mhand-card {
   flex: 0 0 auto;
   width: calc(240px * 0.42);
   height: calc(344px * 0.42);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 14px;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.mobile-game-screen .mhand-card:disabled {
+  cursor: default;
+}
+/* the picked card lifts and glows so it reads as "selected" */
+.mobile-game-screen .mhand-card.picked {
+  transform: translateY(-8px);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 0 26px -4px var(--accent);
 }
 .mobile-game-screen .mhand-card .h-card.handcard {
   width: 240px;
