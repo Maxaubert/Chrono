@@ -245,8 +245,15 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 4px 14px;
+  /* generous top room so a picked card can lift without being clipped by the
+   * scroll container (overflow-x:auto also clips the y axis). */
+  padding: 22px 14px 16px;
   scroll-padding: 14px;
+  overscroll-behavior-x: contain;
+  cursor: grab; /* affordance for mouse drag-to-scroll (touch pans natively) */
+}
+.mobile-game-screen .mhand-rail:active {
+  cursor: grabbing;
 }
 .mobile-game-screen .mhand-rail::-webkit-scrollbar {
   display: none;
@@ -271,12 +278,14 @@
 .mobile-game-screen .mhand-card:disabled {
   cursor: default;
 }
-/* the picked card lifts and glows so it reads as "selected" */
+/* the picked card lifts and glows so it reads as "selected". The glow is kept
+ * tight (a 2px ring + a short downward bloom) so it stays inside the rail's
+ * vertical padding instead of being clipped by the scroll container. */
 .mobile-game-screen .mhand-card.picked {
   transform: translateY(-8px);
   box-shadow:
     0 0 0 2px var(--accent),
-    0 0 26px -4px var(--accent);
+    0 8px 16px -6px color-mix(in srgb, var(--accent) 70%, transparent);
 }
 .mobile-game-screen .mhand-card .h-card.handcard {
   width: 240px;
