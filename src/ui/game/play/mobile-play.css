@@ -28,13 +28,24 @@
 .mobile-game-screen .hand {
   display: none;
 }
-.mobile-game-screen .mystery-wrap {
+/* Two classes on the root (`.mobile-game-screen.game-screen`) so this reliably
+ * outranks the desktop `.game-screen .mystery-wrap` rule that is bundled
+ * globally -- a single-class mobile selector only ties with it, and the winner
+ * then depends on bundle order. */
+.mobile-game-screen.game-screen .mystery-wrap {
   position: static;
+  inset: auto;
   left: auto;
   top: auto;
   transform: none;
   animation: none;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2.2vh, 14px);
 }
 
 .mobile-game-screen .mgs-top {
@@ -140,26 +151,50 @@
 }
 
 /* ===================================================================== */
-/* MIDDLE -- the game-supplied mystery card, scaled to fit phone width   */
+/* MIDDLE -- the game-supplied mystery card, sized to fit the band        */
 /* ===================================================================== */
-/* The mystery content is a 240x344 `.h-card` (+ controls + hint) stacked in
- * `.mystery-wrap`. Scale the whole wrapper down so it fits the available band
- * without changing its internal proportions (disc / equalizer / clue layout). */
-.mobile-game-screen .mystery-wrap {
-  --myst-scale: 0.84;
-  transform: scale(var(--myst-scale));
-  transform-origin: center center;
-  gap: 12px;
+/* Text-clue cards (History, Star Wars) are a fixed 240-248x344 on desktop.
+ * On a phone -- especially a short band -- that fixed height clips the clue and
+ * spills over the rail, so make them fluid: hug the clue, cap at the band
+ * height, and size the text responsively. Specificity is bumped past the skin
+ * rules via `.mobile-game-screen.game-screen` (+ the skin) since the root
+ * carries both classes. */
+.skin-history .mobile-game-screen.game-screen .h-card.hist-myst,
+.mobile-game-screen.game-screen .h-card.sd-myst {
+  width: min(82vw, 300px);
+  height: auto;
+  max-height: 88%;
+  padding: clamp(16px, 4.5vw, 26px) clamp(14px, 4vw, 22px);
+  gap: clamp(10px, 2.4vh, 16px);
+  overflow: hidden;
 }
-/* Very short viewports (landscape phones): shrink further so the card + rail fit. */
-@media (max-height: 640px) {
-  .mobile-game-screen .mystery-wrap {
-    --myst-scale: 0.66;
+.skin-history .mobile-game-screen.game-screen .hist-myst-clue,
+.mobile-game-screen.game-screen .sd-myst-clue {
+  font-size: clamp(15px, 4.2vw, 19px);
+  line-height: 1.36;
+}
+.skin-history .mobile-game-screen.game-screen .hist-myst-kicker,
+.mobile-game-screen.game-screen .sd-myst-kicker {
+  font-size: clamp(11px, 3vw, 13px);
+}
+
+/* Hitster's disc card has absolutely-positioned internals (vinyl, equalizer,
+ * the `?`), so it must keep its fixed 240x344 aspect. Leave it natural on a
+ * normal-height phone; scale the whole slot down only on short bands (landscape
+ * or small phones) so it never collides with the rail. */
+@media (max-height: 720px) {
+  .skin-hitster .mobile-game-screen.game-screen .mystery-wrap {
+    transform: scale(0.86);
   }
 }
-@media (max-height: 540px) {
-  .mobile-game-screen .mystery-wrap {
-    --myst-scale: 0.54;
+@media (max-height: 620px) {
+  .skin-hitster .mobile-game-screen.game-screen .mystery-wrap {
+    transform: scale(0.72);
+  }
+}
+@media (max-height: 520px) {
+  .skin-hitster .mobile-game-screen.game-screen .mystery-wrap {
+    transform: scale(0.6);
   }
 }
 
