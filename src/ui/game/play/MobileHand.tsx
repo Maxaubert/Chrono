@@ -1,4 +1,9 @@
-import { Fragment, useState } from 'react'
+import {
+  Fragment,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import type { Card } from '@/core'
 import HandCard from './HandCard'
 
@@ -38,6 +43,39 @@ export default function MobileHand({
   const [pickedState, setPicked] = useState<number | null>(null)
   // Ignore a stale pick while the hand is non-interactive (turn ending).
   const picked = interactive ? pickedState : null
+
+  const railRef = useRef<HTMLDivElement>(null)
+
+  // Mouse drag-to-scroll. Touch swipes already pan the overflow rail natively,
+  // so this only kicks in for a mouse (e.g. desktop dev / narrow window) where
+  // dragging an overflow container does nothing by default. A drag past a small
+  // threshold also swallows the trailing click so it does not pick a card.
+  function onRailPointerDown(e: ReactPointerEvent<HTMLDivElement>) {
+    if (e.pointerType !== 'mouse') return
+    const el = railRef.current
+    if (!el) return
+    const startX = e.clientX
+    const startLeft = el.scrollLeft
+    let moved = false
+    function onMove(ev: PointerEvent) {
+      const dx = ev.clientX - startX
+      if (Math.abs(dx) > 3) moved = true
+      el!.scrollLeft = startLeft - dx
+    }
+    function onUp() {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      if (moved) {
+        const block = (ev: Event) => {
+          ev.stopPropagation()
+          ev.preventDefault()
+        }
+        el!.addEventListener('click', block, { capture: true, once: true })
+      }
+    }
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+  }
 
   function pick(i: number) {
     setPicked((p) => (p === i ? null : i))
@@ -81,7 +119,11 @@ export default function MobileHand({
             ? 'Tap a card, then place the mystery before or after it'
             : 'Tap BEFORE or AFTER to place the mystery'}
         </p>
-        <div className="mhand-rail">
+        <div
+          className="mhand-rail"
+          ref={railRef}
+          onPointerDown={onRailPointerDown}
+        >
           {timeline.map((card, i) => (
             <Fragment key={card.id}>
               {picked === i && placeBox(i, 'before')}
