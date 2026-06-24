@@ -62,3 +62,4 @@ public/starwars/cards-cand/
 # graphify scratch / regeneratable (machine-specific paths + extraction cache)
 graphify-out/cache/
 graphify-out/.graphify_*
+/starwars-redo/
