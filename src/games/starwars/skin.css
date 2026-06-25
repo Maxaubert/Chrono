@@ -142,14 +142,10 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: grayscale(1) contrast(1.08) brightness(0.82);
+  filter: none;
 }
 .skin-starwars .sw-duo {
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: color;
-  opacity: 0.62;
-  background: linear-gradient(180deg, #ff6a6a, #b22222 55%, #2a0606);
+  display: none;
 }
 .skin-starwars .sw-scrim {
   position: absolute;
@@ -225,19 +221,12 @@
   margin: 0;
   border-radius: inherit;
   box-shadow: none;
-  filter: grayscale(1) contrast(1.08) brightness(0.82);
+  filter: none;
 }
-/* imperial-red duotone over the grayscale art */
+/* full-color art: no red duotone over the in-play cards (red border + scrim stay) */
 .skin-starwars .game-screen .handcard::before,
 .skin-starwars .reveal-the-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  mix-blend-mode: color;
-  opacity: 0.62;
-  background: linear-gradient(180deg, #ff6a6a, #b22222 55%, #2a0606);
+  display: none;
 }
 /* bottom scrim so the year + title stay legible over the art */
 .skin-starwars .game-screen .handcard::after,
