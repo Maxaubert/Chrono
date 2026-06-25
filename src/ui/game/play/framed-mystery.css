@@ -1,0 +1,113 @@
+/* "Framed by rules" mystery: the event card (art + title, no year) beside the
+ * quote, bracketed by top/bottom accent rules. Desktop shows the card; mobile
+ * (under .mobile-game-screen) hides it and shows just the quote. Scoped under
+ * .game-screen (CSS is bundled globally); colours come from the active skin's
+ * theme vars (--accent / --accent2 / --glow). */
+
+.game-screen .fmyst {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  max-width: 540px;
+  padding: 20px 6px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+/* the event card: art under a bottom scrim with the title + era, no year */
+.game-screen .fmyst-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 152px;
+  aspect-ratio: 5 / 7;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow:
+    0 16px 36px -16px rgba(0, 0, 0, 0.8),
+    0 0 26px -12px var(--glow);
+}
+.game-screen .fmyst-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.game-screen .fmyst-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 28px 11px 10px;
+  background: linear-gradient(180deg, transparent, rgba(4, 4, 8, 0.92));
+}
+.game-screen .fmyst-title {
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.08;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #fff;
+}
+.game-screen .fmyst-era {
+  font-weight: 700;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+.game-screen .fmyst-q {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.game-screen .fmyst-kicker {
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.game-screen .fmyst-clue {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.42;
+  color: color-mix(in srgb, #fff 90%, var(--accent2));
+}
+
+/* History reads as an almanac: serif throughout */
+.skin-history .game-screen .fmyst-kicker,
+.skin-history .game-screen .fmyst-clue,
+.skin-history .game-screen .fmyst-title,
+.skin-history .game-screen .fmyst-era {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* ---- mobile: just the quote between the rules, no card ---- */
+.mobile-game-screen.game-screen .fmyst {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: min(86vw, 360px);
+  max-width: none;
+  gap: 0;
+  padding: 22px 12px;
+}
+.mobile-game-screen.game-screen .fmyst-card {
+  display: none;
+}
+.mobile-game-screen.game-screen .fmyst-q {
+  align-items: center;
+  gap: 12px;
+}
+.mobile-game-screen.game-screen .fmyst-kicker {
+  font-size: clamp(11px, 3vw, 13px);
+}
+.mobile-game-screen.game-screen .fmyst-clue {
+  font-size: clamp(16px, 4.4vw, 20px);
+}

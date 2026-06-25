@@ -20,8 +20,8 @@ test('History plays a clue card and reveals on placement', async ({ page }) => {
   await expect(page.getByTestId('start-game')).toBeEnabled()
   await page.getByTestId('start-game').click()
 
-  // The game screen shows the text clue card and the player's hand.
-  await expect(page.locator('.hist-myst')).toBeVisible()
+  // The game screen shows the framed text clue and the player's hand.
+  await expect(page.locator('.fmyst')).toBeVisible()
   const handCard = page.getByTestId('hand-card-0')
   await expect(handCard).toBeVisible()
 
