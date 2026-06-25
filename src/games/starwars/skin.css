@@ -189,6 +189,61 @@
   background: linear-gradient(90deg, var(--accent), transparent);
 }
 
+/* a wide, soft, slow glint that glides top-left -> bottom-right across each
+   fan card, one card at a time, then a long rest (mirrors the History preview
+   highlight). White so it reads as a gloss of light over the full-colour art. */
+.skin-starwars .menu-screen .h-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  mix-blend-mode: screen;
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -120% -120%;
+  background-image: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(255, 244, 244, 0.06) 44%,
+    rgba(255, 250, 250, 0.4) 50%,
+    rgba(255, 244, 244, 0.06) 56%,
+    transparent 70%
+  );
+  animation: starwarsSheen 30s linear infinite;
+}
+/* glide across in the first ~19% (constant speed), then hold parked off the
+   top-left corner (invisible) for the rest. Per-card delays fire one by one. */
+@keyframes starwarsSheen {
+  0% {
+    background-position: 200% 200%;
+  }
+  19% {
+    background-position: -120% -120%;
+  }
+  100% {
+    background-position: -120% -120%;
+  }
+}
+.skin-starwars .menu-screen .c1 .h-card::before {
+  animation-delay: 0s;
+}
+.skin-starwars .menu-screen .c2 .h-card::before {
+  animation-delay: 6.5625s;
+}
+.skin-starwars .menu-screen .c3 .h-card::before {
+  animation-delay: 13.125s;
+}
+.skin-starwars .menu-screen .c4 .h-card::before {
+  animation-delay: 19.6875s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skin-starwars .menu-screen .h-card::before {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
 /* the reveal cover melts to imperial red rather than Hitster purple */
 .skin-starwars .reveal-back {
   background: linear-gradient(160deg, #1a0c0e, #070608);
