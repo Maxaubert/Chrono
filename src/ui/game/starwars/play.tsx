@@ -10,7 +10,11 @@ export function makeStarWarsPlay() {
   return makeDeckPlay({
     cards: CARDS,
     toDrawn,
-    Mystery: makeTypographicMystery(clueBySlug, 'When did it happen?'),
+    Mystery: makeTypographicMystery(
+      clueBySlug,
+      'When did it happen?',
+      (id) => `/starwars/cards/${id}.jpg`,
+    ),
     Setup: StaticDeckSetup,
     revealImage: (drawn) => `/starwars/cards/${drawn.card.id}.jpg`,
   })

@@ -1,18 +1,19 @@
 import type { MysteryProps } from '../play/adapter'
-import { clueBySlug } from './deck'
-import './history-play.css'
+import FramedMystery from '../play/FramedMystery'
+import { clueBySlug, imageBySlug } from './deck'
 
-/** History's mystery slot: a silent text-clue card (no audio). The card's
- *  identity is the clue, so only `drawn` is read from MysteryProps. */
+/** History's mystery slot: the "framed by rules" event card (painting + title,
+ *  no year) beside the silent text clue. The clue is the card's identity, so
+ *  only `drawn` is read. */
 export default function HistoryMystery({ drawn }: MysteryProps) {
-  const clue = drawn ? clueBySlug.get(drawn.card.id) : undefined
+  const id = drawn?.card.id
   return (
-    <div className="mystery-wrap">
-      <div className="h-card hist-myst">
-        <div className="hist-myst-kicker">When did it happen?</div>
-        <p className="hist-myst-clue">{clue}</p>
-      </div>
-      <div className="myst-hint">tap a slot below to place it</div>
-    </div>
+    <FramedMystery
+      kicker="When did it happen?"
+      clue={id ? clueBySlug.get(id) : undefined}
+      image={id ? imageBySlug.get(id) : undefined}
+      title={drawn?.reveal.title}
+      era={drawn?.reveal.subtitle}
+    />
   )
 }

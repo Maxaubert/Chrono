@@ -21,7 +21,7 @@ test('Star Wars plays a clue card and reveals a BBY/ABY label', async ({
   await page.getByTestId('start-game').click()
 
   // The game screen shows the typographic clue card and the player's hand.
-  await expect(page.locator('.sd-myst')).toBeVisible()
+  await expect(page.locator('.fmyst')).toBeVisible()
   const handCard = page.getByTestId('hand-card-0')
   await expect(handCard).toBeVisible()
 
