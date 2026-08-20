@@ -42,6 +42,7 @@ export function makeHitsterPlay(session: SpotifySession): GamePlay {
   return {
     Setup,
     Mystery: HitsterMystery,
+    usesSpotify: !session.guest && !session.mock,
     initDeck: (_result, rng) =>
       makeHitsterDeck(pendingTracks, session.fetchYear, rng),
     revealImage: (drawn) => imageById.get(drawn.card.id) ?? undefined,

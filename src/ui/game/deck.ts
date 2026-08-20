@@ -14,15 +14,19 @@ export function buildDeck(
   return out
 }
 
-/** Pop tracks until one yields a year, returning its DrawnCard + the rest. */
+/** Pop tracks until one yields a year, returning its DrawnCard + the rest.
+ *  Only a track the lookup positively reports as year-less is skipped; a
+ *  FAILED lookup (network, rate limit -- fetchYear throws) propagates without
+ *  consuming the track, so a transient outage cannot silently burn the deck. */
 export async function takeNextDrawn(
   remaining: SpotifyTrack[],
   fetchYear: (id: string) => Promise<number | null>,
 ): Promise<{ drawn: DrawnCard | null; remaining: SpotifyTrack[] }> {
   const rest = remaining.slice()
   while (rest.length > 0) {
-    const track = rest.shift() as SpotifyTrack
-    const year = await fetchYear(track.id)
+    const track = rest[0]
+    const year = await fetchYear(track.id) // throws -> track stays in `remaining`
+    rest.shift()
     if (year != null) {
       return {
         drawn: {

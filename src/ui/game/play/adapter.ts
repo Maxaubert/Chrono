@@ -53,6 +53,9 @@ export interface GamePlay {
   revealImage?: (drawn: DrawnCard) => string | undefined
   /** Omit for a silent game. */
   audio?: GameAudio
+  /** True when this adapter drives the Spotify session (host mode); the shell
+   *  only shows Spotify session errors over games that actually use it. */
+  usesSpotify?: boolean
   /** Collects names + win target (+ any game payload) and calls onStart. */
   Setup: ComponentType<GameSetupProps>
 }

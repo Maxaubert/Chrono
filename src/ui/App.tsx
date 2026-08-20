@@ -97,8 +97,11 @@ function GameRoot() {
       ) : (
         setup && (
           <>
-            {/* Spotify errors are Hitster-only; History never touches the session. */}
-            {game.id !== 'history' && session.error && (
+            {/* Session errors only belong over a game that uses Spotify; the
+                session auto-connects in the background regardless of the
+                active game, so a silent game (History, Star Wars) must never
+                get a Spotify banner painted over it. */}
+            {play.usesSpotify && session.error && (
               <p className="reveal-err">{session.error}</p>
             )}
             <GameContainer play={play} setupResult={setup} />

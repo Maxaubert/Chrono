@@ -43,6 +43,13 @@ export default function MobileHand({
   const [pickedState, setPicked] = useState<number | null>(null)
   // Ignore a stale pick while the hand is non-interactive (turn ending).
   const picked = interactive ? pickedState : null
+  // Same guard as the desktop Hand: a pick must not survive into the next
+  // player's hand when the timeline changes under a still-mounted component.
+  const [prevTimeline, setPrevTimeline] = useState(timeline)
+  if (prevTimeline !== timeline) {
+    setPrevTimeline(timeline)
+    setPicked(null)
+  }
 
   const railRef = useRef<HTMLDivElement>(null)
 
