@@ -15,8 +15,8 @@ import './mobile-play.css'
  *
  * The root carries BOTH `mobile-game-screen` and `game-screen` classes: the
  * game-supplied mystery cards (Hitster disc/equalizer, History/Star Wars clue
- * cards) style their internals with `.game-screen .myst-*` / `.hist-myst` /
- * `.sd-myst` selectors, so keeping `game-screen` makes them render correctly.
+ * cards) style their internals with `.game-screen .myst-*` / `.fmyst-*`
+ * selectors, so keeping `game-screen` makes them render correctly.
  * `mobile-play.css` then overrides only the *layout* selectors
  * (`.mystery-wrap`, entrance animations) under the higher-specificity
  * `.mobile-game-screen` prefix, leaving desktop untouched.

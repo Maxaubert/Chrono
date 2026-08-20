@@ -17,8 +17,3 @@ export interface SpotifyTrack {
   year: number | null
   image: string | null
 }
-
-export interface PlaylistImportResult {
-  id: string
-  tracks: SpotifyTrack[]
-}

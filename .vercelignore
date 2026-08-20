@@ -4,6 +4,7 @@
 .git
 node_modules
 .worktrees
+.claude/worktrees
 dist
 .vercel
 public/bg
