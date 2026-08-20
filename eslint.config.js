@@ -22,9 +22,16 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
-  // Config + e2e files (Node, no React rules)
+  // Config + e2e + server-side files (Node, no React rules)
   {
-    files: ['vite.config.ts', 'playwright.config.ts', 'e2e/**/*.ts'],
+    files: [
+      'vite.config.ts',
+      'playwright.config.ts',
+      'vite-plugin-spotify-scraper.ts',
+      'e2e/**/*.ts',
+      'server/**/*.ts',
+      'api/**/*.ts',
+    ],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,

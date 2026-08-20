@@ -44,5 +44,9 @@ test('a mock game plays through to a win', async ({ page }) => {
   }
 
   await expect(winner).toBeVisible()
-  await expect(winner).toContainText('wins')
+  // The mock deck is unshuffled and its years strictly increase, so play is
+  // fully deterministic: Anna anchors 1950, Ben 1951, then Anna places 1952
+  // and 1954, Ben places 1953, and Anna reaches the target of 3 first. If the
+  // winner is ever not Anna, correct placements are not keeping cards.
+  await expect(winner).toContainText('Anna wins')
 })

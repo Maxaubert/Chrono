@@ -23,8 +23,15 @@ export function makeHitsterPlay(session: SpotifySession): GamePlay {
     Setup: HitsterSetup,
     Mystery: HitsterMystery,
     usesSpotify: !session.guest && !session.mock,
+    // Mock mode skips the shuffle: MOCK_TRACKS' years strictly increase in
+    // draw order, and the E2E's rightmost-placement strategy depends on that
+    // actually holding (a shuffled mock deck only ever "won" by exhaustion).
     initDeck: (_result, rng) =>
-      makeHitsterDeck(pendingTracks(), session.fetchYear, rng),
+      makeHitsterDeck(
+        pendingTracks(),
+        session.fetchYear,
+        session.mock ? null : rng,
+      ),
     revealImage: (drawn) => pendingImage(drawn.card.id),
     audio: {
       onDraw: (drawn) => session.provider.play(trackRef(drawn)),
