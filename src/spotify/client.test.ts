@@ -1,6 +1,6 @@
 // src/spotify/client.test.ts
 import { describe, expect, it, vi } from 'vitest'
-import { fetchPlaylistTracks, parsePlaylistId, parseYear } from './client'
+import { parsePlaylistId, parseYear } from './client'
 
 describe('parsePlaylistId', () => {
   const ID = '37i9dQZF1DXcBWIGoYBM5M'
@@ -25,77 +25,7 @@ describe('parseYear', () => {
   })
 })
 
-describe('fetchPlaylistTracks', () => {
-  it('maps items to SpotifyTrack[] across pages', async () => {
-    const page1 = {
-      items: [
-        {
-          track: {
-            id: 'T1',
-            uri: 'spotify:track:T1',
-            name: 'Song One',
-            artists: [{ name: 'Artist A' }],
-            album: {
-              release_date: '1980-01-01',
-              images: [
-                { url: 'https://img/640', width: 640 },
-                { url: 'https://img/300', width: 300 },
-              ],
-            },
-          },
-        },
-      ],
-      next: 'https://api.spotify.com/v1/next-page',
-    }
-    const page2 = {
-      items: [
-        {
-          track: {
-            id: 'T2',
-            uri: 'spotify:track:T2',
-            name: 'Song Two',
-            artists: [{ name: 'Artist B' }],
-            album: { release_date: '1991' },
-          },
-        },
-      ],
-      next: null,
-    }
-    const fetchImpl = vi
-      .fn()
-      .mockResolvedValueOnce({ ok: true, json: async () => page1 })
-      .mockResolvedValueOnce({ ok: true, json: async () => page2 })
-
-    const tracks = await fetchPlaylistTracks({
-      playlistId: 'PL',
-      accessToken: 'AT',
-      fetchImpl: fetchImpl as unknown as typeof fetch,
-    })
-
-    expect(tracks).toEqual([
-      {
-        id: 'T1',
-        uri: 'spotify:track:T1',
-        title: 'Song One',
-        artist: 'Artist A',
-        year: 1980,
-        image: 'https://img/300',
-      },
-      {
-        id: 'T2',
-        uri: 'spotify:track:T2',
-        title: 'Song Two',
-        artist: 'Artist B',
-        year: 1991,
-        image: null,
-      },
-    ])
-    // first call hits the playlist endpoint with a bearer token
-    const [firstUrl, firstInit] = fetchImpl.mock.calls[0]
-    expect(String(firstUrl)).toContain('/playlists/PL/items')
-    expect(firstInit.headers.Authorization).toBe('Bearer AT')
-  })
-
+describe('client fetch helpers', () => {
   it('fetches scraped tracks from the dev-server endpoint', async () => {
     const { fetchPlaylistTracksViaServer } = await import('./client')
     const payload = {
@@ -183,15 +113,15 @@ describe('fetchPlaylistTracks', () => {
     expect(fetchImpl.mock.calls[0][1].headers.Authorization).toBe('Bearer AT')
   })
 
-  it('throws on a non-ok response, including the response body', async () => {
+  it('surfaces a non-ok playlists response, including the body', async () => {
+    const { fetchMyPlaylists } = await import('./client')
     const fetchImpl = vi.fn().mockResolvedValue({
       ok: false,
       status: 403,
       text: async () => 'Insufficient client scope',
     })
     await expect(
-      fetchPlaylistTracks({
-        playlistId: 'PL',
+      fetchMyPlaylists({
         accessToken: 'AT',
         fetchImpl: fetchImpl as unknown as typeof fetch,
       }),

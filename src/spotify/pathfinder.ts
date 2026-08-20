@@ -103,11 +103,6 @@ export function parseTrackMeta(json: unknown): {
   }
 }
 
-/** Read the release year from a getTrack response, or null. */
-export function parseTrackYear(json: unknown): number | null {
-  return parseTrackMeta(json).year
-}
-
 /** Pick an album-cover URL near 300px (good for a card), or null. Shared by the
  *  pathfinder and Web-API track mappers, whose image lists have the same shape. */
 export function pickCoverUrl(

@@ -19,6 +19,7 @@ dist-ssr
 
 # Git worktrees (superpowers isolated workspaces)
 .worktrees
+.claude/worktrees/
 
 # Superpowers brainstorming mockups
 .superpowers

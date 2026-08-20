@@ -6,7 +6,6 @@ import {
   extractOperationHash,
   parsePathfinderPage,
   parseTrackMeta,
-  parseTrackYear,
 } from './pathfinder'
 
 const HASH = 'a65e12194ed5fc443a1cdebed5fabe33ca5b07b987185d63c72483867ad13cb4'
@@ -31,20 +30,6 @@ describe('buildGetTrackUrl', () => {
     expect(
       JSON.parse(url.searchParams.get('extensions')!).persistedQuery.sha256Hash,
     ).toBe(HASH)
-  })
-})
-
-describe('parseTrackYear', () => {
-  it('reads the year from a getTrack response', () => {
-    expect(
-      parseTrackYear({
-        data: { trackUnion: { albumOfTrack: { date: { year: 2007 } } } },
-      }),
-    ).toBe(2007)
-  })
-  it('returns null when absent', () => {
-    expect(parseTrackYear({ data: { trackUnion: {} } })).toBeNull()
-    expect(parseTrackYear({})).toBeNull()
   })
 })
 

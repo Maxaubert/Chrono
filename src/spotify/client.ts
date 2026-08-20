@@ -1,6 +1,5 @@
 // src/spotify/client.ts
 import type { SpotifyTrack } from './types'
-import { pickCoverUrl } from './pathfinder'
 
 const API = 'https://api.spotify.com/v1'
 
@@ -16,59 +15,6 @@ export function parsePlaylistId(input: string): string | null {
 export function parseYear(releaseDate: string): number | null {
   const m = releaseDate.match(/^(\d{4})/)
   return m ? Number(m[1]) : null
-}
-
-interface RawItem {
-  track: {
-    id: string
-    uri: string
-    name: string
-    artists: { name: string }[]
-    album: {
-      release_date: string
-      images?: { url?: string; width?: number | null }[]
-    }
-  } | null
-}
-
-export function mapTrack(item: RawItem): SpotifyTrack | null {
-  const t = item.track
-  if (!t || !t.id) return null
-  return {
-    id: t.id,
-    uri: t.uri,
-    title: t.name,
-    artist: t.artists.map((a) => a.name).join(', '),
-    year: parseYear(t.album?.release_date ?? ''),
-    image: pickCoverUrl(t.album?.images),
-  }
-}
-
-export async function fetchPlaylistTracks(args: {
-  playlistId: string
-  accessToken: string
-  fetchImpl?: typeof fetch
-}): Promise<SpotifyTrack[]> {
-  const f = args.fetchImpl ?? fetch
-  const headers = { Authorization: `Bearer ${args.accessToken}` }
-  // Spotify renamed /tracks -> /items in Feb 2026; the new endpoint is the
-  // sanctioned one and may behave differently from the (forbidden) /tracks.
-  let url: string | null = `${API}/playlists/${args.playlistId}/items?limit=100`
-  const out: SpotifyTrack[] = []
-  while (url) {
-    const res = await f(url, { headers })
-    if (!res.ok) {
-      const body = await res.text().catch(() => '')
-      throw new Error(`Playlist fetch failed: ${res.status} ${body}`.trim())
-    }
-    const page = (await res.json()) as { items: RawItem[]; next: string | null }
-    for (const item of page.items) {
-      const mapped = mapTrack(item)
-      if (mapped) out.push(mapped)
-    }
-    url = page.next
-  }
-  return out
 }
 
 /** Read a full public playlist via our dev-server scraper (web-player GraphQL).
@@ -116,8 +62,8 @@ interface RawPlaylist {
   images?: { url: string }[] | null
 }
 
-/** List the logged-in user's playlists. Allowed in development mode, and a
- * playlist the user owns returns its full track list via fetchPlaylistTracks. */
+/** List the logged-in user's playlists. Allowed in development mode; track
+ * lists are then imported via the server scraper (fetchPlaylistTracksViaServer). */
 export async function fetchMyPlaylists(args: {
   accessToken: string
   fetchImpl?: typeof fetch

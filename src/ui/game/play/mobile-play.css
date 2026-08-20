@@ -153,30 +153,8 @@
 /* ===================================================================== */
 /* MIDDLE -- the game-supplied mystery card, sized to fit the band        */
 /* ===================================================================== */
-/* Text-clue cards (History, Star Wars) are a fixed 240-248x344 on desktop.
- * On a phone -- especially a short band -- that fixed height clips the clue and
- * spills over the rail, so make them fluid: hug the clue, cap at the band
- * height, and size the text responsively. Specificity is bumped past the skin
- * rules via `.mobile-game-screen.game-screen` (+ the skin) since the root
- * carries both classes. */
-.skin-history .mobile-game-screen.game-screen .h-card.hist-myst,
-.mobile-game-screen.game-screen .h-card.sd-myst {
-  width: min(82vw, 300px);
-  height: auto;
-  max-height: 88%;
-  padding: clamp(16px, 4.5vw, 26px) clamp(14px, 4vw, 22px);
-  gap: clamp(10px, 2.4vh, 16px);
-  overflow: hidden;
-}
-.skin-history .mobile-game-screen.game-screen .hist-myst-clue,
-.mobile-game-screen.game-screen .sd-myst-clue {
-  font-size: clamp(15px, 4.2vw, 19px);
-  line-height: 1.36;
-}
-.skin-history .mobile-game-screen.game-screen .hist-myst-kicker,
-.mobile-game-screen.game-screen .sd-myst-kicker {
-  font-size: clamp(11px, 3vw, 13px);
-}
+/* Text-clue cards (History, Star Wars) render as FramedMystery, which carries
+ * its own mobile treatment in framed-mystery.css. */
 /* The placement instruction now lives in the rail (.mhand-hint), so drop the
  * mystery card's own hint on mobile to avoid saying it twice. */
 .mobile-game-screen.game-screen .myst-hint {
