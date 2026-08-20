@@ -4,8 +4,8 @@ import './skin.css'
 
 /**
  * History game module. Natural / stylish vibe (a contrast to Hitster's
- * retro-scifi). Theme-only placeholder for now: no engine yet, so PLAY is
- * disabled until the game is built.
+ * retro-scifi). Fully playable: a 200-card static deck with text clues and
+ * painting reveals (see src/ui/game/history/).
  */
 export const history: GameModule = {
   id: 'history',

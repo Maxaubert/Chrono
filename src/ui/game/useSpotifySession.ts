@@ -39,7 +39,9 @@ function hasValidToken(): boolean {
 let oauthExchangeStarted = false
 
 // A tiny fixed deck for ?mock=1 (no real Spotify). Years strictly increase in
-// draw order so placing at the rightmost gap is always correct (E2E relies on this).
+// draw order so placing at the rightmost gap is always correct; the Hitster
+// adapter skips the shuffle in mock mode so this actually holds (E2E relies
+// on it to assert the intended winner, not just "someone eventually wins").
 const MOCK_TRACKS: SpotifyTrack[] = Array.from({ length: 8 }, (_, i) => ({
   id: `mock-${i}`,
   uri: `spotify:track:mock-${i}`,

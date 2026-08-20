@@ -3,7 +3,7 @@ import { clientIp, createRateLimiter } from './rateLimit'
 
 describe('createRateLimiter', () => {
   it('allows up to the limit, then rejects within the window', () => {
-    let t = 1000
+    const t = 1000
     const rl = createRateLimiter({ limit: 3, windowMs: 1000, now: () => t })
     expect(rl('a').ok).toBe(true)
     expect(rl('a').ok).toBe(true)
@@ -14,7 +14,7 @@ describe('createRateLimiter', () => {
   })
 
   it('tracks keys independently', () => {
-    let t = 0
+    const t = 0
     const rl = createRateLimiter({ limit: 1, windowMs: 1000, now: () => t })
     expect(rl('a').ok).toBe(true)
     expect(rl('b').ok).toBe(true) // different key, not blocked

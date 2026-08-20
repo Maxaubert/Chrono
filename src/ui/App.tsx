@@ -1,6 +1,5 @@
 // src/ui/App.tsx
-import { useEffect, useMemo, useState } from 'react'
-import SpikeHarness from './SpikeHarness'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import MenuScreen from './menu/MenuScreen'
 import GameContainer from './game/GameContainer'
 import { useSpotifySession } from './game/useSpotifySession'
@@ -14,9 +13,19 @@ import ScreenTransition from './transition/ScreenTransition'
 import { ThemeProvider } from './theme/ThemeProvider'
 import { useActiveGame } from './theme/activeGameContext'
 
+// Lazy: the dev-only spike harness pulls in src/scan and with it the qrcode +
+// @zxing/browser libraries; a static import would bundle all of that into the
+// main chunk every production visitor downloads.
+const SpikeHarness = lazy(() => import('./SpikeHarness'))
+
 export default function App() {
   const params = new URLSearchParams(window.location.search)
-  if (params.get('spike') === '1') return <SpikeHarness />
+  if (params.get('spike') === '1')
+    return (
+      <Suspense fallback={null}>
+        <SpikeHarness />
+      </Suspense>
+    )
   return (
     <ThemeProvider>
       <GameRoot />

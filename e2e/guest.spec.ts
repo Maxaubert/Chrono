@@ -56,5 +56,7 @@ test('a guest game plays in-page (no QR, no login) through to a win', async ({
   }
 
   await expect(winner).toBeVisible()
-  await expect(winner).toContainText('wins')
+  // Deterministic mock order (no shuffle): Anna reaches the target first; see
+  // game.spec.ts for the exact sequence.
+  await expect(winner).toContainText('Anna wins')
 })
