@@ -7,11 +7,13 @@ const API = 'https://api.spotify.com/v1'
 export class SpotifyProvider implements AudioProvider {
   readonly id = 'spotify'
   private deviceId: string | null
-  private readonly getAccessToken: () => string | null
+  private player: Spotify.Player | null = null
+  private readonly getAccessToken: () => string | null | Promise<string | null>
   private readonly fetchImpl: typeof fetch
 
   constructor(opts: {
-    getAccessToken: () => string | null
+    /** Token source; may be async so an expired token can be refreshed first. */
+    getAccessToken: () => string | null | Promise<string | null>
     deviceId?: string | null
     fetchImpl?: typeof fetch
   }) {
@@ -25,11 +27,29 @@ export class SpotifyProvider implements AudioProvider {
   /** Load the SDK and connect a player; stores the resulting device id. */
   async connect(): Promise<void> {
     await loadSdk()
-    const { deviceId } = await createConnectedPlayer({
+    const { deviceId, player } = await createConnectedPlayer({
       name: 'Chrono',
-      getToken: () => this.getAccessToken() ?? '',
+      getToken: async () => (await this.getAccessToken()) ?? '',
     })
+    this.player = player
     this.deviceId = deviceId
+    // If the device drops (network blip, suspended tab), stop claiming to be
+    // connected so playback calls fail with a clear "call connect()" error and
+    // the UI can offer a reconnect, instead of opaque 404s from the Web API.
+    player.addListener('not_ready', () => {
+      this.deviceId = null
+    })
+  }
+
+  /** Tear down the SDK player (used on logout). Safe to call when unconnected. */
+  disconnect(): void {
+    try {
+      this.player?.disconnect()
+    } catch {
+      // best-effort teardown
+    }
+    this.player = null
+    this.deviceId = null
   }
 
   get isConnected(): boolean {
@@ -39,7 +59,7 @@ export class SpotifyProvider implements AudioProvider {
   private async put(path: string, body?: unknown): Promise<void> {
     if (!this.deviceId)
       throw new Error('Player not connected; call connect() first.')
-    const token = this.getAccessToken()
+    const token = await this.getAccessToken()
     if (!token) throw new Error('Not authenticated.')
     const res = await this.fetchImpl(
       `${API}${path}?device_id=${this.deviceId}`,

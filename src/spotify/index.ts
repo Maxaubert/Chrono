@@ -8,6 +8,7 @@ export {
   buildAuthorizeUrl,
   exchangeCodeForTokens,
   refreshTokens,
+  ensureFreshTokens,
   isExpired,
   saveTokens,
   loadTokens,

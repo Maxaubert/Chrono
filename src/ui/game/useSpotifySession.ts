@@ -8,6 +8,7 @@ import {
   buildAuthorizeUrl,
   clearTokens,
   deriveChallenge,
+  ensureFreshTokens,
   exchangeCodeForTokens,
   fetchMyPlaylists,
   fetchPlaylistTracksViaServer,
@@ -25,10 +26,11 @@ import {
   type SpotifyTrack,
 } from '@/spotify'
 
-/** True only when a stored token exists and has not expired. */
+/** True when a stored token is usable: not yet expired, or expired but
+ * refreshable (ensureFreshTokens renews it silently on first use). */
 function hasValidToken(): boolean {
   const tokens = loadTokens()
-  return !!tokens && !isExpired(tokens)
+  return !!tokens && (!isExpired(tokens) || !!tokens.refreshToken)
 }
 
 // Module-scoped so the OAuth code/verifier are exchanged exactly once per page
@@ -78,7 +80,10 @@ export function useSpotifySession(guestArg = false): SpotifySession {
         : mock
           ? new MockProvider()
           : new SpotifyProvider({
-              getAccessToken: () => loadTokens()?.accessToken ?? null,
+              // Async so an expired token is silently refreshed before use;
+              // without this every playback call starts failing after ~1 hour.
+              getAccessToken: async () =>
+                (await ensureFreshTokens())?.accessToken ?? null,
             }),
     [mock, guest],
   )
@@ -133,6 +138,7 @@ export function useSpotifySession(guestArg = false): SpotifySession {
   const autoConnectStarted = useRef(false)
 
   function logout() {
+    if (!mock && !guest) (provider as SpotifyProvider).disconnect()
     clearTokens()
     setConnected(false)
     setLoggedIn(false)
@@ -194,7 +200,7 @@ export function useSpotifySession(guestArg = false): SpotifySession {
 
   async function loadMyPlaylists(): Promise<MyPlaylist[]> {
     if (mock) return []
-    const token = loadTokens()?.accessToken
+    const token = (await ensureFreshTokens())?.accessToken
     if (!token) return []
     return fetchMyPlaylists({ accessToken: token })
   }

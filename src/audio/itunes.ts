@@ -15,6 +15,9 @@ export class ItunesPreviewProvider implements AudioProvider {
   readonly id = 'itunes'
   private audio: HTMLAudioElement | null
   private readonly fetchImpl: typeof fetch
+  // Generation counter: a play()/stop() invalidates any lookup still in flight,
+  // so a slow iTunes response cannot start a stale track over the current one.
+  private playSeq = 0
 
   constructor(opts?: { audio?: HTMLAudioElement; fetchImpl?: typeof fetch }) {
     this.audio = opts?.audio ?? null
@@ -28,9 +31,14 @@ export class ItunesPreviewProvider implements AudioProvider {
   }
 
   async play(track: AudioTrackRef): Promise<void> {
+    const seq = ++this.playSeq
     const url = await this.lookupPreview(track)
+    if (seq !== this.playSeq) return // superseded by a newer play()/stop()
     const el = this.el()
     if (!url) {
+      // Removing src does not stop an element that is already playing, so an
+      // unmatched track must pause explicitly or the previous song leaks on.
+      el.pause()
       el.removeAttribute('src')
       return
     }
@@ -56,6 +64,7 @@ export class ItunesPreviewProvider implements AudioProvider {
   }
 
   async stop(): Promise<void> {
+    this.playSeq++ // cancel any lookup still in flight
     if (!this.audio) return
     this.audio.pause()
     this.audio.removeAttribute('src')
