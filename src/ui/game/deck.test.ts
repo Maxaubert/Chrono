@@ -49,4 +49,19 @@ describe('takeNextDrawn', () => {
     expect(drawn).toBeNull()
     expect(remaining).toHaveLength(0)
   })
+
+  it('propagates a failed lookup without consuming the track', async () => {
+    const tracks = ['1', '2'].map(track)
+    let calls = 0
+    const flaky = async (id: string) => {
+      calls++
+      if (calls === 1) throw new Error('Year lookup failed: 429')
+      return id === '1' ? 1991 : 2001
+    }
+    // transient failure surfaces instead of silently burning the track...
+    await expect(takeNextDrawn(tracks, flaky)).rejects.toThrow(/429/)
+    // ...and a retry with the SAME input still draws track 1
+    const { drawn } = await takeNextDrawn(tracks, flaky)
+    expect(drawn?.card).toEqual({ id: '1', year: 1991 })
+  })
 })

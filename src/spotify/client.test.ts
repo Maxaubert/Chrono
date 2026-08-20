@@ -66,6 +66,26 @@ describe('client fetch helpers', () => {
     expect(String(fetchImpl.mock.calls[0][0])).toBe('/api/track-year?id=T1')
   })
 
+  it('throws on a failed year lookup so callers can retry (null = no year)', async () => {
+    const { fetchTrackYear } = await import('./client')
+    const fail = vi.fn().mockResolvedValue({ ok: false, status: 429 })
+    await expect(
+      fetchTrackYear({
+        trackId: 'T1',
+        fetchImpl: fail as unknown as typeof fetch,
+      }),
+    ).rejects.toThrow(/429/)
+    const noYear = vi
+      .fn()
+      .mockResolvedValue({ ok: true, json: async () => ({ year: null }) })
+    expect(
+      await fetchTrackYear({
+        trackId: 'T1',
+        fetchImpl: noYear as unknown as typeof fetch,
+      }),
+    ).toBeNull()
+  })
+
   it("lists the user's playlists across pages", async () => {
     const { fetchMyPlaylists } = await import('./client')
     const page1 = {

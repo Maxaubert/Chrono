@@ -71,11 +71,19 @@ export default function Hand({
   piled?: boolean
   interactive?: boolean
 }) {
-  // Which card is picked up (null = none). place()/cancel reset it; the turn
-  // only advances after a placement, so it is never stale across a hand change.
+  // Which card is picked up (null = none). place()/cancel reset it.
   const [pickedState, setPicked] = useState<number | null>(null)
   // ignore any pick while the hand is non-interactive (turn ending / switching)
   const picked = interactive ? pickedState : null
+  // The hand stays mounted across turns, so a pick set late in a turn (e.g. by
+  // tabbing behind the reveal scrim) must not survive into the NEXT player's
+  // hand at a stale index; drop it whenever the timeline changes (the React
+  // adjust-state-during-render pattern, no extra effect pass).
+  const [prevTimeline, setPrevTimeline] = useState(timeline)
+  if (prevTimeline !== timeline) {
+    setPrevTimeline(timeline)
+    setPicked(null)
+  }
 
   // Build the left-to-right sequence; when a card is picked, insert a placement
   // slot on each side.

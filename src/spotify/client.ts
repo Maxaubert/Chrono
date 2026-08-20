@@ -32,14 +32,17 @@ export async function fetchPlaylistTracksViaServer(args: {
   return (await res.json()) as { tracks: SpotifyTrack[]; total: number }
 }
 
-/** Look up one track's release year via our dev-server (playlist import omits it). */
+/** Look up one track's release year via our dev-server (playlist import omits it).
+ *  Returns null only when the API positively reports the track has no usable
+ *  year; an infrastructure failure (429/5xx/network) throws instead, so callers
+ *  can retry rather than silently discarding the track as year-less. */
 export async function fetchTrackYear(args: {
   trackId: string
   fetchImpl?: typeof fetch
 }): Promise<number | null> {
   const f = args.fetchImpl ?? fetch
   const res = await f(`/api/track-year?id=${args.trackId}`)
-  if (!res.ok) return null
+  if (!res.ok) throw new Error(`Year lookup failed: ${res.status}`)
   const data = (await res.json()) as { year?: number | null }
   return data.year ?? null
 }

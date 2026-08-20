@@ -122,6 +122,7 @@ export default function GameContainer({
   function beginEndTurn() {
     if (!state || endingStarted.current) return
     endingStarted.current = true
+    setError(null) // OK doubles as the retry after a failed draw
     const cur = state
     const player = cur.players[cur.currentPlayerIndex]
     const won = player.timeline.length >= cur.config.targetCards
@@ -143,9 +144,20 @@ export default function GameContainer({
   }
 
   async function switchCovered() {
-    const nextDrawn = await drawNext()
-    dispatch({ type: 'advance', nextDrawn })
-    if (nextDrawn) startAudio(nextDrawn)
+    try {
+      const nextDrawn = await drawNext()
+      if (!nextDrawn) {
+        // Deck exhausted: the game ends here, so the current track must not
+        // keep playing over the win screen (which has no audio controls).
+        Promise.resolve(play.audio?.onStop()).catch(() => {})
+      }
+      dispatch({ type: 'advance', nextDrawn })
+      if (nextDrawn) startAudio(nextDrawn)
+    } catch (e) {
+      // A failed draw (network, rate limit) must not stall the game silently:
+      // surface it, and let the re-shown reveal's OK act as the retry.
+      setError(String(e))
+    }
   }
   function switchDone() {
     setSwitching(false)
@@ -233,7 +245,7 @@ export default function GameContainer({
       {switching && (
         <TurnSwitch
           name={nextName}
-          onCovered={() => void switchCovered()}
+          onCovered={switchCovered}
           onDone={switchDone}
         />
       )}
