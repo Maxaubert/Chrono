@@ -44,9 +44,33 @@ export function isSpotifyId(id: unknown): id is string {
 let cachedBundle: string | null = null
 const hashCache: Record<string, string> = {}
 
+/** Per-request upstream timeout. A hung Spotify/CDN/iTunes connection must not
+ * pin a serverless invocation to its max duration (or hang the dev server);
+ * the abort surfaces through the existing error paths as a 502. */
+const FETCH_TIMEOUT_MS = 8000
+
+function upstreamFetch(
+  url: string,
+  headers?: Record<string, string>,
+): Promise<Response> {
+  return fetch(url, {
+    headers,
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+  })
+}
+
+/** Discard a response body we will not read. Node's undici keeps the socket
+ * tied up until the body is consumed or cancelled. */
+function discardBody(res: Response): void {
+  void res.arrayBuffer().catch(() => {})
+}
+
 async function fetchText(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { 'User-Agent': UA } })
-  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`)
+  const res = await upstreamFetch(url, { 'User-Agent': UA })
+  if (!res.ok) {
+    discardBody(res)
+    throw new Error(`GET ${url} -> ${res.status}`)
+  }
   return res.text()
 }
 
@@ -107,7 +131,8 @@ async function pathfinderPage(
     limit: PAGE_LIMIT,
     hash,
   })
-  const res = await fetch(url, { headers: pathfinderHeaders(token) })
+  const res = await upstreamFetch(url, pathfinderHeaders(token))
+  if (!res.ok) discardBody(res)
   const json = res.ok ? await res.json().catch(() => null) : null
   const hasContent = !!(
     json as { data?: { playlistV2?: { content?: unknown } } }
@@ -161,10 +186,13 @@ async function itunesOriginalYear(
   const term = [artist?.split(',')[0], title].filter(Boolean).join(' ').trim()
   if (!term) return null
   try {
-    const res = await fetch(
+    const res = await upstreamFetch(
       `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&entity=song&limit=15`,
     )
-    if (!res.ok) return null
+    if (!res.ok) {
+      discardBody(res)
+      return null
+    }
     const data = (await res.json()) as { results?: ItunesSong[] }
     return earliestItunesYear(data.results ?? [], {
       artist: artist ?? '',
@@ -181,9 +209,7 @@ export async function getTrackYear(trackId: string): Promise<number | null> {
   if (!isSpotifyId(trackId)) throw new Error('invalid track id')
   const token = await getAnonToken('track', trackId)
   const request = async (hash: string) =>
-    fetch(buildGetTrackUrl({ trackId, hash }), {
-      headers: pathfinderHeaders(token),
-    })
+    upstreamFetch(buildGetTrackUrl({ trackId, hash }), pathfinderHeaders(token))
   let meta: ReturnType<typeof parseTrackMeta> = {
     year: null,
     title: null,
@@ -192,6 +218,7 @@ export async function getTrackYear(trackId: string): Promise<number | null> {
   for (const force of [false, true]) {
     const hash = await loadHash('getTrack', force)
     const res = await request(hash)
+    if (!res.ok) discardBody(res)
     const json = res.ok ? await res.json().catch(() => null) : null
     const m = parseTrackMeta(json)
     if (m.year != null || m.title) {
