@@ -2,17 +2,27 @@
 
 const SDK_SRC = 'https://sdk.scdn.co/spotify-player.js'
 
+// Memoized so concurrent loadSdk() calls share one script + one ready callback;
+// a second call used to overwrite onSpotifyWebPlaybackSDKReady and leave the
+// first caller's promise pending forever.
+let sdkLoading: Promise<void> | null = null
+
 /** Inject the Web Playback SDK script and resolve when it is ready. */
 export function loadSdk(): Promise<void> {
   if (window.Spotify) return Promise.resolve()
-  return new Promise((resolve, reject) => {
+  if (sdkLoading) return sdkLoading
+  sdkLoading = new Promise((resolve, reject) => {
     window.onSpotifyWebPlaybackSDKReady = () => resolve()
     const tag = document.createElement('script')
     tag.src = SDK_SRC
     tag.async = true
-    tag.onerror = () => reject(new Error('Failed to load Spotify SDK'))
+    tag.onerror = () => {
+      sdkLoading = null // allow a retry to re-inject
+      reject(new Error('Failed to load Spotify SDK'))
+    }
     document.body.appendChild(tag)
   })
+  return sdkLoading
 }
 
 export interface ConnectedPlayer {
@@ -31,14 +41,18 @@ const READY_TIMEOUT_MS = 15000
  * init failure, a failed connect(), or a timeout with no events at all. */
 export function createConnectedPlayer(args: {
   name: string
-  getToken: () => string
+  getToken: () => string | Promise<string>
   spotify?: typeof window.Spotify
 }): Promise<ConnectedPlayer> {
   const Spotify = args.spotify ?? window.Spotify
   return new Promise((resolve, reject) => {
     const player = new Spotify.Player({
       name: args.name,
-      getOAuthToken: (cb) => cb(args.getToken()),
+      // The token source may refresh an expired token first, so resolve it
+      // asynchronously; the SDK's callback contract supports that.
+      getOAuthToken: (cb) => {
+        void Promise.resolve(args.getToken()).then((t) => cb(t))
+      },
     })
     let settled = false
     const timer = setTimeout(
@@ -61,6 +75,13 @@ export function createConnectedPlayer(args: {
     function fail(message: string) {
       if (settled) return
       done()
+      // connect() may already be in flight; tear the player down so an
+      // abandoned attempt cannot surface later as a ghost "Chrono" device.
+      try {
+        player.disconnect()
+      } catch {
+        // best-effort cleanup
+      }
       reject(new Error(message))
     }
 

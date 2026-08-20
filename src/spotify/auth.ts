@@ -1,4 +1,5 @@
 // src/spotify/auth.ts
+import { getSpotifyConfig } from './config'
 import type { SpotifyTokens } from './types'
 
 const AUTHORIZE = 'https://accounts.spotify.com/authorize'
@@ -104,13 +105,57 @@ export function isExpired(tokens: SpotifyTokens, now = Date.now()): boolean {
   return now >= tokens.expiresAt - EXPIRY_SKEW_MS
 }
 
+// Concurrent callers (the SDK's getOAuthToken and a REST call can race) share
+// one refresh request instead of each spending the single-use refresh token.
+let refreshInFlight: Promise<SpotifyTokens | null> | null = null
+
+/**
+ * Stored tokens, silently refreshed first when the access token has expired.
+ * Returns null when there are no tokens, no refresh token, or the refresh
+ * fails (the caller then falls back to the login flow).
+ */
+export async function ensureFreshTokens(args?: {
+  clientId?: string
+  now?: number
+  fetchImpl?: typeof fetch
+}): Promise<SpotifyTokens | null> {
+  const tokens = loadTokens()
+  if (!tokens) return null
+  if (!isExpired(tokens, args?.now)) return tokens
+  if (!tokens.refreshToken) return null
+  if (!refreshInFlight) {
+    refreshInFlight = refreshTokens({
+      refreshToken: tokens.refreshToken,
+      clientId: args?.clientId ?? getSpotifyConfig().clientId,
+      now: args?.now,
+      fetchImpl: args?.fetchImpl,
+    })
+      .then((next) => {
+        saveTokens(next)
+        return next
+      })
+      .catch(() => null)
+      .finally(() => {
+        refreshInFlight = null
+      })
+  }
+  return refreshInFlight
+}
+
 export function saveTokens(tokens: SpotifyTokens): void {
   localStorage.setItem(TOKENS_KEY, JSON.stringify(tokens))
 }
 
 export function loadTokens(): SpotifyTokens | null {
   const raw = localStorage.getItem(TOKENS_KEY)
-  return raw ? (JSON.parse(raw) as SpotifyTokens) : null
+  if (!raw) return null
+  try {
+    return JSON.parse(raw) as SpotifyTokens
+  } catch {
+    // A corrupted entry must not crash the app; treat it as logged out.
+    localStorage.removeItem(TOKENS_KEY)
+    return null
+  }
 }
 
 export function clearTokens(): void {
