@@ -8,6 +8,7 @@ import { makeHitsterPlay } from './game/hitster/play'
 import { makeHistoryPlay } from './game/history/play'
 import { makeStarWarsPlay } from './game/starwars/play'
 import { clearResumeSetup, peekResumeSetup } from './game/resumeSetup'
+import { SpotifySessionProvider } from './game/spotifySessionContext'
 import type { GamePlay, GameSetupResult } from './game/play/adapter'
 import ScreenTransition from './transition/ScreenTransition'
 import { ThemeProvider } from './theme/ThemeProvider'
@@ -38,11 +39,11 @@ function GameRoot() {
   const session = useSpotifySession(guest)
   const { game } = useActiveGame()
   const [setup, setSetup] = useState<GameSetupResult | null>(null)
-  // useSpotifySession returns a fresh object each render; rebuild the adapter
-  // when the active game, the provider identity (mock/guest), OR the reactive
-  // session state the setup screen reads (loggedIn/connected/error) changes --
-  // otherwise the Hitster Setup captures a stale session and never sees the
-  // playback device connect, leaving START greyed out forever.
+  // Rebuild the adapter only when the active game or the provider identity
+  // (mock/guest) changes. Reactive session state (loggedIn/connected/error)
+  // reaches the Setup wizard through SpotifySessionProvider instead: rebuilding
+  // on those used to give play.Setup a new component identity mid-wizard, which
+  // remounted the whole setup screen and wiped everything the host had typed.
   const computedPlay = useMemo(
     () => {
       if (game.id === 'history') return makeHistoryPlay()
@@ -50,14 +51,7 @@ function GameRoot() {
       return makeHitsterPlay(session)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      game.id,
-      session.mock,
-      guest,
-      session.loggedIn,
-      session.connected,
-      session.error,
-    ],
+    [game.id, session.mock, guest],
   )
   // Freeze the adapter once setup is captured (START pressed, see onStart below).
   // Hitster stashes the chosen tracks inside the adapter, so a session-state
@@ -78,7 +72,7 @@ function GameRoot() {
   }, [])
 
   return (
-    <>
+    <SpotifySessionProvider value={session}>
       {screen === 'menu' ? (
         <>
           <MenuScreen onPlay={() => setSetupOpen(true)} />
@@ -118,6 +112,6 @@ function GameRoot() {
           onDone={() => setTransitioning(false)}
         />
       )}
-    </>
+    </SpotifySessionProvider>
   )
 }
